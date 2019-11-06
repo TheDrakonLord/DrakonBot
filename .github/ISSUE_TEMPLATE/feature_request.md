@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
-assignees: ''
+labels: Feature Request, User Requested
+assignees: Jamiesonnc
 
 ---
 
