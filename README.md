@@ -9,6 +9,7 @@ Description:<br />
         -Retrieving and storing FFXIV character data
     This program uses xml to store its data with the exception of the log which is stored as a text file.<br />
     This bot does not currently support multiple guilds.<br />
+    This repository is a rebuilt version of the previous one (HavocBot_VC) redesigned to be .net core 3.0 rather than .net 4.6
     <br />
 Dependencies:<br />
     botEvents.cs<br />
