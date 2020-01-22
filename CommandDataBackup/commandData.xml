@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <events>
+    <event sid="998f839e-b481-4afd-899a-a62ef365a191">
+      <name>Havoc Costume Contest</name>
+      <type>Costume Contest</type>
+      <description>Hello you free company members of memboring!  no this start off bad.  Hi this is Kyrie/Bink.  We'll be hosting the yearly annual All Saints' Wake costume contest on the 27th at around 7pm cst ^^  All participants will get a 5$ gift voucher for the mogstation ^^  The winner of the contest will get a 25$ gift card for the mogstation ^^   if you are unable to come on the 27th we'll be taking ingame pictures of any participants on the 26th ^^</description>
+      <start>10/27/2019 19:00:00</start>
+      <end>10/27/2019 21:00:00</end>
+      <reminder>60</reminder>
+      <repeat>none</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>AlwaysSadSui, Vadden</rsvps>
+      <rsvpids>AlwaysSadSui,Vadden</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="7bc0b09c-f119-4b0d-88de-60c7e8478013">
+      <name>TableTop Sim Games</name>
+      <type>board games</type>
+      <description>Reminder that tonight at 7PM EST I will be hosting a game night with Tabletop Simulator on steam for anyone who has it</description>
+      <start>10/25/2019 19:00:00</start>
+      <end>10/25/2019 21:00:00</end>
+      <reminder>60</reminder>
+      <repeat>none</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>Always Sad Sui</rsvps>
+      <rsvpids>&lt;@206252018761728002&gt;</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="30092a7f-3d86-40d7-80af-db21dd1d8224">
+      <name>Reminder: Havoc Costume Contest</name>
+      <type>Costume Contest</type>
+      <description>Hello you free company members of memboring!  no this start off bad.  Hi this is Kyrie/Bink.  We'll be hosting the yearly annual All Saints' Wake costume contest on the 27th at around 7pm cst ^^  All participants will get a 5$ gift voucher for the mogstation ^^  The winner of the contest will get a 25$ gift card for the mogstation ^^   if you are unable to come on the 27th we'll be taking ingame pictures of any participants on the 26th ^^</description>
+      <start>10/27/2019 19:00:00</start>
+      <end>10/27/2019 21:00:00</end>
+      <reminder>60</reminder>
+      <repeat>0</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>AlwaysSadSui,  Vadden</rsvps>
+      <rsvpids>AlwaysSadSui, Vadden</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="4403e44a-a2be-46c5-b647-6f68c1627c3b">
+      <name>Reminder: TableTop Sim Games</name>
+      <type>board games</type>
+      <description>Reminder that tonight at 7PM EST I will be hosting a game night with Tabletop Simulator on steam for anyone who has it</description>
+      <start>10/25/2019 19:00:00</start>
+      <end>10/25/2019 21:00:00</end>
+      <reminder>60</reminder>
+      <repeat>0</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>Always Sad Sui</rsvps>
+      <rsvpids>&lt;@206252018761728002&gt;</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="06a0c546-1f09-4ff7-8e4d-4dd7528330b4">
+      <name>Jackbox Fun</name>
+      <type>jackbox</type>
+      <description>N/A</description>
+      <start>10/26/2019 19:00:00</start>
+      <end>10/26/2019 21:00:00</end>
+      <reminder>60</reminder>
+      <repeat>none</repeat>
+      <mentions>&lt;@&amp;473181362879332382&gt;</mentions>
+      <rsvps>Aaron Torr,  Whatever Sui, Bink [ Man ]</rsvps>
+      <rsvpids>Aaron Torr, Whatever Sui,Bink [ Man ]</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="902874a3-0cb5-442d-9735-195139566272">
+      <name>Yorha: The Dark Apocalypse FC run</name>
+      <type>raid</type>
+      <description>Come join us as we run the new 24 man alliance raid as a FC! The 2Bpocalypse cometh! and we must stem the tide!</description>
+      <start>10/29/2019 19:00:00</start>
+      <end>10/29/2019 20:00:00</end>
+      <reminder>0</reminder>
+      <repeat>none</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>Aaron Torr,  Grace of Rose, Zen Ryu</rsvps>
+      <rsvpids>Aaron Torr, Grace of Rose,Zen Ryu</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="7c9c4155-70a5-4649-bb7a-2f1497eea45d">
+      <name>thursday maps</name>
+      <type>maps</type>
+      <description>N/A</description>
+      <start>10/31/2019 23:00:00</start>
+      <end>11/1/2019 00:00:00</end>
+      <reminder>0</reminder>
+      <repeat>none</repeat>
+      <mentions>N/A</mentions>
+      <rsvps>Dead Sui</rsvps>
+      <rsvpids>Dead Sui</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="3e13b04a-b159-4618-be20-9ed512b606be">
+      <name>friday morning maps</name>
+      <type>maps</type>
+      <description>N/A</description>
+      <start>11/1/2019 10:00:00</start>
+      <end>11/1/2019 11:00:00</end>
+      <reminder>0</reminder>
+      <repeat>none</repeat>
+      <mentions>N/A</mentions>
+      <rsvps>N/A</rsvps>
+      <rsvpids>N/A</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="0fd0fd7f-efa5-4e8d-96ea-1bf16f97173a">
+      <name>friday night maps</name>
+      <type>maps</type>
+      <description>N/A</description>
+      <start>11/1/2019 23:00:00</start>
+      <end>11/2/2019 00:00:00</end>
+      <reminder>0</reminder>
+      <repeat>none</repeat>
+      <mentions>N/A</mentions>
+      <rsvps>N/A</rsvps>
+      <rsvpids>N/A</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="475717c3-1de1-4772-8a12-42ae49f14b3d">
+      <name>maps</name>
+      <type>maps</type>
+      <description>Hello fellow uh... constituents?  no... uh... bus associates?  no...  uh... we need a cool name.  oh wait.  Havoc.  Hello fellow Havoc members and friends ^^  Monday.  The day of tomorrow will be the monday.  do not let the new time fool you.  its still monday.  Come join me and others with maps.  and doing the raid before reset.  if you need it ^^  Love you guys ^^  bring a pencil.</description>
+      <start>11/4/2019 16:00:00</start>
+      <end>11/4/2019 23:59:00</end>
+      <reminder>60</reminder>
+      <repeat>none</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>N/A</rsvps>
+      <rsvpids>N/A</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+    <event sid="648d2a05-b8a2-45d0-a036-118f8197e0ee">
+      <name>maps</name>
+      <type>maps</type>
+      <description>Hello.  This is a Bink announcement.  Remember when Nanamo is cool.  She is always cool !!!!  remember it!!  there is no comparison!!  also, We would like to do maps on friday 8pm cst ^^  come join us... I'm looking for your nanamo shirts to be on ^^</description>
+      <start>2019-11-08T20:00:00</start>
+      <end>2019-11-08T22:00:00</end>
+      <reminder>0</reminder>
+      <repeat>none</repeat>
+      <mentions>rsvp</mentions>
+      <rsvps>N/A</rsvps>
+      <rsvpids>N/A</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
+  </events>
+  <settings>
+    <TargetChannel>497532090670383135</TargetChannel>
+    <TargetEventChannel>397568096610549771</TargetEventChannel>
+  </settings>
+  <images>
+    <eventType>
+      <diadem>https://i.imgur.com/n08fbk9.png</diadem>
+      <dungeon>https://i.imgur.com/yrwlXyE.png</dungeon>
+      <eureka>https://i.imgur.com/5zO3f3w.png</eureka>
+      <fates>https://i.imgur.com/aAonLHG.png</fates>
+      <gates>https://i.imgur.com/SXao8Ir.png</gates>
+      <HighEnd>https://i.imgur.com/TGMTLLd.png</HighEnd>
+      <hunts>https://i.imgur.com/9ZN2arg.png</hunts>
+      <maps>https://i.imgur.com/Cc5va3T.png</maps>
+      <other>https://i.imgur.com/TG0PHQL.png</other>
+      <potd>https://i.imgur.com/ut7zxvM.png</potd>
+      <pvp>https://i.imgur.com/75fTXKw.png</pvp>
+      <raid>https://i.imgur.com/hzCYA1S.png</raid>
+      <roulette>https://i.imgur.com/7lVkWfk.png</roulette>
+      <trial>https://i.imgur.com/FormlqY.png</trial>
+      <movie>https://i.imgur.com/s0nkwot.png</movie>
+      <jackbox>https://i.imgur.com/kVJfuMV.png</jackbox>
+    </eventType>
+  </images>
+  <characters>
+    <TheDrakonLord userId="110082150241435648">
+      <id>7394134</id>
+      <name>Aaron Torr</name>
+      <server>Exodus (Primal)</server>
+    </TheDrakonLord>
+    <Lucina userId="236990549133885440">
+      <id>7379533</id>
+      <name>Lucina Silvernight</name>
+      <server>Exodus (Primal)</server>
+    </Lucina>
+    <SimplySui userId="206252018761728002">
+      <id>14831122</id>
+      <name>Sui Godo</name>
+      <server>Exodus (Primal)</server>
+    </SimplySui>
+    <Leononon userId="216984459860246529">
+      <id>14988547</id>
+      <name>Rose Grace</name>
+      <server>Exodus (Primal)</server>
+    </Leononon>
+    <TheDrakonLord userId="110082150241435648">
+      <id>14320097</id>
+      <name>Drakon Lord</name>
+      <server>Zalera (Crystal)</server>
+    </TheDrakonLord>
+    <TheDrakonLord userId="110082150241435648">
+      <id>7394134</id>
+      <name>Aaron Torr</name>
+      <server>Exodus (Primal)</server>
+    </TheDrakonLord>
+    <Inoo userId="305442879185092608">
+      <id>23408379</id>
+      <name>Inoo Denma</name>
+      <server>Exodus (Primal)</server>
+    </Inoo>
+    <Lali userId="220217523319078913">
+      <id>4486632</id>
+      <name>Lali Tribal</name>
+      <server>Exodus (Primal)</server>
+    </Lali>
+    <lunatic userId="261707012025483267">
+      <id>14838777</id>
+      <name>Cyrille Desrosiers</name>
+      <server>Exodus (Primal)</server>
+    </lunatic>
+    <Bink userId="236991787602935808">
+      <id>9708356</id>
+      <name>Kyrie Mayner</name>
+      <server>Exodus (Primal)</server>
+    </Bink>
+    <NathanKing userId="264872323675324416">
+      <id>27638816</id>
+      <name>Tamie Vale</name>
+      <server>Exodus (Primal)</server>
+    </NathanKing>
+    <LelouchAkasha userId="186946350783528961">
+      <id>10479069</id>
+      <name>Lelouch Akasha</name>
+      <server>Exodus (Primal)</server>
+    </LelouchAkasha>
+    <LelouchAkasha userId="186946350783528961">
+      <id>4666609</id>
+      <name>Lelouch Akasha</name>
+      <server>Zalera (Crystal)</server>
+    </LelouchAkasha>
+    <LelouchAkasha userId="186946350783528961">
+      <id>10479069</id>
+      <name>Lelouch Akasha</name>
+      <server>Exodus (Primal)</server>
+    </LelouchAkasha>
+    <Lali userId="220217523319078913">
+      <id>4486632</id>
+      <name>Lali Tribal</name>
+      <server>Exodus (Primal)</server>
+    </Lali>
+  </characters>
+  <maintenance>
+    <maint patch="5.11">
+      <start>11/12/2019 00:00:00</start>
+      <end>11/12/2019 04:00:00</end>
+    </maint>
+  </maintenance>
+  <codes>
+    <TheDrakonLord>
+      <psn>TheDrakonLord</psn>
+      <xbox>N/A</xbox>
+      <switch>SW-8492-7200-4921</switch>
+      <nin3ds>N/A</nin3ds>
+      <steam>TheDrakonLord</steam>
+    </TheDrakonLord>
+    <SimplySui>
+      <psn>N/A</psn>
+      <xbox>N/A</xbox>
+      <switch>N/A</switch>
+      <nin3ds>N/A</nin3ds>
+      <steam>Sui Godo</steam>
+    </SimplySui>
+  </codes>
+</root>

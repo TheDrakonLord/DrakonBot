@@ -69,7 +69,8 @@ namespace HavocBot
                 new XElement("events", null),
                 new XElement("settings",
                     new XElement("TargetChannel", "622084719030304810"),
-                    new XElement("TargetEventChannel", "623528068358733824")),
+                    new XElement("TargetEventChannel", "623528068358733824"),
+                    new XElement("StatusMessage", "Hello There")),
                 new XElement("images",
                         new XElement("diadem", "https://i.imgur.com/n08fbk9.png"),
                         new XElement("dungeon", "https://i.imgur.com/yrwlXyE.png"),
@@ -134,9 +135,9 @@ namespace HavocBot
                     {
                         globals.eventCalendar.Add("Reminder: " + globals.eventCalendar.ElementAt(i).Key, retrievedEvent.StartDate.AddMinutes(-retrievedEvent.ReminderMinutes));
                         globals.commandStorage.Element("events").Add(new XElement("event",
-                            new XAttribute("sid", retrievedEvent.StorageID.ToString()),
-                            new XElement("name", "Reminder: " + retrievedEvent.Name),
-                            new XElement("type", retrievedEvent.Type),
+                            new XAttribute("sid", retrievedEvent.storageID.ToString()),
+                            new XElement("name", "Reminder: " + retrievedEvent.name),
+                            new XElement("type", retrievedEvent.type),
                             new XElement("description", retrievedEvent.Description),
                             new XElement("start", retrievedEvent.StartDate),
                             new XElement("end", retrievedEvent.EndDate),
@@ -163,6 +164,10 @@ namespace HavocBot
 
             globals.targetEventChannel = (ulong)
                  (from el in settingRetrieve.Descendants("TargetEventChannel")
+                  select el).First();
+
+            globals.StatusMessage = (string)
+                 (from el in settingRetrieve.Descendants("StatusMessage")
                   select el).First();
 
             // start the bot
