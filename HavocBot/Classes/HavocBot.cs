@@ -64,10 +64,17 @@ namespace HavocBot
 
 
             _client.Log += Log;
-            
-            
-                Console.Write("Please enter the bot token: ");
-                globals.token = Console.ReadLine();
+
+
+            try
+            {
+                globals.token = System.IO.File.ReadAllText("token.txt");
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("error no token file found");
+                throw;
+            }
             
 
             
@@ -77,6 +84,7 @@ namespace HavocBot
             // have the client login and start
             await _client.LoginAsync(TokenType.Bot, globals.token);
             await _client.StartAsync();
+            await _client.SetGameAsync(globals.StatusMessage, null, ActivityType.Playing);
 
 
             // load the commands
@@ -130,7 +138,7 @@ namespace HavocBot
                 mainChannel.SendMessageAsync(caption, false, eventEmbed.Build());
 
                 //log that an event has been triggered in the log
-                Console.WriteLine("Event Triggered: " + retrievedEvent.Name);
+                Console.WriteLine("Event Triggered: " + retrievedEvent.name);
 
                 retrievedEvent.repeatDate();
 
@@ -139,7 +147,7 @@ namespace HavocBot
                        select el;
 
                 eventRetrieve = from el in eventRetrieve.Elements("event")
-                                where (string)el.Element("name") == retrievedEvent.Name
+                                where (string)el.Element("name") == retrievedEvent.name
                                 select el;
 
                 XElement xdate = (from el in eventRetrieve.Descendants("start")

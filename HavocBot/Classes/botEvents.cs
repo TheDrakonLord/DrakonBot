@@ -72,7 +72,7 @@ namespace HavocBot
         // custom string for "other" type events
         private string _otherType = "Other";
         //load image paths
-        private IEnumerable<XElement> imageRetrieve;
+        private IEnumerable<XElement> _imageRetrieve;
         // file path of the image for the current event type
         private string _typeImagePath;
         //Description
@@ -98,14 +98,14 @@ namespace HavocBot
         }
         private repeatTypes _repeat = repeatTypes.none;
         //mentions
-        private enum _mentionOptions
+        private enum mentionOptions
         {
             none,
             rsvp,
             fcMembers,
             Everyone
         }
-        private _mentionOptions _mentions = _mentionOptions.none;
+        private mentionOptions _mentions = mentionOptions.none;
         //rsvps
         private List<string> _rsvps = new List<string>();
         private List<string> _rsvpID = new List<string>();
@@ -127,10 +127,10 @@ namespace HavocBot
             _startDate = start;
             _endDate = end;
 
-            imageRetrieve = from el in cStore.Elements("images")
+            _imageRetrieve = from el in cStore.Elements("images")
                             select el;
 
-            imageRetrieve = from el in imageRetrieve.Elements("eventType")
+            _imageRetrieve = from el in _imageRetrieve.Elements("eventType")
                             select el;
 
         }
@@ -138,12 +138,12 @@ namespace HavocBot
         /// <summary>
         /// read only property for storage id
         /// </summary>
-        public Guid StorageID => _sid;
+        public Guid storageID => _sid;
 
         /// <summary>
         /// property for name
         /// </summary>
-        public string Name
+        public string name
         {
             get { return _name; }
             set { _name = value; }
@@ -154,7 +154,7 @@ namespace HavocBot
         /// </summary>
         /// <remarks>Accepts a string value for setter</remarks>
         /// <returns>a string representation of the type</returns>
-        public string Type
+        public string type
         {
             get
             {
@@ -174,92 +174,92 @@ namespace HavocBot
                     case "dungeon":
                         _type = types.dungeon;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("dungeon")
+                            (from el in _imageRetrieve.Descendants("dungeon")
                              select el).First();
                         break;
                     case "trial":
                         _type = types.trial;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("trial")
+                            (from el in _imageRetrieve.Descendants("trial")
                              select el).First();
                         break;
                     case "raid":
                         _type = types.raid;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("raid")
+                            (from el in _imageRetrieve.Descendants("raid")
                              select el).First();
                         break;
                     case "alliance":
                         _type = types.alliance;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("HighEnd")
+                            (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "extreme":
                         _type = types.extreme;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("HighEnd")
+                            (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "savage":
                         _type = types.savage;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("HighEnd")
+                            (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "ultimate":
                         _type = types.ultimate;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("HighEnd")
+                            (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "maps":
                         _type = types.maps;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("maps")
+                            (from el in _imageRetrieve.Descendants("maps")
                              select el).First();
                         break;
                     case "hunts":
                         _type = types.hunts;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("hunts")
+                            (from el in _imageRetrieve.Descendants("hunts")
                              select el).First();
                         break;
                     case "deepDungeon":
                         _type = types.deepDungeon;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("potd")
+                            (from el in _imageRetrieve.Descendants("potd")
                              select el).First();
                         break;
                     case "fates":
                         _type = types.fates;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("fates")
+                            (from el in _imageRetrieve.Descendants("fates")
                              select el).First();
                         break;
                     case "gates":
                         _type = types.gates;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("gates")
+                            (from el in _imageRetrieve.Descendants("gates")
                              select el).First();
                         break;
                     case "jackbox":
                         _type = types.jackbox;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("jackbox")
+                            (from el in _imageRetrieve.Descendants("jackbox")
                              select el).First();
                         break;
                     case "movie":
                         _type = types.movie;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("movie")
+                            (from el in _imageRetrieve.Descendants("movie")
                              select el).First();
                         break;
                     default:
                         _type = types.other;
                         _otherType = value;
                         _typeImagePath = (string)
-                            (from el in imageRetrieve.Descendants("other")
+                            (from el in _imageRetrieve.Descendants("other")
                              select el).First();
                         break;
                 }
@@ -372,13 +372,13 @@ namespace HavocBot
             {
                 switch (_mentions)
                 {
-                    case _mentionOptions.none:
+                    case mentionOptions.none:
                         return "N/A";
-                    case _mentionOptions.rsvp:
+                    case mentionOptions.rsvp:
                         return "rsvp";
-                    case _mentionOptions.fcMembers:
+                    case mentionOptions.fcMembers:
                         return "<@&473181362879332382>";
-                    case _mentionOptions.Everyone:
+                    case mentionOptions.Everyone:
                         return "<@&236955200311525377>";
                     default:
                         return "N/A";
@@ -390,22 +390,22 @@ namespace HavocBot
                 {
                     case "none":
                     case "N/A":
-                        _mentions = _mentionOptions.none;
+                        _mentions = mentionOptions.none;
                         break;
                     case "everyone":
-                        _mentions = _mentionOptions.Everyone;
+                        _mentions = mentionOptions.Everyone;
                         break;
                     case "fc":
                     case "fc members":
                     case "fcmembers":
-                        _mentions = _mentionOptions.fcMembers;
+                        _mentions = mentionOptions.fcMembers;
                         break;
                     case "rsvp":
                     case "rsvps":
-                        _mentions = _mentionOptions.rsvp;
+                        _mentions = mentionOptions.rsvp;
                         break;
                     default:
-                        _mentions = _mentionOptions.none;
+                        _mentions = mentionOptions.none;
                         break;
                 }
             }

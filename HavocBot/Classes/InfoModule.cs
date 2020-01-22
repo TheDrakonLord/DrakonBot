@@ -730,13 +730,13 @@ namespace HavocBot
                 botEvents storedEvent = new botEvents(name, DateTime.Parse(start), DateTime.Parse(end), globals.commandStorage);
                 storedEvent.Author = Context.User.Username;
                 storedEvent.AuthorURL = Context.User.GetAvatarUrl(ImageFormat.Auto, 128);
-                storedEvent.Type = type;
+                storedEvent.type = type;
                 storedEvent.Mentions = mentions;
                 storedEvent.Description = description;
                 //add the event to the xml tree
                 globals.storeEvent(storedEvent);
                 //display the created event to the user
-                await retrieveEvent(storedEvent.Name, "Event Created");
+                await retrieveEvent(storedEvent.name, "Event Created");
             }
             catch (Exception ex)
             {
@@ -790,7 +790,7 @@ namespace HavocBot
                  select el;
 
                 eventRetrieve = from el in eventRetrieve.Elements("event")
-                                where (string)el.Element("name") == retrievedEvent.Name
+                                where (string)el.Element("name") == retrievedEvent.name
                                 select el;
                 XElement changeTarget;
                 int intChange;
@@ -811,10 +811,10 @@ namespace HavocBot
                         await Context.Channel.SendMessageAsync($"The end date of the event \"{name}\" has been changed to {changes}");
                         break;
                     case "type":
-                        retrievedEvent.Type = changes;
+                        retrievedEvent.type = changes;
                         changeTarget = (from el in eventRetrieve.Descendants("type")
                                         select el).Last();
-                        changeTarget.Value = retrievedEvent.Type;
+                        changeTarget.Value = retrievedEvent.type;
                         await Context.Channel.SendMessageAsync($"The type of the event \"{name}\" has been changed to {changes}");
                         break;
                     case "description":
@@ -907,7 +907,7 @@ namespace HavocBot
                  select el;
 
                     eventRetrieve = from el in eventRetrieve.Elements("event")
-                                    where (string)el.Element("name") == retrievedEvent.Name
+                                    where (string)el.Element("name") == retrievedEvent.name
                                     select el;
 
                     XElement rsvp = (from el in eventRetrieve.Descendants("rsvps")
@@ -932,7 +932,7 @@ namespace HavocBot
                         select el;
 
                     eventRetrieve = from el in eventRetrieve.Elements("event")
-                                    where (string)el.Element("name") == retrievedEvent.Name
+                                    where (string)el.Element("name") == retrievedEvent.name
                                     select el;
 
                     XElement rsvp = (from el in eventRetrieve.Descendants("rsvps")
@@ -1077,6 +1077,30 @@ namespace HavocBot
 
             await ReplyAsync("Maitenance has successfully been added");
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: setmaint"} by {Context.User.Username}");
+        }
+
+        /// <summary>
+        /// Changes the bots currently displayed status message
+        /// </summary>
+        /// <param name="status">status to be set to the bot</param>
+        /// <returns></returns>
+        [Command("setStatus")]
+        [Summary("Sets bots displayed status")]
+        public async Task setStatus([Remainder][Summary("Status to be set to the bot")] string status)
+        {
+            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setStatus"} by {Context.User.Username}");
+            await storeStatusMessage(status);
+        }
+
+        /// <summary>
+        /// Changes the bots currently displayed status message
+        /// </summary>
+        /// <param name="status">status to be set to the bot</param>
+        /// <returns></returns>
+        public async Task storeStatusMessage(string status)
+        {
+            await Task.Run(() => globals.changeStatus(status));
+            await ReplyAsync("The bot status has been changed");
         }
     }
 }

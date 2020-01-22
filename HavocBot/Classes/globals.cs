@@ -63,7 +63,12 @@ namespace HavocBot
         /// <summary>
         /// Holds the ID of the channel events should be announced and permitted in
         /// </summary>
-        public static ulong targetEventChannel = 622084719030304810;
+        public static
+            ulong targetEventChannel = 622084719030304810;
+        /// <summary>
+        /// Status message the bot displays on the server
+        /// </summary>
+        public static string StatusMessage = "Hello There";
 
         /// <summary>
         /// holds the api commands for accessing the lodestone
@@ -83,9 +88,9 @@ namespace HavocBot
         {
             //store the data in the xml file
             commandStorage.Element("events").Add(new XElement("event",
-                    new XAttribute("sid", storedEvent.StorageID.ToString()),
-                        new XElement("name", storedEvent.Name),
-                        new XElement("type", storedEvent.Type),
+                    new XAttribute("sid", storedEvent.storageID.ToString()),
+                        new XElement("name", storedEvent.name),
+                        new XElement("type", storedEvent.type),
                         new XElement("description", storedEvent.Description),
                         new XElement("start", storedEvent.StartDate),
                         new XElement("end", storedEvent.EndDate),
@@ -98,7 +103,7 @@ namespace HavocBot
                         new XElement("authorURL", storedEvent.AuthorURL)
                         ));
             //add the event to the event calendar
-            eventCalendar.Add(storedEvent.Name, storedEvent.StartDate);
+            eventCalendar.Add(storedEvent.name, storedEvent.StartDate);
             //Save the tree to the file
             commandStorage.Save(storageFilePath);
         }
@@ -125,6 +130,19 @@ namespace HavocBot
             targetEventChannel = target;
 
             commandStorage.Element("settings").Element("TargetEventChannel").SetValue(target);
+
+            commandStorage.Save(storageFilePath);
+        }
+
+        /// <summary>
+        /// Changes the current status message of the bot
+        /// </summary>
+        /// <param name="status">status to be set to the bot</param>
+        public static void changeStatus(string status)
+        {
+            StatusMessage = status;
+
+            commandStorage.Element("settings").Element("StatusMessage").SetValue(status);
 
             commandStorage.Save(storageFilePath);
         }
@@ -185,7 +203,7 @@ namespace HavocBot
                     (from el in eventRetrieve.Descendants("authorURL")
                      select el).Last();
                 retrievedEvent = new botEvents(testName, DateTime.Parse(testStart), DateTime.Parse(testEnd), globals.commandStorage);
-                retrievedEvent.Type = testtype;
+                retrievedEvent.type = testtype;
                 retrievedEvent.Description = testDescription;
                 retrievedEvent.ReminderMinutes = int.Parse(testReminder);
                 retrievedEvent.Repeat = testRepeat;
@@ -217,8 +235,8 @@ namespace HavocBot
             {
                 Title = "Event"
             };
-            eventEmbed.AddField("Event Name", retrievedEvent.Name, true);
-            eventEmbed.AddField("Event Type", retrievedEvent.Type, true);
+            eventEmbed.AddField("Event Name", retrievedEvent.name, true);
+            eventEmbed.AddField("Event Type", retrievedEvent.type, true);
             eventEmbed.AddField("Description", retrievedEvent.Description, false);
             eventEmbed.AddField("Start Date", retrievedEvent.StartDate.ToString(), true);
             eventEmbed.AddField("End Date", retrievedEvent.EndDate.ToString(), true);
