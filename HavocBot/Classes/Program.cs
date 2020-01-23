@@ -18,6 +18,7 @@
  * References:
  */
 using System;
+using System.Threading;
 using System.Timers;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace HavocBot
     /// </summary>
     public class Program
     {
-        static System.Timers.Timer tmrCalendar = new System.Timers.Timer(1000);
+        private static System.Timers.Timer tmrCalendar;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -48,6 +49,12 @@ namespace HavocBot
         /// <returns></returns>        
         public async Task MainAsync()
         {
+            //Declare a timer
+            
+            tmrCalendar = new System.Timers.Timer(1000);
+            tmrCalendar.Elapsed += tmrCalendar_Elapsed;
+            tmrCalendar.AutoReset = true;
+
             // declare a new instance of HavocBot
             HavocBot botThread = new HavocBot();
 
@@ -170,11 +177,11 @@ namespace HavocBot
                  (from el in settingRetrieve.Descendants("StatusMessage")
                   select el).First();
 
-            // start the bot
-            await botThread.MainAsync();
             // start timer
             tmrCalendar.Enabled = true;
-            tmrCalendar.Start();
+
+            // start the bot
+            await botThread.MainAsync();
         }
 
         /// <summary>
@@ -183,7 +190,7 @@ namespace HavocBot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tmrCalendar_Elapsed(object sender, EventArgs e)
+        private static void tmrCalendar_Elapsed(Object source, ElapsedEventArgs e)
         {
             // iterate through the dictionary of active events
             foreach (KeyValuePair<string, DateTime> entry in globals.eventCalendar)

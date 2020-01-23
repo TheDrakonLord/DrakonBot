@@ -488,6 +488,33 @@ namespace HavocBot
         }
 
         /// <summary>
+        /// Displays changes since last patch
+        /// </summary>
+        /// <returns></returns>
+        [Command("patchNotes")]
+        [Summary("Displays changes since last patch")]
+        public async Task showPatchNotes()
+        {
+            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
+            var patchEmbed = new EmbedBuilder();
+            patchEmbed.WithTitle("Version: 0.3.1.0");
+
+            patchEmbed.AddField("**Changes**",
+                "--Status Messages can now be changed without a patch\n" +
+                "--Updated APIs\n" +
+                "--Addressed an issue where events were not being announced when they occured\n" +
+                "--Addressed an issue where events were not properly mentioning roles\n" +
+                "--Added bot maintenance handling and messaging");
+
+            patchEmbed.WithFooter("Patch Date: 1/22/2020");
+            patchEmbed.WithCurrentTimestamp();
+            patchEmbed.WithColor(Color.Gold);
+
+            await Context.Channel.SendMessageAsync("Displaying Help", false, patchEmbed.Build());
+        }
+
+
+        /// <summary>
         /// shows detailed information on a specific command
         /// </summary>
         /// <param name="cmdName">the command information is requested for</param>
@@ -1101,6 +1128,18 @@ namespace HavocBot
         {
             await Task.Run(() => globals.changeStatus(status));
             await ReplyAsync("The bot status has been changed");
+        }
+
+        /// <summary>
+        /// Triggers an embed announcing bot downtime
+        /// </summary>
+        /// <returns></returns>
+        [Command("startBotDowntime")]
+        [Summary("triggers an embed announcing bot downtime")]
+        public async Task showDownTime()
+        {
+            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: startbotdowntime"} by {Context.User.Username}");
+            await Task.Run(() => HavocBot.showDownTime());
         }
     }
 }
