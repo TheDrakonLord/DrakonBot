@@ -130,9 +130,6 @@ namespace HavocBot
             _imageRetrieve = from el in cStore.Elements("images")
                             select el;
 
-            _imageRetrieve = from el in _imageRetrieve.Elements("eventType")
-                            select el;
-
         }
 
         /// <summary>
@@ -393,11 +390,13 @@ namespace HavocBot
                         _mentions = mentionOptions.none;
                         break;
                     case "everyone":
+                    case "<@&236955200311525377>":
                         _mentions = mentionOptions.Everyone;
                         break;
                     case "fc":
                     case "fc members":
                     case "fcmembers":
+                    case "<@&473181362879332382>":
                         _mentions = mentionOptions.fcMembers;
                         break;
                     case "rsvp":

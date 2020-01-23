@@ -48,6 +48,7 @@ namespace HavocBot
         private CommandHandler _cHandler;
         private CommandService _cService;
         private static IMessageChannel mainChannel;
+        private static IMessageChannel utilityChannel;
 
         /// <summary>
         /// The main asyncronous method. this must be run asyncronously or it will not function
@@ -172,6 +173,17 @@ namespace HavocBot
                 Console.WriteLine("Exception thrown--event trigger");
                 mainChannel.SendMessageAsync("Error: event trigger failed");
             }                
+        }
+
+        public static void showDownTime()
+        {
+            utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
+            EmbedBuilder downEmbed = new EmbedBuilder();
+
+            downEmbed.WithTitle("Bot Undergoing Maintenance");
+            downEmbed.AddField("Details", "The bot is now undergoing maintenance, during this time the bot may go offline several times and may not respond to commands. Downtime is not expected to take longer than an hour.");
+
+            utilityChannel.SendMessageAsync("", false, downEmbed.Build());
         }
     }
 }
