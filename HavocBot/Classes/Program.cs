@@ -30,33 +30,51 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using HtmlAgilityPack;
 
 namespace HavocBot
 {
     /// <summary>
     /// 
     /// </summary>
-    public class Program
+    public class program
     {
-        private static System.Timers.Timer tmrCalendar;
+        private static System.Timers.Timer _tmrCalendar;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        public static void Main() => new Program().MainAsync().GetAwaiter().GetResult();
+        public static void Main() => new program().mainAsync().GetAwaiter().GetResult();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         /// <returns></returns>        
-        public async Task MainAsync()
+        public async Task mainAsync()
         {
+            // <<<<<Proof of concept>>>>>>
+            ffxivNews xivNews = new ffxivNews();
+            maintNews retTop = xivNews.getMaint(12);
+            StreamWriter w = new StreamWriter("TestOut.txt");
+            w.WriteLine($"Title: {retTop.title}\n\n");
+            //w.WriteLine($"image: {retTop.image}\n\n");
+            w.WriteLine($"desc: {retTop.desc}\n\n");
+            w.WriteLine($"link: {retTop.link}\n\n");
+            //w.WriteLine($"time: {time}\n\n");
+            w.WriteLine($"id: {retTop.id}\n\n");
+            w.WriteLine($"start: {retTop.start}\n\n");
+            w.WriteLine($"end: {retTop.end}\n\n");
+            w.Dispose();
+
+            //<<<<Proof of concept end>>>>>
+
             //Declare a timer
-            
-            tmrCalendar = new System.Timers.Timer(1000);
-            tmrCalendar.Elapsed += tmrCalendar_Elapsed;
-            tmrCalendar.AutoReset = true;
+
+            _tmrCalendar = new System.Timers.Timer(1000);
+            _tmrCalendar.Elapsed += tmrCalendar_Elapsed;
+            _tmrCalendar.AutoReset = true;
 
             // declare a new instance of HavocBot
-            HavocBot botThread = new HavocBot();
+            havocBotClass botThread = new havocBotClass();
 
             // Load the XML file from our project directory containing the events
             string filename = "commandData.xml";
@@ -132,29 +150,28 @@ namespace HavocBot
                 }
             }
 
-            botEvents retrievedEvent;
             int count = globals.eventCalendar.Count;
             for (int i = 0; i < count; i++)
             {
-                if (globals.getEvent(globals.eventCalendar.ElementAt(i).Key, out retrievedEvent))
+                if (globals.getEvent(globals.eventCalendar.ElementAt(i).Key, out botEvents retrievedEvent))
                 {
-                    if (retrievedEvent.ReminderMinutes > 0)
+                    if (retrievedEvent.reminderMinutes > 0)
                     {
-                        globals.eventCalendar.Add("Reminder: " + globals.eventCalendar.ElementAt(i).Key, retrievedEvent.StartDate.AddMinutes(-retrievedEvent.ReminderMinutes));
+                        globals.eventCalendar.Add("Reminder: " + globals.eventCalendar.ElementAt(i).Key, retrievedEvent.startDate.AddMinutes(-retrievedEvent.reminderMinutes));
                         globals.commandStorage.Element("events").Add(new XElement("event",
                             new XAttribute("sid", retrievedEvent.storageID.ToString()),
                             new XElement("name", "Reminder: " + retrievedEvent.name),
                             new XElement("type", retrievedEvent.type),
-                            new XElement("description", retrievedEvent.Description),
-                            new XElement("start", retrievedEvent.StartDate),
-                            new XElement("end", retrievedEvent.EndDate),
-                            new XElement("reminder", retrievedEvent.ReminderMinutes),
+                            new XElement("description", retrievedEvent.description),
+                            new XElement("start", retrievedEvent.startDate),
+                            new XElement("end", retrievedEvent.endDate),
+                            new XElement("reminder", retrievedEvent.reminderMinutes),
                             new XElement("repeat", 0),
-                            new XElement("mentions", retrievedEvent.Mentions),
+                            new XElement("mentions", retrievedEvent.mentions),
                             new XElement("rsvps", retrievedEvent.allRSVPs()),
                             new XElement("rsvpids", retrievedEvent.allRSVPIDs()),
-                            new XElement("author", retrievedEvent.Author),
-                            new XElement("authorURL", retrievedEvent.AuthorURL)
+                            new XElement("author", retrievedEvent.author),
+                            new XElement("authorURL", retrievedEvent.authorURL)
                         ));
                     }
                 }
@@ -173,23 +190,23 @@ namespace HavocBot
                  (from el in settingRetrieve.Descendants("TargetEventChannel")
                   select el).First();
 
-            globals.StatusMessage = (string)
+            globals.statusMessage = (string)
                  (from el in settingRetrieve.Descendants("StatusMessage")
                   select el).First();
 
             // start timer
-            tmrCalendar.Enabled = true;
+            _tmrCalendar.Enabled = true;
 
             // start the bot
-            await botThread.MainAsync();
+            await botThread.mainAsync().ConfigureAwait(true);
         }
 
         /// <summary>
         /// Secondary timer that checks if events have occcured
         /// checks for events once every minute
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <param name="source"></param>
         private static void tmrCalendar_Elapsed(Object source, ElapsedEventArgs e)
         {
             // iterate through the dictionary of active events
@@ -199,7 +216,7 @@ namespace HavocBot
                 if (DateTime.Now >= entry.Value)
                 {
                     // have the bot announce the event
-                    HavocBot.eventTriggered(entry.Key);
+                    havocBotClass.eventTriggered(entry.Key);
                     // remove the event from the list of active events
                     globals.eventCalendar.Remove(entry.Key);
                     // exit the loop, any remaining events will be announced 1 minute later

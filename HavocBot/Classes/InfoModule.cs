@@ -36,7 +36,7 @@ namespace HavocBot
     /// <summary>
     /// Module for storing the commands used by the bot as well as any related methods
     /// </summary>
-    public class InfoModule : ModuleBase<SocketCommandContext>
+    public class infoModule : ModuleBase<SocketCommandContext>
     {
         /// <summary>
         /// saves the specified FFXIV character data to the users profile
@@ -53,7 +53,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                using (Context.Channel.EnterTypingState()) globals.LodestoneAPI.getCharacter(name, server, Context);
+                using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.getCharacter(name, server, Context);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: iam"} by {Context.User.Username}");
             }
@@ -72,7 +72,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                using (Context.Channel.EnterTypingState()) globals.LodestoneAPI.showCharacter(Context);
+                using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context);
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whoami"} by {Context.User.Username}");
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -89,6 +89,7 @@ namespace HavocBot
         public async Task showSpecificCharAsync(string userid)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
+            System.Diagnostics.Contracts.Contract.Requires(userid != null);
             if (Context.Channel.Id == globals.targetChannel)
             {
                 string trimmedId = userid.Replace("<", "");
@@ -96,7 +97,7 @@ namespace HavocBot
                 trimmedId = trimmedId.Replace("@", "");
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                using (Context.Channel.EnterTypingState()) globals.LodestoneAPI.showCharacter(Context, trimmedId);
+                using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context, trimmedId);
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whois"} by {Context.User.Username}");
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -113,7 +114,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.targetChannel)
             {
-                await showMaint();
+                await showMaint().ConfigureAwait(false);
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: maint"} by {Context.User.Username}");
             }
         }
@@ -162,7 +163,7 @@ namespace HavocBot
 
                 eventEmbed.AddField($"Time Until Patch {patch} Maintenance:", dateDiff);
                 eventEmbed.WithColor(Color.Green);
-                await Context.Channel.SendMessageAsync(null, false, eventEmbed.Build());
+                await Context.Channel.SendMessageAsync(null, false, eventEmbed.Build()).ConfigureAwait(false);
             }
             else if (DateTime.Now < end)
             {
@@ -175,11 +176,11 @@ namespace HavocBot
 
                 eventEmbed.AddField($"Time Until Patch {patch} Maintenance Ends:", dateDiff);
                 eventEmbed.WithColor(Color.Green);
-                await Context.Channel.SendMessageAsync(null, false, eventEmbed.Build());
+                await Context.Channel.SendMessageAsync(null, false, eventEmbed.Build()).ConfigureAwait(false);
             }
             else
             {
-                await ReplyAsync("There is no upcoming maintenence currently");
+                await ReplyAsync("There is no upcoming maintenence currently").ConfigureAwait(false);
             }
 
 
@@ -198,7 +199,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: myCode"} by {Context.User.Username}");
-                await saveCode(platform, code);
+                await saveCode(platform, code).ConfigureAwait(false);
             }
         }
 
@@ -210,6 +211,7 @@ namespace HavocBot
         /// <returns></returns>
         public async Task saveCode(string platform, string code)
         {
+            System.Diagnostics.Contracts.Contract.Requires(platform != null);
             if (globals.commandStorage.Element("codes").Elements(Context.User.Username).Any())
             {
                 switch (platform.ToLower())
@@ -218,28 +220,28 @@ namespace HavocBot
                     case "psn":
                     case "playstation":
                         globals.commandStorage.Element("codes").Element(Context.User.Username).Element("psn").Value = code;
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "xbox":
                     case "xbl":
                         globals.commandStorage.Element("codes").Element(Context.User.Username).Element("xbox").Value = code;
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "switch":
                     case "sw":
                         globals.commandStorage.Element("codes").Element(Context.User.Username).Element("switch").Value = code;
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "nin3ds":
                         globals.commandStorage.Element("codes").Element(Context.User.Username).Element("nin3ds").Value = code;
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "steam":
                         globals.commandStorage.Element("codes").Element(Context.User.Username).Element("steam").Value = code;
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     default:
-                        await Context.Channel.SendMessageAsync("Error: no platform found with that name. It is either misspelt or unsupported");
+                        await Context.Channel.SendMessageAsync("Error: no platform found with that name. It is either misspelt or unsupported").ConfigureAwait(false);
                         break;
                 }
             }
@@ -260,7 +262,7 @@ namespace HavocBot
                             new XElement("nin3ds", "N/A"),
                             new XElement("steam", "N/A")
                             ));
-                            await Context.Channel.SendMessageAsync("Code successfully added");
+                            await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         }
                         catch (Exception ex)
                         {
@@ -278,7 +280,7 @@ namespace HavocBot
                             new XElement("nin3ds", "N/A"),
                             new XElement("steam", "N/A")
                             ));
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "switch":
                     case "sw":
@@ -289,7 +291,7 @@ namespace HavocBot
                             new XElement("nin3ds", "N/A"),
                             new XElement("steam", "N/A")
                             ));
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "nin3ds":
                         globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
@@ -299,7 +301,7 @@ namespace HavocBot
                             new XElement("nin3ds", code),
                             new XElement("steam", "N/A")
                             ));
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "steam":
                         globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
@@ -309,10 +311,10 @@ namespace HavocBot
                             new XElement("nin3ds", "N/A"),
                             new XElement("steam", code)
                             ));
-                        await Context.Channel.SendMessageAsync("Code successfully added");
+                        await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     default:
-                        await Context.Channel.SendMessageAsync("Error: no platform found with that name. It is either misspelt or unsupported");
+                        await Context.Channel.SendMessageAsync("Error: no platform found with that name. It is either misspelt or unsupported").ConfigureAwait(false);
                         break;
                 }
             }
@@ -331,7 +333,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes()"} by {Context.User.Username}");
-                await getCodes();
+                await getCodes().ConfigureAwait(false);
             }
         }
 
@@ -347,7 +349,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes(Username)"} by {Context.User.Username}");
-                await getCodes(username);
+                await getCodes(username).ConfigureAwait(false);
             }
         }
 
@@ -362,7 +364,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: mycodes"} by {Context.User.Username}");
-                await getCodes(Context.User.Username);
+                await getCodes(Context.User.Username).ConfigureAwait(false);
             }
         }
 
@@ -407,7 +409,7 @@ namespace HavocBot
             codelist.WithTitle("FC Code Dictionary");
             codelist.WithColor(Color.Green);
             codelist.WithTimestamp(DateTime.Now);
-            await Context.Channel.SendMessageAsync(null, false, codelist.Build());
+            await Context.Channel.SendMessageAsync(null, false, codelist.Build()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -436,7 +438,7 @@ namespace HavocBot
             codelist.WithTitle($"{username} Code Dictionary");
             codelist.WithColor(Color.Green);
             codelist.WithTimestamp(DateTime.Now);
-            await Context.Channel.SendMessageAsync(null , false, codelist.Build());
+            await Context.Channel.SendMessageAsync(null , false, codelist.Build()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -484,7 +486,7 @@ namespace HavocBot
             helpEmbed.WithColor(Color.Blue);
 
             //display the help embed to the user
-            await Context.Channel.SendMessageAsync("Displaying Help", false, helpEmbed.Build());
+            await Context.Channel.SendMessageAsync("Displaying Help", false, helpEmbed.Build()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -510,7 +512,7 @@ namespace HavocBot
             patchEmbed.WithCurrentTimestamp();
             patchEmbed.WithColor(Color.Gold);
 
-            await Context.Channel.SendMessageAsync("Displaying Help", false, patchEmbed.Build());
+            await Context.Channel.SendMessageAsync("Displaying Help", false, patchEmbed.Build()).ConfigureAwait(false);
         }
 
 
@@ -523,6 +525,7 @@ namespace HavocBot
         [Summary("displays help for a specific command")]
         public async Task showHelpAsync(string cmdName)
         {
+            System.Diagnostics.Contracts.Contract.Requires(cmdName != null);
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} ({cmdName}) by {Context.User.Username}");
             var helpEmbed = new EmbedBuilder()
             {
@@ -631,7 +634,7 @@ namespace HavocBot
             helpEmbed.WithColor(Color.Blue);
 
             //display the help embed to the user
-            await Context.Channel.SendMessageAsync("Displaying Help on a specific command", false, helpEmbed.Build());
+            await Context.Channel.SendMessageAsync("Displaying Help on a specific command", false, helpEmbed.Build()).ConfigureAwait(false);
 
         }
     }
@@ -653,7 +656,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetEventChannel)
             {
                 Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: showEvent"} by {Context.User.Username}");
-            await retrieveEvent(reqEvent, "Displaying Event");
+            await retrieveEvent(reqEvent, "Displaying Event").ConfigureAwait(false);
             }
         }
 
@@ -679,13 +682,13 @@ namespace HavocBot
             {
                 if (globals.eventCalendar.ContainsKey(name))
                 {
-                    await ReplyAsync("Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass");
+                    await ReplyAsync("Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass").ConfigureAwait(false);
                     Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Event already exists error thrown"} by {Context.User.Username}");
                 }
                 else
                 {
                     Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: newEvent"} by {Context.User.Username}");
-                    await createEvent(name, start, end, type, mentions, description);
+                    await createEvent(name, start, end, type, mentions, description).ConfigureAwait(false);
                 }
             }
         }
@@ -701,7 +704,7 @@ namespace HavocBot
         [Summary("Alters specified details of an event")]
         public async Task editEventAsync([Summary("event name")] string name, [Summary("field to edit")] string field, [Remainder] [Summary("changes to be made")] string changes)
         {
-            await editEvent(name, field, changes);
+            await editEvent(name, field, changes).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -718,11 +721,11 @@ namespace HavocBot
                 if (globals.eventCalendar.ContainsKey(name))
                 {
                     Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: rsvp"}-{name} by {Context.User.Username}");
-                    await toggleRSVP(name);                    
+                    await toggleRSVP(name).ConfigureAwait(false);                    
                 }
                 else
                 {
-                    await ReplyAsync("Error: no event found with that name");
+                    await ReplyAsync("Error: no event found with that name").ConfigureAwait(false);
                     Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"No event found error"} by {Context.User.Username}");
                 }
             }
@@ -736,7 +739,7 @@ namespace HavocBot
         [Summary("Shows all active events")]
         public async Task showAllEventsAsync()
         {
-            await showAllEvents();
+            await showAllEvents().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -754,21 +757,24 @@ namespace HavocBot
             try
             {
                 //create an event using the specified parameters
-                botEvents storedEvent = new botEvents(name, DateTime.Parse(start), DateTime.Parse(end), globals.commandStorage);
-                storedEvent.Author = Context.User.Username;
-                storedEvent.AuthorURL = Context.User.GetAvatarUrl(ImageFormat.Auto, 128);
+                botEvents storedEvent = new botEvents(name, DateTime.Parse(start), DateTime.Parse(end), globals.commandStorage)
+                {
+                    author = Context.User.Username
+                };
+                Uri.TryCreate(Context.User.GetAvatarUrl(ImageFormat.Auto, 128), UriKind.RelativeOrAbsolute, out Uri uriResult);
+                storedEvent.authorURL = uriResult;
                 storedEvent.type = type;
-                storedEvent.Mentions = mentions;
-                storedEvent.Description = description;
+                storedEvent.mentions = mentions;
+                storedEvent.description = description;
                 //add the event to the xml tree
                 globals.storeEvent(storedEvent);
                 //display the created event to the user
-                await retrieveEvent(storedEvent.name, "Event Created");
+                await retrieveEvent(storedEvent.name, "Event Created").ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                await Context.Channel.SendMessageAsync("Error: An unknown error has occured");
+                await Context.Channel.SendMessageAsync("Error: An unknown error has occured").ConfigureAwait(false);
                 throw;
             }
 
@@ -782,8 +788,7 @@ namespace HavocBot
         /// <returns>returns task complete</returns>
         public async Task retrieveEvent(string eventName, string caption)
         {
-            botEvents retrievedEvent;
-            if (globals.getEvent(eventName, out retrievedEvent))
+            if (globals.getEvent(eventName, out botEvents retrievedEvent))
             {
                 //create an embed based off of the loaded event
                 EmbedBuilder eventEmbed;
@@ -791,13 +796,13 @@ namespace HavocBot
                 eventEmbed = globals.generateEventEmbed(retrievedEvent);
 
                 //display the loaded event to the user
-                await Context.Channel.SendMessageAsync(caption, false, eventEmbed.Build());
+                await Context.Channel.SendMessageAsync(caption, false, eventEmbed.Build()).ConfigureAwait(false);
             }
             else
             {
-                await Context.Channel.SendMessageAsync("Error: No command found with that name");
+                await Context.Channel.SendMessageAsync("Error: No command found with that name").ConfigureAwait(false);
             }
-            
+
         }
 
         /// <summary>
@@ -809,8 +814,8 @@ namespace HavocBot
         /// <returns></returns>
         public async Task editEvent(string name, string field, string changes)
         {
-            botEvents retrievedEvent;
-            if (globals.getEvent(name, out retrievedEvent))
+            System.Diagnostics.Contracts.Contract.Requires(field != null);
+            if (globals.getEvent(name, out botEvents retrievedEvent))
             {
                 IEnumerable<XElement> eventRetrieve =
                  from el in globals.commandStorage.Elements("events")
@@ -824,77 +829,77 @@ namespace HavocBot
                 switch (field.ToLower())
                 {
                     case "start":
-                        retrievedEvent.StartDate = DateTime.Parse(changes);
+                        retrievedEvent.startDate = DateTime.Parse(changes);
                         changeTarget = (from el in eventRetrieve.Descendants("start")
-                           select el).Last();
-                        changeTarget.Value = retrievedEvent.StartDate.ToString();
-                        await Context.Channel.SendMessageAsync($"The start date of the event \"{name}\" has been changed to {changes}");
+                                        select el).Last();
+                        changeTarget.Value = retrievedEvent.startDate.ToString();
+                        await Context.Channel.SendMessageAsync($"The start date of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
                         break;
                     case "end":
-                        retrievedEvent.EndDate = DateTime.Parse(changes);
+                        retrievedEvent.endDate = DateTime.Parse(changes);
                         changeTarget = (from el in eventRetrieve.Descendants("end")
                                         select el).Last();
-                        changeTarget.Value = retrievedEvent.EndDate.ToString();
-                        await Context.Channel.SendMessageAsync($"The end date of the event \"{name}\" has been changed to {changes}");
+                        changeTarget.Value = retrievedEvent.endDate.ToString();
+                        await Context.Channel.SendMessageAsync($"The end date of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
                         break;
                     case "type":
                         retrievedEvent.type = changes;
                         changeTarget = (from el in eventRetrieve.Descendants("type")
                                         select el).Last();
                         changeTarget.Value = retrievedEvent.type;
-                        await Context.Channel.SendMessageAsync($"The type of the event \"{name}\" has been changed to {changes}");
+                        await Context.Channel.SendMessageAsync($"The type of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
                         break;
                     case "description":
-                        retrievedEvent.Description = changes;
+                        retrievedEvent.description = changes;
                         changeTarget = (from el in eventRetrieve.Descendants("description")
                                         select el).Last();
-                        changeTarget.Value = retrievedEvent.Description;
-                        await Context.Channel.SendMessageAsync($"The description of the event \"{name}\" has been changed to {changes}");
+                        changeTarget.Value = retrievedEvent.description;
+                        await Context.Channel.SendMessageAsync($"The description of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
                         break;
                     case "remindermin":
                     case "reminder":
                         if (int.TryParse(changes, out intChange))
                         {
-                            retrievedEvent.ReminderMinutes = intChange;
+                            retrievedEvent.reminderMinutes = intChange;
                             changeTarget = (from el in eventRetrieve.Descendants("reminder")
                                             select el).Last();
-                            changeTarget.Value = retrievedEvent.ReminderMinutes.ToString();
+                            changeTarget.Value = retrievedEvent.reminderMinutes.ToString();
                         }
-                        await Context.Channel.SendMessageAsync($"The reminder option of the event \"{name}\" has been changed to {changes} minutes");
+                        await Context.Channel.SendMessageAsync($"The reminder option of the event \"{name}\" has been changed to {changes} minutes").ConfigureAwait(false);
                         break;
                     case "reminderhrs":
                         if (int.TryParse(changes, out intChange))
                         {
-                            retrievedEvent.ReminderHours = intChange;
+                            retrievedEvent.reminderHours = intChange;
                             changeTarget = (from el in eventRetrieve.Descendants("reminder")
                                             select el).Last();
-                            changeTarget.Value = retrievedEvent.ReminderMinutes.ToString();
+                            changeTarget.Value = retrievedEvent.reminderMinutes.ToString();
                         }
-                        await Context.Channel.SendMessageAsync($"The reminder option of the event \"{name}\" has been changed to {changes} hours");
+                        await Context.Channel.SendMessageAsync($"The reminder option of the event \"{name}\" has been changed to {changes} hours").ConfigureAwait(false);
                         break;
                     case "repeat":
-                        retrievedEvent.Repeat = changes;
+                        retrievedEvent.repeat = changes;
                         changeTarget = (from el in eventRetrieve.Descendants("repeat")
                                         select el).Last();
-                        changeTarget.Value = retrievedEvent.Repeat;
-                        await Context.Channel.SendMessageAsync($"The repeat option of the event \"{name}\" has been changed to {changes}");
+                        changeTarget.Value = retrievedEvent.repeat;
+                        await Context.Channel.SendMessageAsync($"The repeat option of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
                         break;
                     case "mentions":
-                        retrievedEvent.Mentions = changes;
+                        retrievedEvent.mentions = changes;
                         changeTarget = (from el in eventRetrieve.Descendants("mentions")
                                         select el).Last();
-                        changeTarget.Value = retrievedEvent.Mentions;
-                        await Context.Channel.SendMessageAsync($"The mentions option of the event \"{name}\" has been changed to {changes}");
+                        changeTarget.Value = retrievedEvent.mentions;
+                        await Context.Channel.SendMessageAsync($"The mentions option of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
                         break;
                     default:
-                        await Context.Channel.SendMessageAsync("Error: No field found with that name");
+                        await Context.Channel.SendMessageAsync("Error: No field found with that name").ConfigureAwait(false);
                         break;
                 }
                 globals.commandStorage.Save(globals.storageFilePath);
             }
             else
             {
-                await Context.Channel.SendMessageAsync("Error: No command found with that name");
+                await Context.Channel.SendMessageAsync("Error: No command found with that name").ConfigureAwait(false);
             }
         }
 
@@ -915,15 +920,14 @@ namespace HavocBot
                 nickname = Context.User.Username;
             }
             string id = "<@" + Context.User.Id.ToString() + ">";
-            
-            botEvents retrievedEvent;
-            if (globals.getEvent(name, out retrievedEvent))
+
+            if (globals.getEvent(name, out botEvents retrievedEvent))
             {
                 bool toggle = false;
-                
-                if (retrievedEvent.RSVPs != null)
+
+                if (retrievedEvent.rSVPs != null)
                 {
-                    toggle = retrievedEvent.RSVPs.Contains(nickname);
+                    toggle = retrievedEvent.rSVPs.Contains(nickname);
                 }
                 if (toggle)
                 {
@@ -948,7 +952,7 @@ namespace HavocBot
                     rsvp.Value = retrievedEvent.saveRSVPs();
 
                     globals.commandStorage.Save(globals.storageFilePath);
-                    await Context.Channel.SendMessageAsync($"You have sucessfully removed your RSVP for the event {name}");
+                    await Context.Channel.SendMessageAsync($"You have sucessfully removed your RSVP for the event {name}").ConfigureAwait(false);
                 }
                 else
                 {
@@ -963,7 +967,7 @@ namespace HavocBot
                                     select el;
 
                     XElement rsvp = (from el in eventRetrieve.Descendants("rsvps")
-                                         select el).Last();
+                                     select el).Last();
 
                     rsvp.Value = retrievedEvent.allRSVPs();
 
@@ -973,12 +977,12 @@ namespace HavocBot
                     rsvp.Value = retrievedEvent.saveRSVPs();
 
                     globals.commandStorage.Save(globals.storageFilePath);
-                    await Context.Channel.SendMessageAsync($"You have successfully RSVP'd for the event {name}");
+                    await Context.Channel.SendMessageAsync($"You have successfully RSVP'd for the event {name}").ConfigureAwait(false);
                 }
             }
             else
             {
-                await Context.Channel.SendMessageAsync("Error: No command found with that name");
+                await Context.Channel.SendMessageAsync("Error: No command found with that name").ConfigureAwait(false);
             }
         }
 
@@ -997,7 +1001,7 @@ namespace HavocBot
             {
                 listEmbed.AddField(item.Key, $"Starts at: {item.Value}");
             }
-            await Context.Channel.SendMessageAsync("displaying all events", false, listEmbed.Build());
+            await Context.Channel.SendMessageAsync("displaying all events", false, listEmbed.Build()).ConfigureAwait(false);
         }
     }
 
@@ -1018,7 +1022,7 @@ namespace HavocBot
         public async Task setTargetChannel()
         {
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setTarget"} by {Context.User.Username}");
-            await storeTarget((Context.Channel.Id));
+            await storeTarget((Context.Channel.Id)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1028,8 +1032,8 @@ namespace HavocBot
         /// <returns>returns task complete</returns>
         public async Task storeTarget(ulong target)
         {
-            await Task.Run(() => globals.changeTarget(target));
-            await ReplyAsync("This channel will now recieve event announcments.");
+            await Task.Run(() => globals.changeTarget(target)).ConfigureAwait(false);
+            await ReplyAsync("This channel will now recieve event announcments.").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1042,7 +1046,7 @@ namespace HavocBot
         public async Task setTargetEventChannel()
         {
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setEventTarget"} by {Context.User.Username}");
-            await storeEventTarget((Context.Channel.Id));
+            await storeEventTarget((Context.Channel.Id)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1052,8 +1056,8 @@ namespace HavocBot
         /// <returns>returns task complete</returns>
         public async Task storeEventTarget(ulong target)
         {
-            await Task.Run(() => globals.changeEventTarget(target));
-            await ReplyAsync("This channel will now recieve event announcments.");
+            await Task.Run(() => globals.changeEventTarget(target)).ConfigureAwait(false);
+            await ReplyAsync("This channel will now recieve event announcments.").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1067,7 +1071,7 @@ namespace HavocBot
         [Summary("Sets upcoming maintenance")]
         public async Task setMaint([Summary("Start date of maintenance")] string start, [Summary("End date of maintenance")] string end, [Remainder][Summary("Patch for maintenance")] string patch)
         {
-            await storeMaint(start, end, patch);
+            await storeMaint(start, end, patch).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1102,7 +1106,7 @@ namespace HavocBot
 
             globals.commandStorage.Save(globals.storageFilePath);
 
-            await ReplyAsync("Maitenance has successfully been added");
+            await ReplyAsync("Maitenance has successfully been added").ConfigureAwait(false);
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: setmaint"} by {Context.User.Username}");
         }
 
@@ -1116,7 +1120,7 @@ namespace HavocBot
         public async Task setStatus([Remainder][Summary("Status to be set to the bot")] string status)
         {
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setStatus"} by {Context.User.Username}");
-            await storeStatusMessage(status);
+            await storeStatusMessage(status).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1126,8 +1130,8 @@ namespace HavocBot
         /// <returns></returns>
         public async Task storeStatusMessage(string status)
         {
-            await Task.Run(() => globals.changeStatus(status));
-            await ReplyAsync("The bot status has been changed");
+            await Task.Run(() => globals.changeStatus(status)).ConfigureAwait(false);
+            await ReplyAsync("The bot status has been changed").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1139,7 +1143,7 @@ namespace HavocBot
         public async Task showDownTime()
         {
             Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: startbotdowntime"} by {Context.User.Username}");
-            await Task.Run(() => HavocBot.showDownTime());
+            await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
         }
     }
 }

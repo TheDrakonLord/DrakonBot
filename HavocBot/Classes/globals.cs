@@ -43,7 +43,7 @@ namespace HavocBot
         /// <summary>
         /// lists all active events
         /// </summary>
-        public static List<botEvents> EventsList = new List<botEvents>();
+        public static List<botEvents> eventsList = new List<botEvents>();
         
         /// <summary>
         /// holds the file path for the current directory
@@ -68,12 +68,12 @@ namespace HavocBot
         /// <summary>
         /// Status message the bot displays on the server
         /// </summary>
-        public static string StatusMessage = "Hello There";
+        public static string statusMessage = "Hello There";
 
         /// <summary>
         /// holds the api commands for accessing the lodestone
         /// </summary>
-        public static lodestone LodestoneAPI = new lodestone();
+        public static lodestone lodestoneAPI = new lodestone();
 
         /// <summary>
         /// 
@@ -86,24 +86,25 @@ namespace HavocBot
         /// <param name="storedEvent">The botEvents to be stored in the xml file</param>
         public static void storeEvent(botEvents storedEvent)
         {
+            System.Diagnostics.Contracts.Contract.Requires(storedEvent != null);
             //store the data in the xml file
             commandStorage.Element("events").Add(new XElement("event",
                     new XAttribute("sid", storedEvent.storageID.ToString()),
                         new XElement("name", storedEvent.name),
                         new XElement("type", storedEvent.type),
-                        new XElement("description", storedEvent.Description),
-                        new XElement("start", storedEvent.StartDate),
-                        new XElement("end", storedEvent.EndDate),
-                        new XElement("reminder", storedEvent.ReminderMinutes),
-                        new XElement("repeat", storedEvent.Repeat),
-                        new XElement("mentions", storedEvent.Mentions),
+                        new XElement("description", storedEvent.description),
+                        new XElement("start", storedEvent.startDate),
+                        new XElement("end", storedEvent.endDate),
+                        new XElement("reminder", storedEvent.reminderMinutes),
+                        new XElement("repeat", storedEvent.repeat),
+                        new XElement("mentions", storedEvent.mentions),
                         new XElement("rsvps", storedEvent.allRSVPs()),
                         new XElement("rsvpids", storedEvent.allRSVPIDs()),
-                        new XElement("author", storedEvent.Author),
-                        new XElement("authorURL", storedEvent.AuthorURL)
+                        new XElement("author", storedEvent.author),
+                        new XElement("authorURL", storedEvent.authorURL)
                         ));
             //add the event to the event calendar
-            eventCalendar.Add(storedEvent.name, storedEvent.StartDate);
+            eventCalendar.Add(storedEvent.name, storedEvent.startDate);
             //Save the tree to the file
             commandStorage.Save(storageFilePath);
         }
@@ -140,7 +141,7 @@ namespace HavocBot
         /// <param name="status">status to be set to the bot</param>
         public static void changeStatus(string status)
         {
-            StatusMessage = status;
+            statusMessage = status;
 
             commandStorage.Element("settings").Element("StatusMessage").SetValue(status);
 
@@ -202,15 +203,18 @@ namespace HavocBot
                 string testAuthorURL = (string)
                     (from el in eventRetrieve.Descendants("authorURL")
                      select el).Last();
-                retrievedEvent = new botEvents(testName, DateTime.Parse(testStart), DateTime.Parse(testEnd), globals.commandStorage);
-                retrievedEvent.type = testtype;
-                retrievedEvent.Description = testDescription;
-                retrievedEvent.ReminderMinutes = int.Parse(testReminder);
-                retrievedEvent.Repeat = testRepeat;
-                retrievedEvent.Mentions = testMentions;
+                retrievedEvent = new botEvents(testName, DateTime.Parse(testStart), DateTime.Parse(testEnd), globals.commandStorage)
+                {
+                    type = testtype,
+                    description = testDescription,
+                    reminderMinutes = int.Parse(testReminder),
+                    repeat = testRepeat,
+                    mentions = testMentions
+                };
                 retrievedEvent.importRSVPs(testRsvps, testRsvpIDs);
-                retrievedEvent.Author = testAuthor;
-                retrievedEvent.AuthorURL = testAuthorURL;
+                retrievedEvent.author = testAuthor;
+                Uri.TryCreate(testAuthorURL, UriKind.RelativeOrAbsolute, out Uri uriResult);
+                retrievedEvent.authorURL = uriResult;
                 return true;
             }
             catch (InvalidOperationException)
@@ -230,6 +234,7 @@ namespace HavocBot
         /// <returns>Completed embed</returns>
         public static EmbedBuilder generateEventEmbed(botEvents retrievedEvent)
         {
+            System.Diagnostics.Contracts.Contract.Requires(retrievedEvent != null);
             //create an embed based off of the loaded event
             EmbedBuilder eventEmbed = new EmbedBuilder()
             {
@@ -237,17 +242,17 @@ namespace HavocBot
             };
             eventEmbed.AddField("Event Name", retrievedEvent.name, true);
             eventEmbed.AddField("Event Type", retrievedEvent.type, true);
-            eventEmbed.AddField("Description", retrievedEvent.Description, false);
-            eventEmbed.AddField("Start Date", retrievedEvent.StartDate.ToString(), true);
-            eventEmbed.AddField("End Date", retrievedEvent.EndDate.ToString(), true);
-            eventEmbed.AddField("Reminder", retrievedEvent.ReminderMinutes.ToString(), true);
-            eventEmbed.AddField("Repeat", retrievedEvent.Repeat, true);
-            eventEmbed.AddField("Mentions", retrievedEvent.Mentions, true);
+            eventEmbed.AddField("Description", retrievedEvent.description, false);
+            eventEmbed.AddField("Start Date", retrievedEvent.startDate.ToString(), true);
+            eventEmbed.AddField("End Date", retrievedEvent.endDate.ToString(), true);
+            eventEmbed.AddField("Reminder", retrievedEvent.reminderMinutes.ToString(), true);
+            eventEmbed.AddField("Repeat", retrievedEvent.repeat, true);
+            eventEmbed.AddField("Mentions", retrievedEvent.mentions, true);
             eventEmbed.AddField("RSVPs", retrievedEvent.allRSVPs(), true);
-            eventEmbed.WithAuthor(retrievedEvent.Author, retrievedEvent.AuthorURL, null);
+            eventEmbed.WithAuthor(retrievedEvent.author, retrievedEvent.authorURL.ToString(), null);
             eventEmbed.WithCurrentTimestamp();
             eventEmbed.WithColor(Color.Red);
-            eventEmbed.WithThumbnailUrl(retrievedEvent.TypeImagePath);
+            eventEmbed.WithThumbnailUrl(retrievedEvent.typeImagePath);
 
             return eventEmbed;
         }

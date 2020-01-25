@@ -34,7 +34,7 @@ namespace HavocBot
         /// En umeration for the various types of events.
         /// </summary>
         /// <remarks>Public to enable use of enum as a property</remarks>
-        public enum types
+        public enum eventType
         {
             /// <summary>The Default case. enables the use of OtherTypes poperty which accepts custom user input</summary>
             other,
@@ -68,11 +68,11 @@ namespace HavocBot
             movie
         };
         // Event type
-        private types _type = types.other;
+        private eventType _type = eventType.other;
         // custom string for "other" type events
         private string _otherType = "Other";
         //load image paths
-        private IEnumerable<XElement> _imageRetrieve;
+        private readonly IEnumerable<XElement> _imageRetrieve;
         // file path of the image for the current event type
         private string _typeImagePath;
         //Description
@@ -112,7 +112,7 @@ namespace HavocBot
         //author
         private string _author = "HavocBot";
         //author Avatar
-        private string _authorURL = null;
+        private System.Uri _authorURL = null;
 
         /// <summary>
         /// Default Constructor
@@ -123,6 +123,7 @@ namespace HavocBot
         /// <param name="cStore">Passes the current command storage tree</param>
         public botEvents(string name, DateTime start, DateTime end, XElement cStore)
         {
+            System.Diagnostics.Contracts.Contract.Requires(cStore != null);
             _name = name;
             _startDate = start;
             _endDate = end;
@@ -155,13 +156,11 @@ namespace HavocBot
         {
             get
             {
-                switch (_type)
+                return _type switch
                 {
-                    case types.other:
-                        return _otherType;
-                    default:
-                        return _type.ToString();
-                }
+                    eventType.other => _otherType,
+                    _ => _type.ToString(),
+                };
             }
 
             set
@@ -169,91 +168,91 @@ namespace HavocBot
                 switch (value)
                 {
                     case "dungeon":
-                        _type = types.dungeon;
+                        _type = eventType.dungeon;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("dungeon")
                              select el).First();
                         break;
                     case "trial":
-                        _type = types.trial;
+                        _type = eventType.trial;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("trial")
                              select el).First();
                         break;
                     case "raid":
-                        _type = types.raid;
+                        _type = eventType.raid;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("raid")
                              select el).First();
                         break;
                     case "alliance":
-                        _type = types.alliance;
+                        _type = eventType.alliance;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "extreme":
-                        _type = types.extreme;
+                        _type = eventType.extreme;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "savage":
-                        _type = types.savage;
+                        _type = eventType.savage;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "ultimate":
-                        _type = types.ultimate;
+                        _type = eventType.ultimate;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("HighEnd")
                              select el).First();
                         break;
                     case "maps":
-                        _type = types.maps;
+                        _type = eventType.maps;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("maps")
                              select el).First();
                         break;
                     case "hunts":
-                        _type = types.hunts;
+                        _type = eventType.hunts;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("hunts")
                              select el).First();
                         break;
                     case "deepDungeon":
-                        _type = types.deepDungeon;
+                        _type = eventType.deepDungeon;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("potd")
                              select el).First();
                         break;
                     case "fates":
-                        _type = types.fates;
+                        _type = eventType.fates;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("fates")
                              select el).First();
                         break;
                     case "gates":
-                        _type = types.gates;
+                        _type = eventType.gates;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("gates")
                              select el).First();
                         break;
                     case "jackbox":
-                        _type = types.jackbox;
+                        _type = eventType.jackbox;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("jackbox")
                              select el).First();
                         break;
                     case "movie":
-                        _type = types.movie;
+                        _type = eventType.movie;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("movie")
                              select el).First();
                         break;
                     default:
-                        _type = types.other;
+                        _type = eventType.other;
                         _otherType = value;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("other")
@@ -268,7 +267,7 @@ namespace HavocBot
         /// </summary>
         /// <remarks>Accepts types enums</remarks>
         /// <returns>Returns types enums</returns>
-        public types TypeEnum
+        public eventType typeEnum
         {
             get { return _type; }
             set { _type = value; }
@@ -277,7 +276,7 @@ namespace HavocBot
         /// <summary>
         /// property for description
         /// </summary>
-        public string Description
+        public string description
         {
             get { return _description; }
             set { _description = value; }
@@ -286,7 +285,7 @@ namespace HavocBot
         /// <summary>
         /// property for start date
         /// </summary>
-        public DateTime StartDate
+        public DateTime startDate
         {
             get { return _startDate; }
             set { _startDate = value; }
@@ -295,7 +294,7 @@ namespace HavocBot
         /// <summary>
         /// property for end date
         /// </summary>
-        public DateTime EndDate
+        public DateTime endDate
         {
             get { return _endDate; }
             set { _endDate = value; }
@@ -304,7 +303,7 @@ namespace HavocBot
         /// <summary>
         /// property for getting and setting reminder time in minutes
         /// </summary>
-        public int ReminderMinutes
+        public int reminderMinutes
         {
             get { return _reminder; }
             set { _reminder = value; }
@@ -313,7 +312,7 @@ namespace HavocBot
         /// <summary>
         /// property for getting and setting reminder time converted to/from hours
         /// </summary>
-        public double ReminderHours
+        public double reminderHours
         {
             get { return _reminder / 60; }
             set { _reminder = (int)value * 60; }
@@ -322,67 +321,45 @@ namespace HavocBot
         /// <summary>
         /// property for repeat
         /// </summary>
-        public string Repeat
+        public string repeat
         {
             get { return _repeat.ToString(); }
             set
             {
-                switch (value)
+                _repeat = value switch
                 {
-                    case "hourly":
-                        _repeat = repeatTypes.hourly;
-                        break;
-                    case "daily":
-                        _repeat = repeatTypes.daily;
-                        break;
-                    case "weekly":
-                        _repeat = repeatTypes.weekly;
-                        break;
-                    case "monthly":
-                        _repeat = repeatTypes.monthly;
-                        break;
-                    case "quarterly":
-                        _repeat = repeatTypes.quarterly;
-                        break;
-                    case "semiannually":
-                        _repeat = repeatTypes.semiannually;
-                        break;
-                    case "annually":
-                        _repeat = repeatTypes.annually;
-                        break;
-                    case "biannually":
-                        _repeat = repeatTypes.biannually;
-                        break;
-                    default:
-                        _repeat = repeatTypes.none;
-                        break;
-                }
+                    "hourly" => repeatTypes.hourly,
+                    "daily" => repeatTypes.daily,
+                    "weekly" => repeatTypes.weekly,
+                    "monthly" => repeatTypes.monthly,
+                    "quarterly" => repeatTypes.quarterly,
+                    "semiannually" => repeatTypes.semiannually,
+                    "annually" => repeatTypes.annually,
+                    "biannually" => repeatTypes.biannually,
+                    _ => repeatTypes.none,
+                };
             }
         }
 
         /// <summary>
         /// property for mentions
         /// </summary>
-        public string Mentions
+        public string mentions
         {
             get
             {
-                switch (_mentions)
+                return _mentions switch
                 {
-                    case mentionOptions.none:
-                        return "N/A";
-                    case mentionOptions.rsvp:
-                        return "rsvp";
-                    case mentionOptions.fcMembers:
-                        return "<@&473181362879332382>";
-                    case mentionOptions.Everyone:
-                        return "<@&236955200311525377>";
-                    default:
-                        return "N/A";
-                }
+                    mentionOptions.none => "N/A",
+                    mentionOptions.rsvp => "rsvp",
+                    mentionOptions.fcMembers => "<@&473181362879332382>",
+                    mentionOptions.Everyone => "<@&236955200311525377>",
+                    _ => "N/A",
+                };
             }
             set
             {
+                System.Diagnostics.Contracts.Contract.Requires(value != null);
                 switch (value.ToLower())
                 {
                     case "none":
@@ -413,10 +390,9 @@ namespace HavocBot
         /// <summary>
         /// Property for assigning or retrieving the entire list of RSVPs
         /// </summary>
-        public List<string> RSVPs
+        public List<string> rSVPs
         {
             get { return _rsvps; }
-            set { _rsvps = value; }
         }
 
         /// <summary>
@@ -474,11 +450,12 @@ namespace HavocBot
         /// <param name="idList">the ids of the users</param>
         public void importRSVPs(string rsvpList, string idList)
         {
+            System.Diagnostics.Contracts.Contract.Requires(rsvpList != null);
+            System.Diagnostics.Contracts.Contract.Requires(idList != null);
             if (!rsvpList.Equals("N/A"))
             {
                 string tempString = rsvpList;
                 _rsvps = tempString.Split(',').ToList();
-                tempString = "";
                 tempString = idList;
                 tempString = tempString.Replace(" ", "");
                 _rsvpID = tempString.Split(',').ToList();
@@ -510,7 +487,7 @@ namespace HavocBot
         /// <summary>
         /// sets or gets the image path for the type image icons
         /// </summary>
-        public string TypeImagePath
+        public string typeImagePath
         {
             get { return _typeImagePath; }
             set { _typeImagePath = value; }
@@ -519,7 +496,7 @@ namespace HavocBot
         /// <summary>
         /// Sets or gets the author of the event
         /// </summary>
-        public string Author
+        public string author
         {
             get { return _author; }
             set { _author = value; }
@@ -528,7 +505,7 @@ namespace HavocBot
         /// <summary>
         /// sets or gets the URL of the author's avatar
         /// </summary>
-        public string AuthorURL
+        public System.Uri authorURL
         {
             get { return _authorURL; }
             set { _authorURL = value; }

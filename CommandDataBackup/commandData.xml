@@ -149,7 +149,7 @@
       <end>2019-11-08T22:00:00</end>
       <reminder>0</reminder>
       <repeat>none</repeat>
-      <mentions>rsvp</mentions>
+      <mentions>&lt;@&amp;473181362879332382&gt;</mentions>
       <rsvps>N/A</rsvps>
       <rsvpids>N/A</rsvpids>
       <author>TheDrakonLord</author>
@@ -159,6 +159,7 @@
   <settings>
     <TargetChannel>497532090670383135</TargetChannel>
     <TargetEventChannel>397568096610549771</TargetEventChannel>
+    <StatusMessage>Patch 5.2 Hype</StatusMessage>
   </settings>
   <images>
     <eventType>
@@ -256,11 +257,21 @@
       <name>Lali Tribal</name>
       <server>Exodus (Primal)</server>
     </Lali>
+    <Exodus00FF userId="238495839301926915">
+      <id>8714958</id>
+      <name>Palaene Rhel</name>
+      <server>Exodus (Primal)</server>
+    </Exodus00FF>
+    <NathanKing userId="264872323675324416">
+      <id>27638816</id>
+      <name>Nathan King</name>
+      <server>Exodus (Primal)</server>
+    </NathanKing>
   </characters>
   <maintenance>
-    <maint patch="5.11">
-      <start>11/12/2019 00:00:00</start>
-      <end>11/12/2019 04:00:00</end>
+    <maint patch="5.15">
+      <start>12/09/2019 21:00:00</start>
+      <end>12/10/2019 04:00:00</end>
     </maint>
   </maintenance>
   <codes>
@@ -278,5 +289,26 @@
       <nin3ds>N/A</nin3ds>
       <steam>Sui Godo</steam>
     </SimplySui>
+    <Exodus00FF>
+      <psn>N/A</psn>
+      <xbox>jengawocky</xbox>
+      <switch>sw-1948-9169-2097</switch>
+      <nin3ds>N/A</nin3ds>
+      <steam>exodus00ff</steam>
+    </Exodus00FF>
+    <Bink>
+      <psn>N/A</psn>
+      <xbox>N/A</xbox>
+      <switch>sw-5712-4217-7707</switch>
+      <nin3ds>N/A</nin3ds>
+      <steam>N/A</steam>
+    </Bink>
+    <lunatic>
+      <psn>N/A</psn>
+      <xbox>N/A</xbox>
+      <switch>SW-1518-3988-0097</switch>
+      <nin3ds>N/A</nin3ds>
+      <steam>N/A</steam>
+    </lunatic>
   </codes>
 </root>
