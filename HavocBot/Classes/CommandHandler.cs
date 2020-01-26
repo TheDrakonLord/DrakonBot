@@ -31,7 +31,7 @@ namespace HavocBot
     /// <summary>
     /// Provides the framework for handling commands recieved from the user
     /// </summary>
-    public class CommandHandler
+    public class commandHandler
     {
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commands;
@@ -41,7 +41,7 @@ namespace HavocBot
         /// </summary>
         /// <param name="client">the discord client</param>
         /// <param name="commands">the command service</param>
-        public CommandHandler(DiscordSocketClient client, CommandService commands)
+        public commandHandler(DiscordSocketClient client, CommandService commands)
         {
             _commands = commands;
             _client = client;
@@ -51,10 +51,10 @@ namespace HavocBot
         /// Identifies and loads the known commands
         /// </summary>
         /// <returns>returns task complete</returns>
-        public async Task InstallCommandsAsync()
+        public async Task installCommandsAsync()
         {
             // Hook the MessageReceived event into our command handler
-            _client.MessageReceived += HandleCommandAsync;
+            _client.MessageReceived += handleCommandAsync;
 
             // Here we discover all of the command modules in the entry 
             // assembly and load them. Starting from Discord.NET 2.0, a
@@ -65,7 +65,7 @@ namespace HavocBot
             // If you do not use Dependency Injection, pass null.
             // See Dependency Injection guide for more information.
             await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(),
-                                            services: null);
+                                            services: null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -73,33 +73,32 @@ namespace HavocBot
         /// </summary>
         /// <param name="messageParam">message recieved form the server</param>
         /// <returns>returns task complete</returns>
-        private async Task HandleCommandAsync(SocketMessage messageParam)
+        private async Task handleCommandAsync(SocketMessage messageParam)
         {
             // Don't process the command if it was a system message
-            var message = messageParam as SocketUserMessage;
-            if (message == null) return;
+            if (messageParam as SocketUserMessage == null) return;
 
             // Create a number to track where the prefix ends and the command begins
             int argPos = 0;
 
             // Determine if the message is a command based on the prefix and make sure no bots trigger commands
-            if (!(message.HasCharPrefix('!', ref argPos) ||
-                message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
-                message.Author.IsBot)
+            if (!((messageParam as SocketUserMessage).HasCharPrefix('!', ref argPos) ||
+                (messageParam as SocketUserMessage).HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
+(messageParam as SocketUserMessage).Author.IsBot)
                 return;
 
             // Create a WebSocket-based command context based on the message
-            var context = new SocketCommandContext(_client, message);
+            var context = new SocketCommandContext(_client, messageParam as SocketUserMessage);
 
             // Execute the command with the command context we just
             // created, along with the service provider for precondition checks.
             await _commands.ExecuteAsync(
                 context: context,
                 argPos: argPos,
-                services: null);
+                services: null).ConfigureAwait(false);
 
             //log the command recieve in the log
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command",-11} {message}");
+            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command",-11} {messageParam as SocketUserMessage}");
         }
     }
 }

@@ -42,7 +42,7 @@ namespace HavocBot
     /// </summary>
     public class lodestone
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         /// <summary>
         /// Default Constructor
@@ -61,12 +61,15 @@ namespace HavocBot
         /// <returns></returns>
         public async Task getCharacter(string name, string server, SocketCommandContext context)
         {
+            System.Diagnostics.Contracts.Contract.Requires(name != null);
+            System.Diagnostics.Contracts.Contract.Requires(context != null);
             try
             {
 
            
             string strName = name.Replace(" ", "+");
-            HttpResponseMessage req = await _client.GetAsync($"https://xivapi.com/character/search?name={strName}&server={server}");
+                Uri.TryCreate($"https://xivapi.com/character/search?name={strName}&server={server}", UriKind.RelativeOrAbsolute, out Uri uriResult);
+            HttpResponseMessage req = await _client.GetAsync(uriResult).ConfigureAwait(false);
             dynamic character = JsonConvert.DeserializeObject(
             req.Content.ReadAsStringAsync().Result
             );
@@ -90,7 +93,7 @@ namespace HavocBot
             charEmbed.WithColor(Color.Green);
 
             //display the loaded event to the user
-            await context.Channel.SendMessageAsync("Saving Character", false, charEmbed.Build());
+            await context.Channel.SendMessageAsync("Saving Character", false, charEmbed.Build()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -106,7 +109,7 @@ namespace HavocBot
         /// <returns></returns>
         public async Task showCharacter(SocketCommandContext context)
         {
-            ulong charId;
+            System.Diagnostics.Contracts.Contract.Requires(context != null);
             string charName;
             string charServer;
             string charTitle;
@@ -135,7 +138,7 @@ namespace HavocBot
                  (from el in charRetrieve.Descendants("id")
                   select el).Last();
 
-                if (ulong.TryParse(strCharId, out charId)) { }
+                if (ulong.TryParse(strCharId, out ulong charId)) { }
                 
                 charName = (string)
                  (from el in charRetrieve.Descendants("name")
@@ -145,7 +148,8 @@ namespace HavocBot
                  (from el in charRetrieve.Descendants("server")
                   select el).Last();
 
-                HttpResponseMessage req = await _client.GetAsync($"https://xivapi.com/character/{charId}");
+                Uri.TryCreate($"https://xivapi.com/character/{charId}", UriKind.RelativeOrAbsolute, out Uri uriResult);
+                HttpResponseMessage req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 dynamic character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
@@ -158,21 +162,24 @@ namespace HavocBot
                 charFcId = character.Character.FreeCompanyId;
                 charPortrait = character.Character.Portrait;
 
-                req = await _client.GetAsync($"https://xivapi.com/freecompany/{charFcId}");
+                Uri.TryCreate($"https://xivapi.com/freecompany/{charFcId}", UriKind.RelativeOrAbsolute, out uriResult);
+                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
 
                 charFC = character.FreeCompany.Name;
 
-                req = await _client.GetAsync($"https://xivapi.com/title/{charTitleId}");
+                Uri.TryCreate($"https://xivapi.com/title/{charTitleId}", UriKind.RelativeOrAbsolute, out uriResult);
+                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
 
                 charTitle = character.Name;
 
-                req = await _client.GetAsync($"https://xivapi.com/race/{charRaceId}");
+                Uri.TryCreate($"https://xivapi.com/race/{charRaceId}", UriKind.RelativeOrAbsolute, out uriResult);
+                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
@@ -190,12 +197,12 @@ namespace HavocBot
                 charEmbed.WithColor(Color.Red);
 
                 //display the loaded event to the user
-                await context.Channel.SendMessageAsync("Displaying Character", false, charEmbed.Build());
+                await context.Channel.SendMessageAsync("Displaying Character", false, charEmbed.Build()).ConfigureAwait(false);
 
             }
             catch (Exception ex)
             {
-                await context.Channel.SendMessageAsync("Error: No Character Found", false);
+                await context.Channel.SendMessageAsync("Error: No Character Found", false).ConfigureAwait(false);
                 Console.WriteLine(ex.Message);
                 throw;
             }
@@ -209,7 +216,7 @@ namespace HavocBot
         /// <returns></returns>
         public async Task showCharacter(SocketCommandContext context, string userid)
         {
-            ulong charId;
+            System.Diagnostics.Contracts.Contract.Requires(context != null);
             string charName;
             string charServer;
             string charTitle;
@@ -222,11 +229,11 @@ namespace HavocBot
             string charTitleId;
             string charRaceId;
             string charPortrait;
-            ulong ulongId;
             SocketGuildUser user = null;
 
-            if (ulong.TryParse(userid, out ulongId))
+            if (ulong.TryParse(userid, out ulong ulongId))
             {
+                
                 user = context.Guild.GetUser(ulongId);
             }
             
@@ -247,7 +254,7 @@ namespace HavocBot
                  (from el in charRetrieve.Descendants("id")
                   select el).First();
 
-                if (ulong.TryParse(strCharId, out charId)) { }
+                if (ulong.TryParse(strCharId, out ulong charId)) { }
 
                 charName = (string)
                  (from el in charRetrieve.Descendants("name")
@@ -257,7 +264,8 @@ namespace HavocBot
                  (from el in charRetrieve.Descendants("server")
                   select el).First();
 
-                HttpResponseMessage req = await _client.GetAsync($"https://xivapi.com/character/{charId}");
+                Uri.TryCreate($"https://xivapi.com/character/{charId}", UriKind.RelativeOrAbsolute, out Uri uriResult);
+                HttpResponseMessage req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 dynamic character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
@@ -270,21 +278,25 @@ namespace HavocBot
                 charFcId = character.Character.FreeCompanyId;
                 charPortrait = character.Character.Portrait;
 
-                req = await _client.GetAsync($"https://xivapi.com/freecompany/{charFcId}");
+                Uri.TryCreate($"https://xivapi.com/freecompany/{charFcId}", UriKind.RelativeOrAbsolute, out uriResult);
+
+                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
 
                 charFC = character.FreeCompany.Name;
 
-                req = await _client.GetAsync($"https://xivapi.com/title/{charTitleId}");
+                Uri.TryCreate($"https://xivapi.com/title/{charTitleId}", UriKind.RelativeOrAbsolute, out uriResult);
+                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
 
                 charTitle = character.Name;
 
-                req = await _client.GetAsync($"https://xivapi.com/race/{charRaceId}");
+                Uri.TryCreate($"https://xivapi.com/race/{charRaceId}", UriKind.RelativeOrAbsolute, out uriResult);
+                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
@@ -302,12 +314,12 @@ namespace HavocBot
                 charEmbed.WithColor(Color.Red);
 
                 //display the loaded event to the user
-                await context.Channel.SendMessageAsync("Displaying Character", false, charEmbed.Build());
+                await context.Channel.SendMessageAsync("Displaying Character", false, charEmbed.Build()).ConfigureAwait(false);
 
             }
             catch (Exception ex)
             {
-                await context.Channel.SendMessageAsync("Error: No Character Found", false);
+                await context.Channel.SendMessageAsync("Error: No Character Found", false).ConfigureAwait(false);
                 Console.WriteLine(ex.Message);
                 throw;
             }

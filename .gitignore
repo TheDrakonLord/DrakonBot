@@ -340,3 +340,5 @@ ASALocalRun/
 healthchecksdb
 /HavocBot/commandData.xml
 /HavocBot/token.txt
+/HavocBot/TestOut.txt
+/HavocBot/CommandDataBackup/commandData.xml

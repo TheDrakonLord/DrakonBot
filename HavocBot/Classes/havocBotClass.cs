@@ -41,30 +41,30 @@ namespace HavocBot
     /// Main class for the havoc bot. initializes the command handler and service as well as the client.
     /// also contains methods for the announcing of events.
     /// </summary>
-    public class HavocBot
+    public sealed class havocBotClass
     {
         //declare necessary variables
         private static DiscordSocketClient _client;
-        private CommandHandler _cHandler;
+        private commandHandler _cHandler;
         private CommandService _cService;
-        private static IMessageChannel mainChannel;
-        private static IMessageChannel utilityChannel;
+        private static IMessageChannel _mainChannel;
+        private static IMessageChannel _utilityChannel;
 
         /// <summary>
         /// The main asyncronous method. this must be run asyncronously or it will not function
         /// </summary>
         /// <returns></returns>
-        public async Task MainAsync()
+        public async Task mainAsync()
         {
             //initialize the client, command handler, and command service
             _client = new DiscordSocketClient();
             _cService = new CommandService();
-            _cHandler = new CommandHandler(_client, _cService);
+            _cHandler = new commandHandler(_client, _cService);
 
 
 
 
-            _client.Log += Log;
+            _client.Log += log;
 
 
             try
@@ -83,15 +83,15 @@ namespace HavocBot
             
             
             // have the client login and start
-            await _client.LoginAsync(TokenType.Bot, globals.token);
-            await _client.StartAsync();
-            await _client.SetGameAsync(globals.StatusMessage, null, ActivityType.Playing);
+            await _client.LoginAsync(TokenType.Bot, globals.token).ConfigureAwait(false);
+            await _client.StartAsync().ConfigureAwait(false);
+            await _client.SetGameAsync(globals.statusMessage, null, ActivityType.Playing).ConfigureAwait(false);
 
 
             // load the commands
-            await _cHandler.InstallCommandsAsync();
+            await _cHandler.installCommandsAsync().ConfigureAwait(false);
             // Block this task until the program is closed.
-            await Task.Delay(-1);
+            await Task.Delay(-1).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace HavocBot
         /// </summary>
         /// <param name="msg">Message to be sent to the log</param>
         /// <returns>completed task state</returns>
-        private Task Log(LogMessage msg)
+        private Task log(LogMessage msg)
         {
             // queue the message to be sent to the log
             Console.WriteLine(msg.ToString());
@@ -113,14 +113,13 @@ namespace HavocBot
         public static void eventTriggered(string name)
         {
             //identify the target channel (this is set in globals)
-            mainChannel = _client.GetChannel(globals.targetEventChannel) as IMessageChannel;
+            _mainChannel = _client.GetChannel(globals.targetEventChannel) as IMessageChannel;
 
-            botEvents retrievedEvent;
-            if (globals.getEvent(name, out retrievedEvent))
+            if (globals.getEvent(name, out botEvents retrievedEvent))
             {
                 //build the embed to be sent to the target channel
                 EmbedBuilder eventEmbed;
-                string mentions = retrievedEvent.Mentions;
+                string mentions = retrievedEvent.mentions;
                 string caption = $"The event \"{name}\" has begun";
 
                 if (mentions.Contains("<@&"))
@@ -128,7 +127,7 @@ namespace HavocBot
                     caption = $"{mentions} {caption}";
                 }
                 if (mentions.Equals("rsvp"))
-	            {
+                {
                     mentions = retrievedEvent.allRSVPIDs();
                     caption = $"{caption} {mentions}";
                 }
@@ -136,7 +135,7 @@ namespace HavocBot
                 eventEmbed = globals.generateEventEmbed(retrievedEvent);
 
                 //send the announcement to the target channel
-                mainChannel.SendMessageAsync(caption, false, eventEmbed.Build());
+                _mainChannel.SendMessageAsync(caption, false, eventEmbed.Build());
 
                 //log that an event has been triggered in the log
                 Console.WriteLine("Event Triggered: " + retrievedEvent.name);
@@ -152,17 +151,17 @@ namespace HavocBot
                                 select el;
 
                 XElement xdate = (from el in eventRetrieve.Descendants("start")
-                                 select el).Last();
-
-                xdate.Value = retrievedEvent.StartDate.ToString();
-
-                xdate = (from el in eventRetrieve.Descendants("end")
                                   select el).Last();
 
-                xdate.Value = retrievedEvent.EndDate.ToString();
+                xdate.Value = retrievedEvent.startDate.ToString();
+
+                xdate = (from el in eventRetrieve.Descendants("end")
+                         select el).Last();
+
+                xdate.Value = retrievedEvent.endDate.ToString();
 
                 globals.commandStorage.Save(globals.storageFilePath);
-                if (!retrievedEvent.Repeat.Equals("none"))
+                if (!retrievedEvent.repeat.Equals("none"))
                 {
                     Console.WriteLine("Advanced date based on repeat");
                 }
@@ -171,19 +170,22 @@ namespace HavocBot
             {
                 //if the event is missing send an error to the target channel and log the error
                 Console.WriteLine("Exception thrown--event trigger");
-                mainChannel.SendMessageAsync("Error: event trigger failed");
-            }                
+                _mainChannel.SendMessageAsync("Error: event trigger failed");
+            }
         }
 
+        /// <summary>
+        /// Displays message that the bot is undergoing maintenance
+        /// </summary>
         public static void showDownTime()
         {
-            utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
+            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
             EmbedBuilder downEmbed = new EmbedBuilder();
 
             downEmbed.WithTitle("Bot Undergoing Maintenance");
             downEmbed.AddField("Details", "The bot is now undergoing maintenance, during this time the bot may go offline several times and may not respond to commands. Downtime is not expected to take longer than an hour.");
 
-            utilityChannel.SendMessageAsync("", false, downEmbed.Build());
+            _utilityChannel.SendMessageAsync("", false, downEmbed.Build());
         }
     }
 }

@@ -2,6 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Authors>Neal Jamieson</Authors>
+    <Company>Jamieson Applications</Company>
+    <Version>0.3.1.0</Version>
+    <Copyright>(c) Neal Jamieson 2020</Copyright>
+    <RepositoryUrl>https://github.com/Jamiesonnc/HavocBot</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Jamiesonnc/HavocBot</PackageProjectUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageReleaseNotes>--Status Messages can now be changed without a patch
+--Updated APIs
+--Addressed an issue where events were not being announced when they occured
+--Addressed an issue where events were not properly mentioning roles
+--Added bot maintenance handling and messaging</PackageReleaseNotes>
+    <Description>DIscord bot to combine the functions of several bots used in a specific server</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\nealc\OneDrive\Application Development\HavocBot\HavocBot\HavocBot.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +28,11 @@
     <PackageReference Include="Discord.Net.Rest" Version="2.1.1" />
     <PackageReference Include="Discord.Net.Webhook" Version="2.1.1" />
     <PackageReference Include="Discord.Net.WebSocket" Version="2.1.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
