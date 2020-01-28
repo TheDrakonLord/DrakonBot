@@ -1,17 +1,20 @@
 on: release
-name: Publish Website
-jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@2.0.0
-      env:
-        FTP_SERVER: ${{ secrets.FTP_SERVER }}
-        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        METHOD: sftp
-        PORT: 22  
-      
+  name: FTP Deploy
+  uses: SamKirkland/FTP-Deploy-Action@2.0.0
+  with:
+    # FTP server name (you may need to specify a port)
+    ftp_server: ${{ secrets.FTP_SERVER }}
+    # FTP account username
+    ftp_username: ${{ secrets.FTP_USERNAME }}
+    # FTP account password
+    ftp_password: ${{ secrets.FTP_PASSWORD }}
+    # Protocol used to deploy (ftp or sftp)
+    method: SFTP # optional, default is ftp
+    # The port used to connect to server
+    port: 22 # optional, default is 21
+    # The local folder to copy, defaults to root project folder
+    local_dir: # optional, default is 
+    # The remote folder to copy to, deafults to root FTP folder (I recommend you configure this on your server side instead of here)
+    remote_dir: # optional, default is 
+    # Passes through options into lftp
+    ARGS: # optional, default is 
