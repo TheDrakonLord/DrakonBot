@@ -87,7 +87,9 @@ namespace HavocBot
             await _client.StartAsync().ConfigureAwait(false);
             await _client.SetGameAsync(globals.statusMessage, null, ActivityType.Playing).ConfigureAwait(false);
 
+            
 
+            
             // load the commands
             await _cHandler.installCommandsAsync().ConfigureAwait(false);
             // Block this task until the program is closed.
@@ -186,6 +188,34 @@ namespace HavocBot
             downEmbed.AddField("Details", "The bot is now undergoing maintenance, during this time the bot may go offline several times and may not respond to commands. Downtime is not expected to take longer than an hour.");
 
             _utilityChannel.SendMessageAsync("", false, downEmbed.Build());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void showNewsEmbed()
+        {
+            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
+            //test
+            EmbedBuilder newsTest;
+            try
+            {
+                newsTest = globals.xivNews.generateEmbed(1, newsType.Notice);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("error");
+                throw;
+            }
+            try
+            {
+                _utilityChannel.SendMessageAsync("", false, newsTest.Build());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("error2");
+                throw;
+            }
         }
     }
 }

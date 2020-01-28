@@ -41,11 +41,6 @@ namespace HavocBot
         public static XElement commandStorage;
         
         /// <summary>
-        /// lists all active events
-        /// </summary>
-        public static List<botEvents> eventsList = new List<botEvents>();
-        
-        /// <summary>
         /// holds the file path for the current directory
         /// </summary>
         public static string storageFilePath;
@@ -63,8 +58,8 @@ namespace HavocBot
         /// <summary>
         /// Holds the ID of the channel events should be announced and permitted in
         /// </summary>
-        public static
-            ulong targetEventChannel = 622084719030304810;
+        public static ulong targetEventChannel = 622084719030304810;
+
         /// <summary>
         /// Status message the bot displays on the server
         /// </summary>
@@ -74,6 +69,11 @@ namespace HavocBot
         /// holds the api commands for accessing the lodestone
         /// </summary>
         public static lodestone lodestoneAPI = new lodestone();
+
+        /// <summary>
+        /// holds the data and commands for accessing lodestone news items
+        /// </summary>
+        public static ffxivNews xivNews = new ffxivNews();
 
         /// <summary>
         /// 

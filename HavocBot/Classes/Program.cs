@@ -51,21 +51,7 @@ namespace HavocBot
         /// <returns></returns>        
         public async Task mainAsync()
         {
-            // <<<<<Proof of concept>>>>>>
-            ffxivNews xivNews = new ffxivNews();
-            maintNews retTop = xivNews.getMaint(12);
-            StreamWriter w = new StreamWriter("TestOut.txt");
-            w.WriteLine($"Title: {retTop.title}\n\n");
-            //w.WriteLine($"image: {retTop.image}\n\n");
-            w.WriteLine($"desc: {retTop.desc}\n\n");
-            w.WriteLine($"link: {retTop.link}\n\n");
-            //w.WriteLine($"time: {time}\n\n");
-            w.WriteLine($"id: {retTop.id}\n\n");
-            w.WriteLine($"start: {retTop.start}\n\n");
-            w.WriteLine($"end: {retTop.end}\n\n");
-            w.Dispose();
-
-            //<<<<Proof of concept end>>>>>
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{DateTime.Now.ToLongTimeString(),-8} Application Start");
 
             //Declare a timer
 

@@ -85,3 +85,8 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.havocBotClass.mainAsync~System.Threading.Tasks.Task")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.havocBotClass.eventTriggered(System.String)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "<Pending>", Scope = "type", Target = "~T:HavocBot.havocBotClass")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.generateEmbed(System.Int32,System.Int32,HavocBot.newsType)~Discord.EmbedBuilder")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.generateEmbed(System.Int32,HavocBot.newsType)~Discord.EmbedBuilder")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:HavocBot.globals.xivNews")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.havocBotClass.showNewsEmbed")]
