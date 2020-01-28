@@ -1,4 +1,4 @@
-on: push
+on: release
 name: Publish Website
 jobs:
   FTP-Deploy-Action:
