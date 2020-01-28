@@ -2,7 +2,7 @@ on:
   release:
     types: # This configuration does not affect the page_build event above
       - created
-name: Publish Website
+name: Deploy via SFTP
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
