@@ -55,7 +55,7 @@ namespace HavocBot
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.getCharacter(name, server, Context);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: iam"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: iam"} by {Context.User.Username}");
             }
         }
 
@@ -73,7 +73,7 @@ namespace HavocBot
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context);
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whoami"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whoami"} by {Context.User.Username}");
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
@@ -98,7 +98,7 @@ namespace HavocBot
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context, trimmedId);
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whois"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whois"} by {Context.User.Username}");
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
@@ -115,7 +115,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.targetChannel)
             {
                 await showMaint().ConfigureAwait(false);
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: maint"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: maint"} by {Context.User.Username}");
             }
         }
 
@@ -198,7 +198,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.targetChannel)
             {
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: myCode"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: myCode"} by {Context.User.Username}");
                 await saveCode(platform, code).ConfigureAwait(false);
             }
         }
@@ -332,7 +332,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.targetChannel)
             {
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes()"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes()"} by {Context.User.Username}");
                 await getCodes().ConfigureAwait(false);
             }
         }
@@ -348,7 +348,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.targetChannel)
             {
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes(Username)"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes(Username)"} by {Context.User.Username}");
                 await getCodes(username).ConfigureAwait(false);
             }
         }
@@ -363,7 +363,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.targetChannel)
             {
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: mycodes"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: mycodes"} by {Context.User.Username}");
                 await getCodes(Context.User.Username).ConfigureAwait(false);
             }
         }
@@ -449,7 +449,7 @@ namespace HavocBot
         [Summary("Displays a list of available commands")]
         public async Task showHelpAsync()
         {
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} by {Context.User.Username}");
             var helpEmbed = new EmbedBuilder()
             {
                 Title = "Available Commands"
@@ -497,7 +497,7 @@ namespace HavocBot
         [Summary("Displays changes since last patch")]
         public async Task showPatchNotes()
         {
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
             var patchEmbed = new EmbedBuilder();
             patchEmbed.WithTitle("Version: 0.3.1.0");
 
@@ -526,7 +526,7 @@ namespace HavocBot
         public async Task showHelpAsync(string cmdName)
         {
             System.Diagnostics.Contracts.Contract.Requires(cmdName != null);
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} ({cmdName}) by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} ({cmdName}) by {Context.User.Username}");
             var helpEmbed = new EmbedBuilder()
             {
                 Title = $"Help: {cmdName}"
@@ -655,7 +655,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.targetEventChannel)
             {
-                Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: showEvent"} by {Context.User.Username}");
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: showEvent"} by {Context.User.Username}");
             await retrieveEvent(reqEvent, "Displaying Event").ConfigureAwait(false);
             }
         }
@@ -683,11 +683,11 @@ namespace HavocBot
                 if (globals.eventCalendar.ContainsKey(name))
                 {
                     await ReplyAsync("Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass").ConfigureAwait(false);
-                    Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Event already exists error thrown"} by {Context.User.Username}");
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Event already exists error thrown"} by {Context.User.Username}");
                 }
                 else
                 {
-                    Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: newEvent"} by {Context.User.Username}");
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: newEvent"} by {Context.User.Username}");
                     await createEvent(name, start, end, type, mentions, description).ConfigureAwait(false);
                 }
             }
@@ -726,7 +726,7 @@ namespace HavocBot
                 else
                 {
                     await ReplyAsync("Error: no event found with that name").ConfigureAwait(false);
-                    Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"No event found error"} by {Context.User.Username}");
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"No event found error"} by {Context.User.Username}");
                 }
             }
         }
@@ -1021,7 +1021,7 @@ namespace HavocBot
         [Summary("Sets the target channel for event announcments")]
         public async Task setTargetChannel()
         {
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setTarget"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setTarget"} by {Context.User.Username}");
             await storeTarget((Context.Channel.Id)).ConfigureAwait(false);
         }
 
@@ -1045,7 +1045,7 @@ namespace HavocBot
         [Summary("Sets the target channel for event announcments")]
         public async Task setTargetEventChannel()
         {
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setEventTarget"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setEventTarget"} by {Context.User.Username}");
             await storeEventTarget((Context.Channel.Id)).ConfigureAwait(false);
         }
 
@@ -1107,7 +1107,7 @@ namespace HavocBot
             globals.commandStorage.Save(globals.storageFilePath);
 
             await ReplyAsync("Maitenance has successfully been added").ConfigureAwait(false);
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: setmaint"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: setmaint"} by {Context.User.Username}");
         }
 
         /// <summary>
@@ -1119,7 +1119,7 @@ namespace HavocBot
         [Summary("Sets bots displayed status")]
         public async Task setStatus([Remainder][Summary("Status to be set to the bot")] string status)
         {
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setStatus"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setStatus"} by {Context.User.Username}");
             await storeStatusMessage(status).ConfigureAwait(false);
         }
 
@@ -1142,8 +1142,20 @@ namespace HavocBot
         [Summary("triggers an embed announcing bot downtime")]
         public async Task showDownTime()
         {
-            Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: startbotdowntime"} by {Context.User.Username}");
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: startbotdowntime"} by {Context.User.Username}");
             await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Command("runTest")]
+        [Summary("triggers the test embed")]
+        public async Task runTest()
+        {
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: runTest"} by {Context.User.Username}");
+            await Task.Run(() => havocBotClass.showNewsEmbed()).ConfigureAwait(false);
         }
     }
 }

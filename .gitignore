@@ -16,14 +16,14 @@
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
+# [Rr]elease/
 [Rr]eleases/
 x64/
 x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-[Bb]in/
+# [Bb]in/
 [Oo]bj/
 [Ll]og/
 
@@ -165,7 +165,7 @@ DocProject/Help/Html2
 DocProject/Help/html
 
 # Click-Once directory
-publish/
+# publish/
 
 # Publish Web Output
 *.[Pp]ublish.xml
@@ -342,3 +342,19 @@ healthchecksdb
 /HavocBot/token.txt
 /HavocBot/TestOut.txt
 /HavocBot/CommandDataBackup/commandData.xml
+/HavocBot/bin/Release/netcoreapp3.0/linux-x64
+/HavocBot/bin/Release/netcoreapp3.0/Properties
+/HavocBot/bin/Release/netcoreapp3.0/System.Interactive.Async.dll
+/HavocBot/bin/Release/netcoreapp3.0/Newtonsoft.Json.dll
+/HavocBot/bin/Release/netcoreapp3.0/HavocBot.runtimeconfig.json
+/HavocBot/bin/Release/netcoreapp3.0/HavocBot.runtimeconfig.dev.json
+/HavocBot/bin/Release/netcoreapp3.0/HavocBot.exe
+/HavocBot/bin/Release/netcoreapp3.0/HavocBot.dll
+/HavocBot/bin/Release/netcoreapp3.0/HavocBot.deps.json
+/HavocBot/bin/Release/netcoreapp3.0/Discord.Net.WebSocket.dll
+/HavocBot/bin/Release/netcoreapp3.0/Discord.Net.Webhook.dll
+/HavocBot/bin/Release/netcoreapp3.0/Discord.Net.Rest.dll
+/HavocBot/bin/Release/netcoreapp3.0/Discord.Net.Core.dll
+/HavocBot/bin/Release/netcoreapp3.0/Discord.Net.Commands.dll
+/HavocBot/bin/Release/netcoreapp3.0/appsettings.json
+/HavocBot/bin/Release/netcoreapp3.0/appsettings.Development.json
