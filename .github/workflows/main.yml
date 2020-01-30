@@ -2,7 +2,7 @@ on:
   release:
     types: # This configuration does not affect the page_build event above
       - created
-name: Build and Deploy via SFTP
+name: Deploy via SFTP
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
@@ -18,3 +18,4 @@ jobs:
         METHOD: sftp
         PORT: 22
         local_dir: publish
+        remote_dir: root
