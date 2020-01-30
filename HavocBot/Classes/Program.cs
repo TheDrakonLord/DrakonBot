@@ -1,6 +1,6 @@
 /* Title: Program.cs
  * Author: Neal Jamieson
- * Version: 0.1.0.0
+ * Version: 0.3.1.0
  * 
  * Description:
  *     This class acts as the main entry point for the application
@@ -41,6 +41,8 @@ namespace HavocBot
     public class program
     {
         private static System.Timers.Timer _tmrCalendar;
+        private static System.Timers.Timer _tmrNews;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -58,6 +60,10 @@ namespace HavocBot
             _tmrCalendar = new System.Timers.Timer(1000);
             _tmrCalendar.Elapsed += tmrCalendar_Elapsed;
             _tmrCalendar.AutoReset = true;
+
+            _tmrNews = new System.Timers.Timer(900000);
+            _tmrNews.Elapsed += tmrNews_Elapsed;
+            _tmrNews.AutoReset = true;
 
             // declare a new instance of HavocBot
             havocBotClass botThread = new havocBotClass();
@@ -105,7 +111,13 @@ namespace HavocBot
                             new XAttribute("patch", "0.0"),
                             new XElement("start", null),
                             new XElement("end", null))),
-                    new XElement("codes", null)
+                    new XElement("codes", null),
+                    new XElement("news",
+                        new XElement("topics", "3f999b278389c9fe9dfe3362f477059577df769e"),
+                        new XElement("notices", "bc41a298e01c832f9b552c35d5314392f7edd479"),
+                        new XElement("maint", "f66590bde2734203fa56e32c82780681f155cd59"),
+                        new XElement("updates", "58cc5a4cb0c56567da42d0fa08e696097b755cb3"),
+                        new XElement("status", "8a2616e2d864f35449d97551312ca11d1d23896d"))
                     );
                 NewCommandData.Save(globals.storageFilePath);
                 globals.commandStorage = XElement.Load(globals.storageFilePath);
@@ -180,11 +192,37 @@ namespace HavocBot
                  (from el in settingRetrieve.Descendants("StatusMessage")
                   select el).First();
 
+            settingRetrieve =
+                 from el in globals.commandStorage.Elements("maintenance")
+                 select el;
+            settingRetrieve = from el in settingRetrieve.Elements("lodeMaint")
+                            select el;
+
+            globals.lodeMaintStart = DateTime.Parse((string)
+                 (from el in settingRetrieve.Descendants("start")
+                  select el).First());
+
+            globals.lodeMaintEnd = DateTime.Parse((string)
+                 (from el in settingRetrieve.Descendants("start")
+                  select el).First());
+
+            // instantiate the news class with loaded events
+
+            globals.xivNews = new ffxivNews();
             // start timer
             _tmrCalendar.Enabled = true;
+            _tmrNews.Enabled = true;
+
+            globals.xivNews.getTopic(1);
+            globals.xivNews.getMaint(1);
+            globals.xivNews.getNews(1, newsType.Notice);
+            globals.xivNews.getNews(1, newsType.Status);
+            globals.xivNews.getNews(1, newsType.Update);
 
             // start the bot
             await botThread.mainAsync().ConfigureAwait(true);
+
+            
         }
 
         /// <summary>
@@ -208,6 +246,24 @@ namespace HavocBot
                     // exit the loop, any remaining events will be announced 1 minute later
                     break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Timer that checks if new news items have been posted
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private static void tmrNews_Elapsed(Object source, ElapsedEventArgs e)
+        {
+            if (DateTime.Now >= globals.lodeMaintStart && DateTime.Now <= globals.lodeMaintEnd)
+            {
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} News refresh skipped due to lodestone maintenance");
+            }
+            else
+            {
+                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Begin News Refresh");
+                globals.xivNews.refresh();
             }
         }
     }

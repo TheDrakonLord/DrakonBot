@@ -22,7 +22,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v3.0": {
-      "HavocBot/1.0.0": {
+      "HavocBot/0.3.1.0": {
         "dependencies": {
           "Discord.Net": "2.1.1",
           "Discord.Net.Commands": "2.1.1",
@@ -30,7 +30,10 @@
           "Discord.Net.Rest": "2.1.1",
           "Discord.Net.WebSocket": "2.1.1",
           "Discord.Net.Webhook": "2.1.1",
+          "HtmlAgilityPack": "1.11.18",
+          "Microsoft.CodeAnalysis.FxCopAnalyzers": "2.9.8",
           "Newtonsoft.Json": "12.0.3",
+          "dcsoup": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.0.0.0",
@@ -308,9 +311,9 @@
           "System.Xml.ReaderWriter.Reference": "4.2.1.0",
           "System.Xml.Serialization": "4.0.0.0",
           "System.Xml.XDocument.Reference": "4.1.1.0",
-          "System.Xml.XmlDocument": "4.1.1.0",
+          "System.Xml.XmlDocument.Reference": "4.1.1.0",
           "System.Xml.XmlSerializer": "4.1.1.0",
-          "System.Xml.XPath": "4.1.1.0",
+          "System.Xml.XPath.Reference": "4.1.1.0",
           "System.Xml.XPath.XDocument": "4.1.1.0",
           "WindowsBase": "4.0.0.0"
         },
@@ -1703,7 +1706,7 @@
           "System.Xml.XDocument.dll": {}
         }
       },
-      "System.Xml.XmlDocument/4.1.1.0": {
+      "System.Xml.XmlDocument.Reference/4.1.1.0": {
         "compile": {
           "System.Xml.XmlDocument.dll": {}
         }
@@ -1713,7 +1716,7 @@
           "System.Xml.XmlSerializer.dll": {}
         }
       },
-      "System.Xml.XPath/4.1.1.0": {
+      "System.Xml.XPath.Reference/4.1.1.0": {
         "compile": {
           "System.Xml.XPath.dll": {}
         }
@@ -1726,6 +1729,11 @@
       "WindowsBase/4.0.0.0": {
         "compile": {
           "WindowsBase.dll": {}
+        }
+      },
+      "dcsoup/1.0.0": {
+        "compile": {
+          "lib/netstandard1.3/Supremes.dll": {}
         }
       },
       "Discord.Net/2.1.1": {
@@ -1783,14 +1791,37 @@
           "lib/netstandard2.0/Discord.Net.WebSocket.dll": {}
         }
       },
+      "HtmlAgilityPack/1.11.18": {
+        "dependencies": {
+          "System.Net.Http": "4.3.2",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {}
+        }
+      },
+      "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.8": {
+        "dependencies": {
+          "Microsoft.CodeAnalysis.VersionCheckAnalyzer": "2.9.8",
+          "Microsoft.CodeQuality.Analyzers": "2.9.8",
+          "Microsoft.NetCore.Analyzers": "2.9.8",
+          "Microsoft.NetFramework.Analyzers": "2.9.8"
+        }
+      },
+      "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.8": {},
+      "Microsoft.CodeQuality.Analyzers/2.9.8": {},
       "Microsoft.Extensions.DependencyInjection/2.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {},
+      "Microsoft.NetCore.Analyzers/2.9.8": {},
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Microsoft.NetFramework.Analyzers/2.9.8": {},
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1819,7 +1850,7 @@
           "System.IO.FileSystem.Primitives": "4.3.0",
           "System.Linq": "4.3.0",
           "System.Linq.Expressions": "4.3.0",
-          "System.Net.Http": "4.3.0",
+          "System.Net.Http": "4.3.2",
           "System.Net.Primitives": "4.3.0",
           "System.Net.Sockets": "4.3.0",
           "System.ObjectModel": "4.3.0",
@@ -2234,7 +2265,7 @@
           "System.Threading": "4.3.0"
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.2": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
           "System.Collections": "4.3.0",
@@ -2686,10 +2717,54 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
+      },
+      "System.Xml.XmlDocument/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.Encoding": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0"
+        }
+      },
+      "System.Xml.XPath/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0"
+        }
+      },
+      "System.Xml.XPath.XmlDocument/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        }
       }
     },
     ".NETCoreApp,Version=v3.0/linux-x64": {
-      "HavocBot/1.0.0": {
+      "HavocBot/0.3.1.0": {
         "dependencies": {
           "Discord.Net": "2.1.1",
           "Discord.Net.Commands": "2.1.1",
@@ -2697,7 +2772,10 @@
           "Discord.Net.Rest": "2.1.1",
           "Discord.Net.WebSocket": "2.1.1",
           "Discord.Net.Webhook": "2.1.1",
+          "HtmlAgilityPack": "1.11.18",
+          "Microsoft.CodeAnalysis.FxCopAnalyzers": "2.9.8",
           "Newtonsoft.Json": "12.0.3",
+          "dcsoup": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.0.0.0",
@@ -2975,14 +3053,22 @@
           "System.Xml.ReaderWriter.Reference": "4.2.1.0",
           "System.Xml.Serialization": "4.0.0.0",
           "System.Xml.XDocument.Reference": "4.1.1.0",
-          "System.Xml.XmlDocument": "4.1.1.0",
+          "System.Xml.XmlDocument.Reference": "4.1.1.0",
           "System.Xml.XmlSerializer": "4.1.1.0",
-          "System.Xml.XPath": "4.1.1.0",
+          "System.Xml.XPath.Reference": "4.1.1.0",
           "System.Xml.XPath.XDocument": "4.1.1.0",
           "WindowsBase": "4.0.0.0"
         },
         "runtime": {
           "HavocBot.dll": {}
+        }
+      },
+      "dcsoup/1.0.0": {
+        "runtime": {
+          "lib/netstandard1.3/Supremes.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Discord.Net/2.1.1": {
@@ -3055,14 +3141,40 @@
           }
         }
       },
+      "HtmlAgilityPack/1.11.18": {
+        "dependencies": {
+          "System.Net.Http": "4.3.2",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlAgilityPack.dll": {
+            "assemblyVersion": "1.11.18.0",
+            "fileVersion": "1.11.18.0"
+          }
+        }
+      },
+      "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.8": {
+        "dependencies": {
+          "Microsoft.CodeAnalysis.VersionCheckAnalyzer": "2.9.8",
+          "Microsoft.CodeQuality.Analyzers": "2.9.8",
+          "Microsoft.NetCore.Analyzers": "2.9.8",
+          "Microsoft.NetFramework.Analyzers": "2.9.8"
+        }
+      },
+      "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.8": {},
+      "Microsoft.CodeQuality.Analyzers/2.9.8": {},
       "Microsoft.Extensions.DependencyInjection/2.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {},
+      "Microsoft.NetCore.Analyzers/2.9.8": {},
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Microsoft.NetFramework.Analyzers/2.9.8": {},
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -3091,7 +3203,7 @@
           "System.IO.FileSystem.Primitives": "4.3.0",
           "System.Linq": "4.3.0",
           "System.Linq.Expressions": "4.3.0",
-          "System.Net.Http": "4.3.0",
+          "System.Net.Http": "4.3.2",
           "System.Net.Primitives": "4.3.0",
           "System.Net.Sockets": "4.3.0",
           "System.ObjectModel": "4.3.0",
@@ -3512,7 +3624,7 @@
           "System.Threading": "4.3.0"
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.2": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
           "System.Collections": "4.3.0",
@@ -3964,14 +4076,68 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
+      },
+      "System.Xml.XmlDocument/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.Encoding": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0"
+        }
+      },
+      "System.Xml.XPath/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0"
+        }
+      },
+      "System.Xml.XPath.XmlDocument/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        }
       }
     }
   },
   "libraries": {
-    "HavocBot/1.0.0": {
+    "HavocBot/0.3.1.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "dcsoup/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LVtvXmuEdu3YFXxj3OpnqlLy/iOvnQbR70tGumyMOo9YllDfjils/wVwppFON+9qAvhTWIHeLTW5HDqhVpuJ1Q==",
+      "path": "dcsoup/1.0.0",
+      "hashPath": "dcsoup.1.0.0.nupkg.sha512"
     },
     "Discord.Net/2.1.1": {
       "type": "package",
@@ -4015,6 +4181,34 @@
       "path": "discord.net.websocket/2.1.1",
       "hashPath": "discord.net.websocket.2.1.1.nupkg.sha512"
     },
+    "HtmlAgilityPack/1.11.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Wdfc2rEy0nr1peawYnOA8aufAo9Z5y16Oz4Rr+NmN8kMB0YBbHO4igYb+a0Px4LX5Ehx2u70dSnU6Be05Tna+w==",
+      "path": "htmlagilitypack/1.11.18",
+      "hashPath": "htmlagilitypack.1.11.18.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FZhO7S+xinFrcRvPyIxPbFgY0Jg3X+KNkawhg7wwoVxnT/ySdoO162dyIMXfQQ6/qCmjNFHmTDXiNlpPNvKNyQ==",
+      "path": "microsoft.codeanalysis.fxcopanalyzers/2.9.8",
+      "hashPath": "microsoft.codeanalysis.fxcopanalyzers.2.9.8.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iSjqkECKpagJPjzc7sMjD6rQWSznVYqTfUZ96yR0r0jDzA45TymBof350tlOfGDRvn4OrU/KKJav21/oZDttrA==",
+      "path": "microsoft.codeanalysis.versioncheckanalyzer/2.9.8",
+      "hashPath": "microsoft.codeanalysis.versioncheckanalyzer.2.9.8.nupkg.sha512"
+    },
+    "Microsoft.CodeQuality.Analyzers/2.9.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KevAiJKuolGKK84jDHMVGJjBAigH/86xyCVtbOzh5avUYzW7jPErdJW708byKKMiVKTwv027mbKCNnnOgNQHsA==",
+      "path": "microsoft.codequality.analyzers/2.9.8",
+      "hashPath": "microsoft.codequality.analyzers.2.9.8.nupkg.sha512"
+    },
     "Microsoft.Extensions.DependencyInjection/2.0.0": {
       "type": "package",
       "serviceable": true,
@@ -4029,10 +4223,17 @@
       "path": "microsoft.extensions.dependencyinjection.abstractions/2.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512"
     },
+    "Microsoft.NetCore.Analyzers/2.9.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zbGttCZ8T5wJiBDhgIaFWTrYa/X7zbCnQ76PEu/B4gb64KY+yB9gjkndsKWR+2TbOId76PN7WrSQAn+W7gr5jQ==",
+      "path": "microsoft.netcore.analyzers/2.9.8",
+      "hashPath": "microsoft.netcore.analyzers.2.9.8.nupkg.sha512"
+    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "sha512-a/iSwnRZb+LHFk49hQOyThh/ZNC3vsbZsF65XwQIb863qF6msmhdQtxGXFL28Ob2NsCz/drEj28BJd/YPpLRBg==",
       "path": "microsoft.netcore.platforms/1.1.0",
       "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
     },
@@ -4042,6 +4243,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "Microsoft.NetFramework.Analyzers/2.9.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8fZYJqeKBW5uuKBact26IeOBogchn5Km85klHqHneRY7Jxp+ERtrw8zJVumNFUVL68pIcf4uKPOY7zfBQ7eY3A==",
+      "path": "microsoft.netframework.analyzers/2.9.8",
+      "hashPath": "microsoft.netframework.analyzers.2.9.8.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
@@ -4361,7 +4569,7 @@
     "System.Buffers/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ratu44uTIHgeBeI0dE8DWvmXVBSo4u7ozRZZHOMmK/JPpYyo0dAfgSiHlpiObMQ5lEtEyIXA40sKRYg5J6A8uQ==",
+      "sha512": "sha512-Pcv2b27ffpu09pjN3PgbnQWYEdhOBcesYYsmQO/tZC8Imw74TJJ8X1j+/+Q7uWprz0/sQiUpuCmYsY1w5GSMvg==",
       "path": "system.buffers/4.3.0",
       "hashPath": "system.buffers.4.3.0.nupkg.sha512"
     },
@@ -4498,12 +4706,12 @@
       "path": "system.linq.expressions/4.3.0",
       "hashPath": "system.linq.expressions.4.3.0.nupkg.sha512"
     },
-    "System.Net.Http/4.3.0": {
+    "System.Net.Http/4.3.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
-      "path": "system.net.http/4.3.0",
-      "hashPath": "system.net.http.4.3.0.nupkg.sha512"
+      "sha512": "sha512-y7hv0o0weI0j0mvEcBOdt1F3CAADiWlcw3e54m8TfYiRmBPDIsHElx8QUPDlY4x6yWXKPGN0Z2TuXCTPgkm5WQ==",
+      "path": "system.net.http/4.3.2",
+      "hashPath": "system.net.http.4.3.2.nupkg.sha512"
     },
     "System.Net.NameResolution/4.3.0": {
       "type": "package",
@@ -4777,6 +4985,27 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
+    },
+    "System.Xml.XmlDocument/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
+      "path": "system.xml.xmldocument/4.3.0",
+      "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "System.Xml.XPath/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-v1JQ5SETnQusqmS3RwStF7vwQ3L02imIzl++sewmt23VGygix04pEH+FCj1yWb+z4GDzKiljr1W7Wfvrx0YwgA==",
+      "path": "system.xml.xpath/4.3.0",
+      "hashPath": "system.xml.xpath.4.3.0.nupkg.sha512"
+    },
+    "System.Xml.XPath.XmlDocument/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
+      "path": "system.xml.xpath.xmldocument/4.3.0",
+      "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/3.0.0.0": {
       "type": "referenceassembly",
@@ -6163,7 +6392,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Xml.XmlDocument/4.1.1.0": {
+    "System.Xml.XmlDocument.Reference/4.1.1.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -6173,7 +6402,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Xml.XPath/4.1.1.0": {
+    "System.Xml.XPath.Reference/4.1.1.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

@@ -499,17 +499,16 @@ namespace HavocBot
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
             var patchEmbed = new EmbedBuilder();
-            patchEmbed.WithTitle("Version: 0.3.1.0");
+            patchEmbed.WithTitle("Version: 0.3.2.1");
 
             patchEmbed.AddField("**Changes**",
-                "--Status Messages can now be changed without a patch\n" +
-                "--Updated APIs\n" +
-                "--Addressed an issue where events were not being announced when they occured\n" +
-                "--Addressed an issue where events were not properly mentioning roles\n" +
-                "--Added bot maintenance handling and messaging");
+                "--Added FFXIV Lodestone News Functionality (Beta)\n" +
+                "--!maint is now automated\n" +
+                "--Performance improvements\n" +
+                "--Addressed an issue where if the structure of the lodestone changed (most often during lodestone maintenance or when a news item was pinned) news retrieval would encounter an exception and cause unexpected behavior");
 
-            patchEmbed.WithFooter("Patch Date: 1/22/2020");
-            patchEmbed.WithCurrentTimestamp();
+            patchEmbed.WithFooter("Emergency Patch 0.3.2.1");
+            patchEmbed.WithTimestamp(new DateTimeOffset(2020, 01, 30, 16, 00, 00, new TimeSpan(-6, 0, 0)));
             patchEmbed.WithColor(Color.Gold);
 
             await Context.Channel.SendMessageAsync("Displaying Help", false, patchEmbed.Build()).ConfigureAwait(false);
@@ -1146,16 +1145,5 @@ namespace HavocBot
             await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Command("runTest")]
-        [Summary("triggers the test embed")]
-        public async Task runTest()
-        {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: runTest"} by {Context.User.Username}");
-            await Task.Run(() => havocBotClass.showNewsEmbed()).ConfigureAwait(false);
-        }
     }
 }

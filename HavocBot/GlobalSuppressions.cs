@@ -90,3 +90,10 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:HavocBot.globals.xivNews")]
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.havocBotClass.showNewsEmbed")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.generateEmbed(HavocBot.maintNews)~Discord.EmbedBuilder")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.generateEmbed(HavocBot.news,HavocBot.newsType)~Discord.EmbedBuilder")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.generateEmbed(HavocBot.topic)~Discord.EmbedBuilder")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.refresh")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>", Scope = "member", Target = "~M:HavocBot.ffxivNews.getMaint(System.Int32)~HavocBot.maintNews")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:HavocBot.globals.lodeMaintEnd")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:HavocBot.globals.lodeMaintStart")]
