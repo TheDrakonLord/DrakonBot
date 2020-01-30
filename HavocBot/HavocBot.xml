@@ -400,12 +400,36 @@
             <param name="tId">the news item to retrieve. 1 is the newest. Each increment is one older news item. must be a positive integer</param>
             <returns>Returns a maintNews structure containing the requested data</returns>
         </member>
-        <member name="M:HavocBot.ffxivNews.generateEmbed(System.Int32,HavocBot.newsType)">
+        <member name="M:HavocBot.ffxivNews.generateEmbed(HavocBot.topic)">
             <summary>
-            Generates an embed for the requested news item
+            
             </summary>
-            <param name="tId">the news item to be retrieve</param>
-            <param name="type">when using s = 1, the type of news to be retrieved</param>
+            <param name="retTop"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.ffxivNews.generateEmbed(HavocBot.news,HavocBot.newsType)">
+            <summary>
+            
+            </summary>
+            <param name="retNews"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.ffxivNews.generateEmbed(HavocBot.maintNews)">
+            <summary>
+            
+            </summary>
+            <param name="retMaint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.ffxivNews.refresh">
+            <summary>
+            Searches through the lodestone news pages and determines how many new news items there are
+            </summary>
+            <returns>Returns an integer array representing how many new news items are present
+            Each index corresponds to a news type
+            0: Topic, 1: Notice, 2: Update, 3: Status, 4: Maint
+            Value equals number of new items</returns>
         </member>
         <member name="T:HavocBot.globals">
             <summary>
@@ -453,6 +477,16 @@
             </summary>
         </member>
         <member name="F:HavocBot.globals.token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.lodeMaintStart">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.lodeMaintEnd">
             <summary>
             
             </summary>
@@ -526,10 +560,24 @@
             Displays message that the bot is undergoing maintenance
             </summary>
         </member>
-        <member name="M:HavocBot.havocBotClass.showNewsEmbed">
+        <member name="M:HavocBot.havocBotClass.showNewsEmbed(HavocBot.topic)">
             <summary>
             
             </summary>
+            <param name="retTop"></param>
+        </member>
+        <member name="M:HavocBot.havocBotClass.showNewsEmbed(HavocBot.news,HavocBot.newsType)">
+            <summary>
+            
+            </summary>
+            <param name="retNews"></param>
+            <param name="type"></param>
+        </member>
+        <member name="M:HavocBot.havocBotClass.showNewsEmbed(HavocBot.maintNews)">
+            <summary>
+            
+            </summary>
+            <param name="retMaint"></param>
         </member>
         <member name="T:HavocBot.infoModule">
             <summary>
@@ -794,12 +842,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:HavocBot.adminModule.runTest">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:HavocBot.lodestone">
             <summary>
             Class for accessing the FFXIV lodestone API
@@ -857,6 +899,13 @@
             </summary>
             <param name="e"></param>
             <param name="source"></param>
+        </member>
+        <member name="M:HavocBot.program.tmrNews_Elapsed(System.Object,System.Timers.ElapsedEventArgs)">
+            <summary>
+            Timer that checks if new news items have been posted
+            </summary>
+            <param name="source"></param>
+            <param name="e"></param>
         </member>
         <member name="T:HavocBot.Startup">
             <summary>

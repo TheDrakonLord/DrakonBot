@@ -499,12 +499,12 @@ namespace HavocBot
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
             var patchEmbed = new EmbedBuilder();
-            patchEmbed.WithTitle("Version: 0.3.1.0");
+            patchEmbed.WithTitle("Version: 0.3.2.0");
 
             patchEmbed.AddField("**Changes**",
-                "--Status Messages can now be changed without a patch\n" +
-                "--Updated APIs\n" +
-                "--Addressed an issue where events were not being announced when they occured\n" +
+                "--Added FFXIV Lodestone News Functionality (Beta)" +
+                "--!maint is now automated\n" +
+                "--Performance improvements\n" +
                 "--Addressed an issue where events were not properly mentioning roles\n" +
                 "--Added bot maintenance handling and messaging");
 
@@ -1146,16 +1146,5 @@ namespace HavocBot
             await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Command("runTest")]
-        [Summary("triggers the test embed")]
-        public async Task runTest()
-        {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: runTest"} by {Context.User.Username}");
-            await Task.Run(() => havocBotClass.showNewsEmbed()).ConfigureAwait(false);
-        }
     }
 }

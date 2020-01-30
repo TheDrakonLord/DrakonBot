@@ -73,12 +73,24 @@ namespace HavocBot
         /// <summary>
         /// holds the data and commands for accessing lodestone news items
         /// </summary>
-        public static ffxivNews xivNews = new ffxivNews();
+        public static ffxivNews xivNews;
 
         /// <summary>
         /// 
         /// </summary>
         public static string token = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static DateTime lodeMaintStart;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static DateTime lodeMaintEnd;
+
+
 
         /// <summary>
         /// Stores an event in the command Data file and adds it to the event calendar

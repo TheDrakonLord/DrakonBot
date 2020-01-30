@@ -76,20 +76,16 @@ namespace HavocBot
                 Console.WriteLine("error no token file found");
                 throw;
             }
-            
 
-            
-
-            
             
             // have the client login and start
             await _client.LoginAsync(TokenType.Bot, globals.token).ConfigureAwait(false);
             await _client.StartAsync().ConfigureAwait(false);
             await _client.SetGameAsync(globals.statusMessage, null, ActivityType.Playing).ConfigureAwait(false);
 
-            
 
             
+
             // load the commands
             await _cHandler.installCommandsAsync().ConfigureAwait(false);
             // Block this task until the program is closed.
@@ -193,29 +189,43 @@ namespace HavocBot
         /// <summary>
         /// 
         /// </summary>
-        public static void showNewsEmbed()
+        /// <param name="retTop"></param>
+        public static void showNewsEmbed(topic retTop)
         {
             _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
-            //test
-            EmbedBuilder newsTest;
-            try
-            {
-                newsTest = globals.xivNews.generateEmbed(1, newsType.Notice);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("error");
-                throw;
-            }
-            try
-            {
-                _utilityChannel.SendMessageAsync("", false, newsTest.Build());
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("error2");
-                throw;
-            }
+            EmbedBuilder newsEmbed;
+            newsEmbed = globals.xivNews.generateEmbed(retTop);
+            _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
+            
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="retNews"></param>
+        /// <param name="type"></param>
+        public static void showNewsEmbed(news retNews, newsType type)
+        {
+            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
+            EmbedBuilder newsEmbed;
+            newsEmbed = globals.xivNews.generateEmbed(retNews, type);
+            _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
+
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="retMaint"></param>
+        public static void showNewsEmbed(maintNews retMaint)
+        {
+            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
+            EmbedBuilder newsEmbed;
+            newsEmbed = globals.xivNews.generateEmbed(retMaint);
+            _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
+
         }
     }
 }
