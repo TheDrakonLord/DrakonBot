@@ -341,7 +341,9 @@ healthchecksdb
 /HavocBot/commandData.xml
 /HavocBot/token.txt
 /HavocBot/TestOut.txt
-/HavocBot/CommandDataBackup/commandData.xml
+CommandDataBackup/commandData.xml
+CommandDataBackup/nohup.out
+CommandDataBackup
 /HavocBot/bin/Release/netcoreapp3.0/linux-x64
 /HavocBot/bin/Release/netcoreapp3.0/Properties
 /HavocBot/bin/Release/netcoreapp3.0/System.Interactive.Async.dll

@@ -232,20 +232,45 @@ namespace HavocBot
             //Topics
             Uri.TryCreate(siteRoot + topicsRoot, UriKind.RelativeOrAbsolute, out Uri uriResult);
             HtmlDocument doc = _web.Load(uriResult);
+            topic retTopic = new topic();
 
-            string xpathRoot = "/html/body/div[4]/div[2]/div[1]/div/ul[2]";
-            string xpathTarget = $"/li[{tId}]";
-
-            topic retTopic = new topic
+            try
             {
-                title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/p/a")[0].InnerText,
-                image = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/div/a/img")[0].Attributes[0].Value,
-                desc = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/div/p[2]")[0].InnerText,
-                link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/p/a")[0].Attributes[0].Value,
-                //retTopic.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
-            };
 
-            retTopic.id = retTopic.link.Substring(retTopic.link.LastIndexOf('/') + 1);
+                string xpathRoot = "/html/body/div[4]/div[2]/div[1]/div/ul[2]";
+                string xpathTarget = $"/li[{tId}]";
+
+
+                retTopic.title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/p/a")[0].InnerText;
+                retTopic.image = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/div/a/img")[0].Attributes[0].Value;
+                retTopic.desc = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/div/p[2]")[0].InnerText;
+                retTopic.link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/p/a")[0].Attributes[0].Value;
+                //retTopic.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
+                
+                retTopic.id = retTopic.link.Substring(retTopic.link.LastIndexOf('/') + 1);
+            }
+            catch (NullReferenceException)
+            {
+                try
+                {
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Error in Topic retrieval, Defaulting to alternate execution.");
+                    string xpathRoot = "/html/body/div[4]/div[2]/div[1]/div/ul[3]";
+                    string xpathTarget = $"/li[{tId}]";
+
+
+                    retTopic.title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/p/a")[0].InnerText;
+                    retTopic.image = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/div/a/img")[0].Attributes[0].Value;
+                    retTopic.desc = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/div/p[2]")[0].InnerText;
+                    retTopic.link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/p/a")[0].Attributes[0].Value;
+                    //retTopic.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
+                    
+                    retTopic.id = retTopic.link.Substring(retTopic.link.LastIndexOf('/') + 1);
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Error in Topic retrieval, Alternate execution failed, skipping topic retrieval.");
+                }
+            }
 
             return retTopic;
         }
@@ -259,45 +284,62 @@ namespace HavocBot
         public news getNews(int tId, newsType type)
         {
             HtmlDocument doc;
-            int intUL;
             Uri uriResult;
+            news retNews = new news();
+
             switch (type)
             {
                 case newsType.Notice:
                     Uri.TryCreate(siteRoot + noticesRoot, UriKind.RelativeOrAbsolute, out uriResult);
                     doc = _web.Load(uriResult);
-                    intUL = 3;
                     break;
                 case newsType.Update:
                     Uri.TryCreate(siteRoot + updatesRoot, UriKind.RelativeOrAbsolute, out uriResult);
                     doc = _web.Load(uriResult);
-                    intUL = 2;
                     break;
                 case newsType.Status:
                     Uri.TryCreate(siteRoot + statusRoot, UriKind.RelativeOrAbsolute, out uriResult);
                     doc = _web.Load(uriResult);
-                    intUL = 2;
                     break;
                 default:
-                    Uri.TryCreate(siteRoot + noticesRoot, UriKind.RelativeOrAbsolute, out uriResult);
-                    doc = _web.Load(uriResult);
-                    intUL = 3;
-                    break;
+                    throw new Exception("Unexpected NewsType in paramater");
             }
 
-
-            string xpathRoot = $"/html/body/div[4]/div[2]/div[1]/div/ul[{intUL}]";
-            string xpathTarget = $"/li[{tId}]";
-
-            news retNews = new news
+            try
             {
-                title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a/div/p")[0].InnerText,
-                link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a")[0].Attributes[0].Value,
+                string xpathRoot = $"/html/body/div[4]/div[2]/div[1]/div/ul[2]";
+                string xpathTarget = $"/li[{tId}]";
+
+                retNews.title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a/div/p")[0].InnerText;
+                retNews.link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a")[0].Attributes[0].Value;
                 //retNews.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
-            };
+                
+                retNews.id = retNews.link.Substring(retNews.link.LastIndexOf('/') + 1);
 
-            retNews.id = retNews.link.Substring(retNews.link.LastIndexOf('/') + 1);
+                
+            }
+            catch (NullReferenceException)
+            {
+                try
+                {
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Error in {type.ToString()} retrieval, Defaulting to alternate execution.");
+                    string xpathRoot = $"/html/body/div[4]/div[2]/div[1]/div/ul[3]";
+                    string xpathTarget = $"/li[{tId}]";
 
+
+                    retNews.title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a/div/p")[0].InnerText;
+                    retNews.link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a")[0].Attributes[0].Value;
+                    //retNews.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
+                    
+                    retNews.id = retNews.link.Substring(retNews.link.LastIndexOf('/') + 1);
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Error in {type.ToString()} retrieval, Alternate execution failed, skipping {type.ToString()} retrieval.");
+
+                }
+                
+            }
             return retNews;
         }
 
@@ -311,44 +353,95 @@ namespace HavocBot
 
             Uri.TryCreate(siteRoot + maintRoot, UriKind.RelativeOrAbsolute, out Uri uriResult);
             HtmlDocument doc = _web.Load(uriResult);
+            maintNews retMaint = new maintNews();
 
-            string xpathRoot = "/html/body/div[4]/div[2]/div[1]/div/ul[2]";
-            string xpathTarget = $"/li[{tId}]";
-
-            maintNews retMaint = new maintNews
+            try
             {
-                title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a/div/p")[0].InnerText,
-                link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a")[0].Attributes[0].Value,
+                string xpathRoot = "/html/body/div[4]/div[2]/div[1]/div/ul[2]";
+                string xpathTarget = $"/li[{tId}]";
+
+
+                retMaint.title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a/div/p")[0].InnerText;
+                retMaint.link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a")[0].Attributes[0].Value;
                 //retMaint.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
-            };
 
-            retMaint.id = retMaint.link.Substring(retMaint.link.LastIndexOf('/') + 1);
+                retMaint.id = retMaint.link.Substring(retMaint.link.LastIndexOf('/') + 1);
 
-            Uri.TryCreate(retMaint.link, UriKind.RelativeOrAbsolute, out uriResult);
-            doc = _web.Load(uriResult);
+                Uri.TryCreate(retMaint.link, UriKind.RelativeOrAbsolute, out uriResult);
+                doc = _web.Load(uriResult);
 
-            retMaint.desc = doc.DocumentNode.SelectNodes("/html/body/div[4]/div[2]/div[1]/article/div[1]")[0].InnerText;
+                retMaint.desc = doc.DocumentNode.SelectNodes("/html/body/div[4]/div[2]/div[1]/article/div[1]")[0].InnerText;
 
-            string tempStart;
-            string tempEnd;
-            retMaint.desc = retMaint.desc.Substring(retMaint.desc.IndexOf(']') + 1);
-            retMaint.desc = retMaint.desc.Substring(0, retMaint.desc.IndexOf('('));
-            retMaint.desc = retMaint.desc.Trim();
-            tempStart = retMaint.desc.Substring(0, retMaint.desc.IndexOf('t'));
-            tempEnd = retMaint.desc.Remove(retMaint.desc.IndexOf(tempStart), tempStart.Length);
-            tempEnd = tempEnd.Substring(tempEnd.IndexOf('o') + 1);
-            tempEnd = tempEnd.Replace(".", "");
-            tempEnd = tempEnd.Trim();
-            tempStart = tempStart.Replace(".", "");
-            tempStart = tempStart.Trim();
+                string tempStart;
+                string tempEnd;
+                retMaint.desc = retMaint.desc.Substring(retMaint.desc.IndexOf(']') + 1);
+                retMaint.desc = retMaint.desc.Substring(0, retMaint.desc.IndexOf('('));
+                retMaint.desc = retMaint.desc.Trim();
+                tempStart = retMaint.desc.Substring(0, retMaint.desc.IndexOf('t'));
+                tempEnd = retMaint.desc.Remove(retMaint.desc.IndexOf(tempStart), tempStart.Length);
+                tempEnd = tempEnd.Substring(tempEnd.IndexOf('o') + 1);
+                tempEnd = tempEnd.Replace(".", "");
+                tempEnd = tempEnd.Trim();
+                tempStart = tempStart.Replace(".", "");
+                tempStart = tempStart.Trim();
 
-            retMaint.start = DateTime.Parse(tempStart);
-            retMaint.end = DateTime.Parse(tempEnd);
-            CultureInfo enUS = new CultureInfo("en-US");
-            if (DateTime.TryParseExact(tempEnd, "h:mm tt", enUS, DateTimeStyles.None, out var result2))
-            {
-                retMaint.end = retMaint.start.Date + retMaint.end.TimeOfDay;
+                retMaint.start = DateTime.Parse(tempStart);
+                retMaint.end = DateTime.Parse(tempEnd);
+                CultureInfo enUS = new CultureInfo("en-US");
+                if (DateTime.TryParseExact(tempEnd, "h:mm tt", enUS, DateTimeStyles.None, out var result2))
+                {
+                    retMaint.end = retMaint.start.Date + retMaint.end.TimeOfDay;
+                }
             }
+            catch (NullReferenceException)
+            {
+                try
+                {
+                    string xpathRoot = "/html/body/div[4]/div[2]/div[1]/div/ul[3]";
+                    string xpathTarget = $"/li[{tId}]";
+
+
+                    retMaint.title = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a/div/p")[0].InnerText;
+                    retMaint.link = siteRoot + doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/a")[0].Attributes[0].Value;
+                    //retMaint.time = doc.DocumentNode.SelectNodes(xpathRoot + xpathTarget + "/header/time")[0].InnerText;
+
+                    retMaint.id = retMaint.link.Substring(retMaint.link.LastIndexOf('/') + 1);
+
+                    Uri.TryCreate(retMaint.link, UriKind.RelativeOrAbsolute, out uriResult);
+                    doc = _web.Load(uriResult);
+
+                    retMaint.desc = doc.DocumentNode.SelectNodes("/html/body/div[4]/div[2]/div[1]/article/div[1]")[0].InnerText;
+
+                    string tempStart;
+                    string tempEnd;
+                    retMaint.desc = retMaint.desc.Substring(retMaint.desc.IndexOf(']') + 1);
+                    retMaint.desc = retMaint.desc.Substring(0, retMaint.desc.IndexOf('('));
+                    retMaint.desc = retMaint.desc.Trim();
+                    tempStart = retMaint.desc.Substring(0, retMaint.desc.IndexOf('t'));
+                    tempEnd = retMaint.desc.Remove(retMaint.desc.IndexOf(tempStart), tempStart.Length);
+                    tempEnd = tempEnd.Substring(tempEnd.IndexOf('o') + 1);
+                    tempEnd = tempEnd.Replace(".", "");
+                    tempEnd = tempEnd.Trim();
+                    tempStart = tempStart.Replace(".", "");
+                    tempStart = tempStart.Trim();
+
+                    retMaint.start = DateTime.Parse(tempStart);
+                    retMaint.end = DateTime.Parse(tempEnd);
+                    CultureInfo enUS = new CultureInfo("en-US");
+                    if (DateTime.TryParseExact(tempEnd, "h:mm tt", enUS, DateTimeStyles.None, out var result2))
+                    {
+                        retMaint.end = retMaint.start.Date + retMaint.end.TimeOfDay;
+                    }
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Error in Maintenance retrieval, Defaulting to alternate execution.");
+
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Error in Maintenance retrieval, Alternate execution failed, skipping Maintenance retrieval.");
+                }
+                
+            }
+            
             
             return retMaint;
         }

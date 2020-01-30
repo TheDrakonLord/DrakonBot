@@ -155,6 +155,20 @@
       <author>TheDrakonLord</author>
       <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
     </event>
+    <event sid="5beda715-48e0-4c2c-b643-7cc6ed69666e">
+      <name>Innocece EX (Practice)</name>
+      <type>extreme</type>
+      <description>Hello Morning and afternoon and alternate squrrells friends.   We are shooting for an innocence ex practice runs.  Monday  ^^  come join us ^^</description>
+      <start>01/27/2020 19:00:00</start>
+      <end>01/27/2020 23:00:00</end>
+      <reminder>0</reminder>
+      <repeat>none</repeat>
+      <mentions>&lt;@&amp;473181362879332382&gt;</mentions>
+      <rsvps>N/A</rsvps>
+      <rsvpids>N/A</rsvpids>
+      <author>TheDrakonLord</author>
+      <authorURL>https://cdn.discordapp.com/avatars/110082150241435648/4adcc3b357ce5e8636196680331c7d0c.png?size=128</authorURL>
+    </event>
   </events>
   <settings>
     <TargetChannel>497532090670383135</TargetChannel>
@@ -267,12 +281,31 @@
       <name>Nathan King</name>
       <server>Exodus (Primal)</server>
     </NathanKing>
+    <KingNathan userId="264872323675324416">
+      <id>27638816</id>
+      <name>Nathan King</name>
+      <server>Exodus (Primal)</server>
+    </KingNathan>
+    <VenomSeed userId="249613509657100289">
+      <id>11725652</id>
+      <name>Vadden Summus</name>
+      <server>Exodus (Primal)</server>
+    </VenomSeed>
+    <mechromancer userId="224386837643264010">
+      <id>28315021</id>
+      <name>Arya Rohaen</name>
+      <server>Exodus (Primal)</server>
+    </mechromancer>
   </characters>
   <maintenance>
     <maint patch="5.15">
       <start>12/09/2019 21:00:00</start>
       <end>12/10/2019 04:00:00</end>
     </maint>
+    <lodeMaint>
+      <start>1/28/2020 18:00:00</start>
+      <end>1/28/2020 23:00:00</end>
+    </lodeMaint>
   </maintenance>
   <codes>
     <TheDrakonLord>
@@ -311,4 +344,11 @@
       <steam>N/A</steam>
     </lunatic>
   </codes>
+  <news>
+    <topics>c60c88dbe10067d1441cf2b359b265591f10fb7c</topics>
+    <notices>4020fb90ec34280eb246f61365a29dcf9e7d1339</notices>
+    <maint>dae6ee712f941fb90017570b723f87ffa4e62fa7</maint>
+    <updates>f6474bbf9ab51c20af9b09112235fabeb38d91b6</updates>
+    <status>4feb551544844d854e9d7a038145e9e6c9c1455d</status>
+  </news>
 </root>
