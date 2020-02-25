@@ -236,8 +236,7 @@ namespace HavocBot
                 {
                     // have the bot announce the event
                     havocBotClass.eventTriggered(entry.Key);
-                    // remove the event from the list of active events
-                    globals.eventCalendar.Remove(entry.Key);
+                                       
                     // exit the loop, any remaining events will be announced 1 minute later
                     break;
                 }
