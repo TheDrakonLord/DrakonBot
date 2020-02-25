@@ -105,7 +105,7 @@ namespace HavocBot
             fcMembers,
             Everyone
         }
-        private mentionOptions _mentions = mentionOptions.none;
+        private string  _mentions = "none";
         //rsvps
         private List<string> _rsvps = new List<string>();
         private List<string> _rsvpID = new List<string>();
@@ -348,42 +348,11 @@ namespace HavocBot
         {
             get
             {
-                return _mentions switch
-                {
-                    mentionOptions.none => "N/A",
-                    mentionOptions.rsvp => "rsvp",
-                    mentionOptions.fcMembers => "<@&473181362879332382>",
-                    mentionOptions.Everyone => "<@&236955200311525377>",
-                    _ => "N/A",
-                };
+                return _mentions;
             }
             set
             {
-                System.Diagnostics.Contracts.Contract.Requires(value != null);
-                switch (value.ToLower())
-                {
-                    case "none":
-                    case "N/A":
-                        _mentions = mentionOptions.none;
-                        break;
-                    case "everyone":
-                    case "<@&236955200311525377>":
-                        _mentions = mentionOptions.Everyone;
-                        break;
-                    case "fc":
-                    case "fc members":
-                    case "fcmembers":
-                    case "<@&473181362879332382>":
-                        _mentions = mentionOptions.fcMembers;
-                        break;
-                    case "rsvp":
-                    case "rsvps":
-                        _mentions = mentionOptions.rsvp;
-                        break;
-                    default:
-                        _mentions = mentionOptions.none;
-                        break;
-                }
+                _mentions = value;
             }
         }
 
