@@ -948,7 +948,7 @@ namespace HavocBot
                     rsvp = (from el in eventRetrieve.Descendants("rsvpids")
                             select el).Last();
 
-                    rsvp.Value = retrievedEvent.saveRSVPs();
+                    rsvp.Value = retrievedEvent.allRSVPIDs();
 
                     globals.commandStorage.Save(globals.storageFilePath);
                     await Context.Channel.SendMessageAsync($"You have sucessfully removed your RSVP for the event {name}").ConfigureAwait(false);
@@ -973,7 +973,8 @@ namespace HavocBot
                     rsvp = (from el in eventRetrieve.Descendants("rsvpids")
                             select el).Last();
 
-                    rsvp.Value = retrievedEvent.saveRSVPs();
+                    rsvp.Value = retrievedEvent.allRSVPIDs();
+
 
                     globals.commandStorage.Save(globals.storageFilePath);
                     await Context.Channel.SendMessageAsync($"You have successfully RSVP'd for the event {name}").ConfigureAwait(false);
