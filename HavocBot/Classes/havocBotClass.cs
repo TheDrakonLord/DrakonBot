@@ -121,7 +121,7 @@ namespace HavocBot
                 string mentions = retrievedEvent.mentions;
                 string caption = $"The event \"{name}\" has begun";
 
-                if (mentions.Contains("<@&"))
+                if (!mentions.Equals("none") && !mentions.Equals("rsvp"))
                 {
                     caption = $"{mentions} {caption}";
                 }
