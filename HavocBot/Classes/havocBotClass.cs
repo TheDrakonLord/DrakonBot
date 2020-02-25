@@ -83,7 +83,8 @@ namespace HavocBot
             await _client.StartAsync().ConfigureAwait(false);
             await _client.SetGameAsync(globals.statusMessage, null, ActivityType.Playing).ConfigureAwait(false);
 
-
+            _client.JoinedGuild += joinedGuild;
+            _client.LeftGuild += leftGuild;
             
 
             // load the commands
@@ -226,6 +227,27 @@ namespace HavocBot
             newsEmbed = globals.xivNews.generateEmbed(retMaint);
             _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
 
+        }
+
+
+        private async Task joinedGuild(SocketGuild newGuild)
+        {
+
+        }
+
+        private async Task leftGuild(SocketGuild leavingGuild)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static void statusChange(string message)
+        {
+            _client.SetGameAsync(message, null, ActivityType.Playing).ConfigureAwait(false);
         }
     }
 }

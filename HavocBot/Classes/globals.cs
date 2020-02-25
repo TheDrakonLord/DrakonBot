@@ -158,6 +158,8 @@ namespace HavocBot
             commandStorage.Element("settings").Element("StatusMessage").SetValue(status);
 
             commandStorage.Save(storageFilePath);
+
+            havocBotClass.statusChange(status);
         }
 
         /// <summary>
