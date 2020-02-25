@@ -386,7 +386,9 @@ namespace HavocBot
                 tempStart = tempStart.Trim();
 
                 retMaint.start = DateTime.Parse(tempStart);
+                retMaint.start.AddHours(2);
                 retMaint.end = DateTime.Parse(tempEnd);
+                retMaint.end.AddHours(2);
                 CultureInfo enUS = new CultureInfo("en-US");
                 if (DateTime.TryParseExact(tempEnd, "h:mm tt", enUS, DateTimeStyles.None, out var result2))
                 {
@@ -426,7 +428,9 @@ namespace HavocBot
                     tempStart = tempStart.Trim();
 
                     retMaint.start = DateTime.Parse(tempStart);
+                    retMaint.start.AddHours(2);
                     retMaint.end = DateTime.Parse(tempEnd);
+                    retMaint.end.AddHours(2);
                     CultureInfo enUS = new CultureInfo("en-US");
                     if (DateTime.TryParseExact(tempEnd, "h:mm tt", enUS, DateTimeStyles.None, out var result2))
                     {

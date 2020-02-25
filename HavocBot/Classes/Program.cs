@@ -213,12 +213,7 @@ namespace HavocBot
             _tmrCalendar.Enabled = true;
             _tmrNews.Enabled = true;
 
-            globals.xivNews.getTopic(1);
-            globals.xivNews.getMaint(1);
-            globals.xivNews.getNews(1, newsType.Notice);
-            globals.xivNews.getNews(1, newsType.Status);
-            globals.xivNews.getNews(1, newsType.Update);
-
+            
             // start the bot
             await botThread.mainAsync().ConfigureAwait(true);
 
