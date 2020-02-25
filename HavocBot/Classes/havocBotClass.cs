@@ -162,7 +162,13 @@ namespace HavocBot
                 globals.commandStorage.Save(globals.storageFilePath);
                 if (!retrievedEvent.repeat.Equals("none"))
                 {
+                    globals.eventCalendar[name] = retrievedEvent.startDate;
                     Console.WriteLine("Advanced date based on repeat");
+                }
+                else
+                {
+                    // remove the event from the list of active events
+                    globals.eventCalendar.Remove(name);
                 }
             }
             else
