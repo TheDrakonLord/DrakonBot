@@ -63,6 +63,8 @@ namespace HavocBot
         {
             System.Diagnostics.Contracts.Contract.Requires(name != null);
             System.Diagnostics.Contracts.Contract.Requires(context != null);
+            
+            string userID = $"u{context.User.Id.ToString()}";
             try
             {
 
@@ -74,8 +76,7 @@ namespace HavocBot
             req.Content.ReadAsStringAsync().Result
             );
             //store the data in the xml file
-            globals.commandStorage.Element("characters").Add(new XElement(context.User.Username,
-                    new XAttribute("userId", context.User.Id.ToString()),
+            globals.commandStorage.Element("characters").Add(new XElement(userID,
                         new XElement("id", (string)character.Results[0].ID),
                         new XElement("name", (string)character.Results[0].Name),
                         new XElement("server", (string)character.Results[0].Server)
@@ -114,14 +115,13 @@ namespace HavocBot
             string charServer;
             string charTitle;
             string charRace;
+            string charTribe;
             string charLevel;
             string charJob;
             string charFC;
-            string charFcId;
             string charAvatar;
-            string charTitleId;
-            string charRaceId;
             string charPortrait;
+            string userID = $"u{context.User.Id.ToString()}";
 
             try
             {
@@ -130,8 +130,7 @@ namespace HavocBot
                  from el in globals.commandStorage.Elements("characters")
                  select el;
 
-                charRetrieve = from el in charRetrieve.Elements(context.User.Username)
-                                where (string)el.Attribute("userId") == context.User.Id.ToString()
+                charRetrieve = from el in charRetrieve.Elements(userID)
                                 select el;
 
                 string strCharId = (string)
@@ -148,49 +147,36 @@ namespace HavocBot
                  (from el in charRetrieve.Descendants("server")
                   select el).Last();
 
-                Uri.TryCreate($"https://xivapi.com/character/{charId}", UriKind.RelativeOrAbsolute, out Uri uriResult);
+                Uri.TryCreate($"https://xivapi.com/character/{charId}?extended=1&data=FC,CJ", UriKind.RelativeOrAbsolute, out Uri uriResult);
                 HttpResponseMessage req = await _client.GetAsync(uriResult).ConfigureAwait(false);
                 dynamic character = JsonConvert.DeserializeObject(
                 req.Content.ReadAsStringAsync().Result
                 );
 
-                charTitleId = character.Character.Title;
-                charRaceId = character.Character.Race;
+                charTitle = character.Character.Title.Name;
+                charRace = character.Character.Race.Name;
+                charTribe = character.Character.Tribe.Name;
+                try
+                {
+                    charJob = character.Character.ActiveClassJob.Job.Name;
+                }
+                catch (Exception)
+                {
+                    charJob = character.Character.ActiveClassJob.Class.Name;
+                }
                 charLevel = character.Character.ActiveClassJob.Level;
-                charJob = character.Character.ActiveClassJob.Name;
                 charAvatar = character.Character.Avatar;
-                charFcId = character.Character.FreeCompanyId;
+                charFC = character.FreeCompany.Name;
+                charServer = character.FreeCompany.Server;
                 charPortrait = character.Character.Portrait;
 
-                Uri.TryCreate($"https://xivapi.com/freecompany/{charFcId}", UriKind.RelativeOrAbsolute, out uriResult);
-                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
-                character = JsonConvert.DeserializeObject(
-                req.Content.ReadAsStringAsync().Result
-                );
-
-                charFC = character.FreeCompany.Name;
-
-                Uri.TryCreate($"https://xivapi.com/title/{charTitleId}", UriKind.RelativeOrAbsolute, out uriResult);
-                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
-                character = JsonConvert.DeserializeObject(
-                req.Content.ReadAsStringAsync().Result
-                );
-
-                charTitle = character.Name;
-
-                Uri.TryCreate($"https://xivapi.com/race/{charRaceId}", UriKind.RelativeOrAbsolute, out uriResult);
-                req = await _client.GetAsync(uriResult).ConfigureAwait(false);
-                character = JsonConvert.DeserializeObject(
-                req.Content.ReadAsStringAsync().Result
-                );
-
-                charRace = character.Name;
+                
 
                 //create an embed based off of the loaded event
                 var charEmbed = new EmbedBuilder()
                 {
                 };
-                charEmbed.WithDescription($"{charRace} \nLevel {charLevel} {charJob}\n<{charFC}> on {charServer}");
+                charEmbed.WithDescription($"{charRace} {charTribe}\nLevel {charLevel} {charJob}\n<{charFC}> on {charServer}");
                 charEmbed.WithAuthor($"{charName}, {charTitle}", charAvatar, $"https://na.finalfantasyxiv.com/lodestone/character/{charId}/");
                 charEmbed.WithImageUrl(charPortrait);
                 charEmbed.WithCurrentTimestamp();
@@ -230,6 +216,7 @@ namespace HavocBot
             string charRaceId;
             string charPortrait;
             SocketGuildUser user = null;
+            string uID = $"u{context.User.Id.ToString()}";
 
             if (ulong.TryParse(userid, out ulong ulongId))
             {
@@ -246,8 +233,7 @@ namespace HavocBot
                  from el in globals.commandStorage.Elements("characters")
                  select el;
 
-                charRetrieve = from el in charRetrieve.Elements(user.Username)
-                               where (string)el.Attribute("userId") == user.Id.ToString()
+                charRetrieve = from el in charRetrieve.Elements(uID)
                                select el;
 
                 string strCharId = (string)
