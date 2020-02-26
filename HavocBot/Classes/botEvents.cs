@@ -114,6 +114,9 @@ namespace HavocBot
         //author Avatar
         private System.Uri _authorURL = null;
 
+        //guild
+        private string _guild;
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -524,6 +527,15 @@ namespace HavocBot
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string guild
+        {
+            get { return _guild; }
+            set { _guild = value;  }
         }
     }
 }

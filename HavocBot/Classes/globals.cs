@@ -49,16 +49,11 @@ namespace HavocBot
         /// lists all active events
         /// </summary>
         public static Dictionary<string, DateTime> eventCalendar = new Dictionary<string, DateTime>();
-        
-        /// <summary>
-        /// Holds the ID of the channel commands are permitted in
-        /// </summary>
-        public static ulong targetChannel = 622084719030304810;
 
         /// <summary>
-        /// Holds the ID of the channel events should be announced and permitted in
+        /// 
         /// </summary>
-        public static ulong targetEventChannel = 622084719030304810;
+        public static Dictionary<string, ulong[]> guildSettings = new Dictionary<string, ulong[]>();
 
         /// <summary>
         /// Status message the bot displays on the server
@@ -74,6 +69,11 @@ namespace HavocBot
         /// holds the data and commands for accessing lodestone news items
         /// </summary>
         public static ffxivNews xivNews;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static List<string> allGuilds;
 
         /// <summary>
         /// 
@@ -113,7 +113,8 @@ namespace HavocBot
                         new XElement("rsvps", storedEvent.allRSVPs()),
                         new XElement("rsvpids", storedEvent.allRSVPIDs()),
                         new XElement("author", storedEvent.author),
-                        new XElement("authorURL", storedEvent.authorURL)
+                        new XElement("authorURL", storedEvent.authorURL),
+                        new XElement("guild", storedEvent.guild)
                         ));
             //add the event to the event calendar
             eventCalendar.Add(storedEvent.name, storedEvent.startDate);
@@ -125,11 +126,12 @@ namespace HavocBot
         /// Changes the target channel to the requested id
         /// </summary>
         /// <param name="target">id of the new target channel</param>
-        public static void changeTarget(ulong target)
+        /// <param name="guild">id of the target guild</param>
+        public static void changeTarget(ulong target, ulong guild)
         {
-            targetChannel = target;
+            guildSettings[$"g{guild.ToString()}"][0] = target;
 
-            commandStorage.Element("settings").Element("TargetChannel").SetValue(target);
+            commandStorage.Element("settings").Element($"g{guild}").Element("TargetChannel").SetValue(target);
 
             commandStorage.Save(storageFilePath);
         }
@@ -138,11 +140,12 @@ namespace HavocBot
         /// Changes the target channel to the requested id
         /// </summary>
         /// <param name="target">id of the new target channel</param>
-        public static void changeEventTarget(ulong target)
+        /// <param name="guild">id of the target guild</param>
+        public static void changeEventTarget(ulong target, ulong guild)
         {
-            targetEventChannel = target;
+            guildSettings[$"g{guild.ToString()}"][0] = target;
 
-            commandStorage.Element("settings").Element("TargetEventChannel").SetValue(target);
+            commandStorage.Element("settings").Element($"g{guild}").Element("TargetEventChannel").SetValue(target);
 
             commandStorage.Save(storageFilePath);
         }
@@ -217,6 +220,9 @@ namespace HavocBot
                 string testAuthorURL = (string)
                     (from el in eventRetrieve.Descendants("authorURL")
                      select el).Last();
+                string testGuild = (string)
+                    (from el in eventRetrieve.Descendants("guild")
+                     select el).Last();
                 retrievedEvent = new botEvents(testName, DateTime.Parse(testStart), DateTime.Parse(testEnd), globals.commandStorage)
                 {
                     type = testtype,
@@ -229,6 +235,7 @@ namespace HavocBot
                 retrievedEvent.author = testAuthor;
                 Uri.TryCreate(testAuthorURL, UriKind.RelativeOrAbsolute, out Uri uriResult);
                 retrievedEvent.authorURL = uriResult;
+                retrievedEvent.guild = testGuild;
                 return true;
             }
             catch (InvalidOperationException)
