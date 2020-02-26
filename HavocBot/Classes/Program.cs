@@ -84,10 +84,11 @@ namespace HavocBot
                 XElement NewCommandData = new XElement("root");
                 NewCommandData.Add(
                 new XElement("events", null),
+                new XElement("StatusMessage", "Hello There"),
                 new XElement("settings",
-                    new XElement("TargetChannel", "622084719030304810"),
-                    new XElement("TargetEventChannel", "623528068358733824"),
-                    new XElement("StatusMessage", "Hello There")),
+                    new XElement("g622084719030304806",
+                        new XElement("TargetChannel", "622084719030304810"),
+                        new XElement("TargetEventChannel", "623528068358733824"))),
                 new XElement("images",
                         new XElement("diadem", "https://i.imgur.com/n08fbk9.png"),
                         new XElement("dungeon", "https://i.imgur.com/yrwlXyE.png"),
@@ -105,20 +106,24 @@ namespace HavocBot
                         new XElement("trial", "https://i.imgur.com/FormlqY.png"),
                         new XElement("movie", "https://i.imgur.com/s0nkwot.png"),
                         new XElement("jackbox", "https://i.imgur.com/kVJfuMV.png")),
-                    new XElement("characters", null),
-                    new XElement("maintenance",
-                        new XElement("maint",
-                            new XAttribute("patch", "0.0"),
-                            new XElement("start", null),
-                            new XElement("end", null))),
-                    new XElement("codes", null),
-                    new XElement("news",
-                        new XElement("topics", "3f999b278389c9fe9dfe3362f477059577df769e"),
-                        new XElement("notices", "bc41a298e01c832f9b552c35d5314392f7edd479"),
-                        new XElement("maint", "f66590bde2734203fa56e32c82780681f155cd59"),
-                        new XElement("updates", "58cc5a4cb0c56567da42d0fa08e696097b755cb3"),
-                        new XElement("status", "8a2616e2d864f35449d97551312ca11d1d23896d"))
-                    );
+                new XElement("characters", null),
+                new XElement("maintenance",
+                    new XElement("maint",
+                        new XAttribute("patch", "0.0"),
+                            new XElement("start", "01/01/2001"),
+                            new XElement("end", "01/01/2001")),
+                    new XElement("lodeMaint",
+                            new XElement("start", "01/01/2001"),
+                            new XElement("end", "01/01/2001"))),
+                new XElement("codes", null),                new XElement("guilds",
+                    new XElement("guild", "622084719030304806")),
+                new XElement("news",
+                    new XElement("topics", "3f999b278389c9fe9dfe3362f477059577df769e"),
+                    new XElement("notices", "bc41a298e01c832f9b552c35d5314392f7edd479"),
+                    new XElement("maint", "f66590bde2734203fa56e32c82780681f155cd59"),
+                    new XElement("updates", "58cc5a4cb0c56567da42d0fa08e696097b755cb3"),
+                    new XElement("status", "8a2616e2d864f35449d97551312ca11d1d23896d")
+                    ));
                 NewCommandData.Save(globals.storageFilePath);
                 globals.commandStorage = XElement.Load(globals.storageFilePath);
             }
@@ -169,7 +174,8 @@ namespace HavocBot
                             new XElement("rsvps", retrievedEvent.allRSVPs()),
                             new XElement("rsvpids", retrievedEvent.allRSVPIDs()),
                             new XElement("author", retrievedEvent.author),
-                            new XElement("authorURL", retrievedEvent.authorURL)
+                            new XElement("authorURL", retrievedEvent.authorURL),
+                            new XElement("guild", retrievedEvent.guild)
                         ));
                     }
                 }
@@ -179,21 +185,20 @@ namespace HavocBot
             IEnumerable<XElement> settingRetrieve =
                  from el in globals.commandStorage.Elements("settings")
                  select el;
+            settingRetrieve = settingRetrieve.Elements();
 
-            globals.targetChannel = (ulong)
-                 (from el in settingRetrieve.Descendants("TargetChannel")
-                  select el).First();
+            foreach (XElement x in settingRetrieve)
+            {
+                    string name = x.Name.LocalName;
+                    ulong[] data = { ulong.Parse(x.Element("TargetChannel").Value), ulong.Parse(x.Element("TargetEventChannel").Value) };
+                    globals.guildSettings.Add(name, data);
+               
+            }
 
-            globals.targetEventChannel = (ulong)
-                 (from el in settingRetrieve.Descendants("TargetEventChannel")
-                  select el).First();
 
-            globals.statusMessage = (string)
-                 (from el in settingRetrieve.Descendants("StatusMessage")
-                  select el).First();
+            globals.statusMessage = (string)globals.commandStorage.Element("StatusMessage").Value;
 
-            settingRetrieve =
-                 from el in globals.commandStorage.Elements("maintenance")
+            settingRetrieve = from el in globals.commandStorage.Elements("maintenance")
                  select el;
             settingRetrieve = from el in settingRetrieve.Elements("lodeMaint")
                             select el;

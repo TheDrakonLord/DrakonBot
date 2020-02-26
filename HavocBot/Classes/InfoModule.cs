@@ -50,7 +50,7 @@ namespace HavocBot
         public async Task getCharAsync([Summary("Server Character is on")] string server, [Remainder][Summary("Name of character to be save")] string name)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.getCharacter(name, server, Context);
@@ -69,7 +69,7 @@ namespace HavocBot
         public async Task showCharAsync()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context);
@@ -90,7 +90,7 @@ namespace HavocBot
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             System.Diagnostics.Contracts.Contract.Requires(userid != null);
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 string trimmedId = userid.Replace("<", "");
                 trimmedId = trimmedId.Replace(">", "");
@@ -112,7 +112,7 @@ namespace HavocBot
         [Summary("displays time until maintenance")]
         public async Task showMaintCoundown()
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 await showMaint().ConfigureAwait(false);
                 Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: maint"} by {Context.User.Username}");
@@ -196,7 +196,7 @@ namespace HavocBot
         [Summary("saves a specific friend code")]
         public async Task saveCodeAsync([Summary("Platform the code belongs to")] string platform, [Remainder][Summary("Code for the specified platform")] string code)
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: myCode"} by {Context.User.Username}");
                 await saveCode(platform, code).ConfigureAwait(false);
@@ -212,32 +212,32 @@ namespace HavocBot
         public async Task saveCode(string platform, string code)
         {
             System.Diagnostics.Contracts.Contract.Requires(platform != null);
-            if (globals.commandStorage.Element("codes").Elements(Context.User.Username).Any())
+            if (globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Elements(Context.User.Username).Any())
             {
                 switch (platform.ToLower())
                 {
 
                     case "psn":
                     case "playstation":
-                        globals.commandStorage.Element("codes").Element(Context.User.Username).Element("psn").Value = code;
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Element(Context.User.Id.ToString()).Element("psn").Value = code;
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "xbox":
                     case "xbl":
-                        globals.commandStorage.Element("codes").Element(Context.User.Username).Element("xbox").Value = code;
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Element(Context.User.Id.ToString()).Element("xbox").Value = code;
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "switch":
                     case "sw":
-                        globals.commandStorage.Element("codes").Element(Context.User.Username).Element("switch").Value = code;
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Element(Context.User.Id.ToString()).Element("switch").Value = code;
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "nin3ds":
-                        globals.commandStorage.Element("codes").Element(Context.User.Username).Element("nin3ds").Value = code;
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Element(Context.User.Id.ToString()).Element("nin3ds").Value = code;
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "steam":
-                        globals.commandStorage.Element("codes").Element(Context.User.Username).Element("steam").Value = code;
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Element(Context.User.Username).Element("steam").Value = code;
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     default:
@@ -254,8 +254,7 @@ namespace HavocBot
                     case "playstation":
                         try
                         {
-                            Console.WriteLine(Context.User.Username);
-                            globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
+                            globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Add(new XElement(Context.User.Username,
                             new XElement("psn", code),
                             new XElement("xbox", "N/A"),
                             new XElement("switch", "N/A"),
@@ -273,7 +272,7 @@ namespace HavocBot
                         break;
                     case "xbox":
                     case "xbl":
-                        globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Add(new XElement(Context.User.Username,
                             new XElement("psn", "N/A"),
                             new XElement("xbox", code),
                             new XElement("switch", "N/A"),
@@ -284,7 +283,7 @@ namespace HavocBot
                         break;
                     case "switch":
                     case "sw":
-                        globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Add(new XElement(Context.User.Username,
                             new XElement("psn", "N/A"),
                             new XElement("xbox", "N/A"),
                             new XElement("switch", code),
@@ -294,7 +293,7 @@ namespace HavocBot
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "nin3ds":
-                        globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Add(new XElement(Context.User.Username,
                             new XElement("psn", "N/A"),
                             new XElement("xbox", "N/A"),
                             new XElement("switch", "N/A"),
@@ -304,7 +303,7 @@ namespace HavocBot
                         await Context.Channel.SendMessageAsync("Code successfully added").ConfigureAwait(false);
                         break;
                     case "steam":
-                        globals.commandStorage.Element("codes").Add(new XElement(Context.User.Username,
+                        globals.commandStorage.Element("codes").Element($"g{Context.Guild.Id.ToString()}").Add(new XElement(Context.User.Username,
                             new XElement("psn", "N/A"),
                             new XElement("xbox", "N/A"),
                             new XElement("switch", "N/A"),
@@ -330,7 +329,7 @@ namespace HavocBot
         [Summary("gets all the codes in the server")]
         public async Task getCodesAsync()
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes()"} by {Context.User.Username}");
                 await getCodes().ConfigureAwait(false);
@@ -346,7 +345,7 @@ namespace HavocBot
         [Summary("gets all codes for a specific user")]
         public async Task getCodesAsync([Remainder][Summary("user to retrive codes for")] string username)
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes(Username)"} by {Context.User.Username}");
                 await getCodes(username).ConfigureAwait(false);
@@ -361,7 +360,7 @@ namespace HavocBot
         [Summary("gets all codes for the current user")]
         public async Task getMyCodesAsync()
         {
-            if (Context.Channel.Id == globals.targetChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: mycodes"} by {Context.User.Username}");
                 await getCodes(Context.User.Username).ConfigureAwait(false);
@@ -377,6 +376,9 @@ namespace HavocBot
             IEnumerable<XElement> codeDatabase =
                  from el in globals.commandStorage.Elements("codes")
                  select el;
+
+            codeDatabase = from el in codeDatabase.Elements($"g{Context.Guild.Id.ToString()}")
+                           select el;
 
             codeDatabase = codeDatabase.Elements();
 
@@ -423,6 +425,9 @@ namespace HavocBot
                  from el in globals.commandStorage.Elements("codes")
                  select el;
 
+            codeDatabase = from el in codeDatabase.Elements($"g{Context.Guild.Id.ToString()}")
+                           select el;
+
             IEnumerable<XElement> userCodes = from el in codeDatabase.Elements(Context.User.Username)
                             select el;
 
@@ -455,7 +460,7 @@ namespace HavocBot
                 Title = "Available Commands"
             };
 
-            if (Context.Channel.Id == globals.targetEventChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
             {
                 helpEmbed.AddField("!help <command>", "Displays a detailed explanation of the specified command");
                 helpEmbed.AddField("!newEvent", "Creates a new event based on the specified details. See detailed description for more info");
@@ -469,7 +474,7 @@ namespace HavocBot
                 helpEmbed.AddField("!setTarget", "Enables the use of normal commands in the current channel");
                 helpEmbed.AddField("!setEventTarget", "Enables the use of event commands in the current channel");
                 helpEmbed.AddField("!addMaint <start> <end> <patch>", "Adds maitenence to the maint command. Admin use only");
-                if (Context.Channel.Id == globals.targetChannel)
+                if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
                 {
                     helpEmbed.AddField("!iam <server> <name>", "Saves your FFXIV character data");
                     helpEmbed.AddField("!whoami", "Displays your FFXIV Character Data, shows an error if you have never used !iam");
@@ -502,16 +507,20 @@ namespace HavocBot
             patchEmbed.WithTitle("Version: 0.3.2.1");
 
             patchEmbed.AddField("**Changes**",
-                "--Added FFXIV Lodestone News Functionality (Beta)\n" +
-                "--!maint is now automated\n" +
-                "--Performance improvements\n" +
-                "--Addressed an issue where if the structure of the lodestone changed (most often during lodestone maintenance or when a news item was pinned) news retrieval would encounter an exception and cause unexpected behavior");
+                "--Added support for multiple discord servers\n" +
+                "--Added the ability for events to mention any role or user\n" +
+                "--Addressed an issue where the bot would not properly update its status message\n " +
+                "--Addressed an issue where events would not repeat until the bot was restarted\n" +
+                "--Addressed an issue where event announcments were not tagging users\n" +
+                "--Addressed an issue where users with non-alphanumeric characters in their discord username could not use !iam or !whoami" +
+                "\n\n **Known Issue:**\n" +
+                "--!newevent does not support its optional parameters. A fix is in the works for this issue. Please use !editevent in the meantime");
 
-            patchEmbed.WithFooter("Emergency Patch 0.3.2.1");
-            patchEmbed.WithTimestamp(new DateTimeOffset(2020, 01, 30, 16, 00, 00, new TimeSpan(-6, 0, 0)));
+            patchEmbed.WithFooter("Emergency Patch 0.4.0.0");
+            patchEmbed.WithTimestamp(new DateTimeOffset(2020, 02, 26, 12, 50, 00, new TimeSpan(-6, 0, 0)));
             patchEmbed.WithColor(Color.Gold);
 
-            await Context.Channel.SendMessageAsync("Displaying Help", false, patchEmbed.Build()).ConfigureAwait(false);
+            await Context.Channel.SendMessageAsync("Displaying patch notes", false, patchEmbed.Build()).ConfigureAwait(false);
         }
 
 
@@ -652,7 +661,7 @@ namespace HavocBot
         [Summary("Displays an event that matches the specified name")]
         public async Task showEventAsync([Remainder] [Summary("The name of the event to display")] string reqEvent)
         {
-            if (Context.Channel.Id == globals.targetEventChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
             {
                 Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: showEvent"} by {Context.User.Username}");
             await retrieveEvent(reqEvent, "Displaying Event").ConfigureAwait(false);
@@ -677,7 +686,7 @@ namespace HavocBot
             [Summary("type")] string type = "other", [Summary("mentions")] string mentions = "none",
             [Remainder] [Summary("Description")] string description = "N/A")
         {
-            if (Context.Channel.Id == globals.targetEventChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
             {
                 if (globals.eventCalendar.ContainsKey(name))
                 {
@@ -689,6 +698,10 @@ namespace HavocBot
                     Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: newEvent"} by {Context.User.Username}");
                     await createEvent(name, start, end, type, mentions, description).ConfigureAwait(false);
                 }
+            }
+            else
+            {
+                Console.WriteLine("error");
             }
         }
 
@@ -715,7 +728,7 @@ namespace HavocBot
         [Summary("Adds or Removes the user from the RSVP list of a specified event")]
         public async Task toggleRSVPAsync([Remainder] [Summary("name of specified event")] string name)
         {
-            if (Context.Channel.Id == globals.targetEventChannel)
+            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
             {
                 if (globals.eventCalendar.ContainsKey(name))
                 {
@@ -765,6 +778,7 @@ namespace HavocBot
                 storedEvent.type = type;
                 storedEvent.mentions = mentions;
                 storedEvent.description = description;
+                storedEvent.guild = Context.Guild.Id.ToString();
                 //add the event to the xml tree
                 globals.storeEvent(storedEvent);
                 //display the created event to the user
@@ -774,7 +788,6 @@ namespace HavocBot
             {
                 Console.WriteLine(ex.ToString());
                 await Context.Channel.SendMessageAsync("Error: An unknown error has occured").ConfigureAwait(false);
-                throw;
             }
 
         }
@@ -1022,18 +1035,19 @@ namespace HavocBot
         public async Task setTargetChannel()
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setTarget"} by {Context.User.Username}");
-            await storeTarget((Context.Channel.Id)).ConfigureAwait(false);
+            await storeTarget((Context.Channel.Id),Context.Guild.Id).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Stores and assigns the specified channel id as the new target channel
         /// </summary>
         /// <param name="target">the channel id to be set as the new target</param>
+        /// <param name="gID">The guild id of the target</param>
         /// <returns>returns task complete</returns>
-        public async Task storeTarget(ulong target)
+        public async Task storeTarget(ulong target, ulong gID)
         {
-            await Task.Run(() => globals.changeTarget(target)).ConfigureAwait(false);
-            await ReplyAsync("This channel will now recieve event announcments.").ConfigureAwait(false);
+            await Task.Run(() => globals.changeTarget(target, gID)).ConfigureAwait(false);
+            await ReplyAsync("This channel will now recieve utility announcments.").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1046,17 +1060,18 @@ namespace HavocBot
         public async Task setTargetEventChannel()
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setEventTarget"} by {Context.User.Username}");
-            await storeEventTarget((Context.Channel.Id)).ConfigureAwait(false);
+            await storeEventTarget((Context.Channel.Id), Context.Guild.Id).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Stores and assigns the specified channel id as the new target event channel
         /// </summary>
         /// <param name="target">the channel id to be set as the new target</param>
+        /// <param name="gID">The guild id of the target</param>
         /// <returns>returns task complete</returns>
-        public async Task storeEventTarget(ulong target)
+        public async Task storeEventTarget(ulong target, ulong gID)
         {
-            await Task.Run(() => globals.changeEventTarget(target)).ConfigureAwait(false);
+            await Task.Run(() => globals.changeEventTarget(target, gID)).ConfigureAwait(false);
             await ReplyAsync("This channel will now recieve event announcments.").ConfigureAwait(false);
         }
 

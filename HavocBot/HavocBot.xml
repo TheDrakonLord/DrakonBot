@@ -192,6 +192,11 @@
             advances the start and end date of the event based on the repeat
             </summary>
         </member>
+        <member name="P:HavocBot.botEvents.guild">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:HavocBot.commandHandler">
             <summary>
             Provides the framework for handling commands recieved from the user
@@ -451,14 +456,9 @@
             lists all active events
             </summary>
         </member>
-        <member name="F:HavocBot.globals.targetChannel">
+        <member name="F:HavocBot.globals.guildSettings">
             <summary>
-            Holds the ID of the channel commands are permitted in
-            </summary>
-        </member>
-        <member name="F:HavocBot.globals.targetEventChannel">
-            <summary>
-            Holds the ID of the channel events should be announced and permitted in
+            
             </summary>
         </member>
         <member name="F:HavocBot.globals.statusMessage">
@@ -474,6 +474,11 @@
         <member name="F:HavocBot.globals.xivNews">
             <summary>
             holds the data and commands for accessing lodestone news items
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.allGuilds">
+            <summary>
+            
             </summary>
         </member>
         <member name="F:HavocBot.globals.token">
@@ -497,17 +502,19 @@
             </summary>
             <param name="storedEvent">The botEvents to be stored in the xml file</param>
         </member>
-        <member name="M:HavocBot.globals.changeTarget(System.UInt64)">
+        <member name="M:HavocBot.globals.changeTarget(System.UInt64,System.UInt64)">
             <summary>
             Changes the target channel to the requested id
             </summary>
             <param name="target">id of the new target channel</param>
+            <param name="guild">id of the target guild</param>
         </member>
-        <member name="M:HavocBot.globals.changeEventTarget(System.UInt64)">
+        <member name="M:HavocBot.globals.changeEventTarget(System.UInt64,System.UInt64)">
             <summary>
             Changes the target channel to the requested id
             </summary>
             <param name="target">id of the new target channel</param>
+            <param name="guild">id of the target guild</param>
         </member>
         <member name="M:HavocBot.globals.changeStatus(System.String)">
             <summary>
@@ -790,11 +797,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:HavocBot.adminModule.storeTarget(System.UInt64)">
+        <member name="M:HavocBot.adminModule.storeTarget(System.UInt64,System.UInt64)">
             <summary>
             Stores and assigns the specified channel id as the new target channel
             </summary>
             <param name="target">the channel id to be set as the new target</param>
+            <param name="gID">The guild id of the target</param>
             <returns>returns task complete</returns>
         </member>
         <member name="M:HavocBot.adminModule.setTargetEventChannel">
@@ -804,11 +812,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:HavocBot.adminModule.storeEventTarget(System.UInt64)">
+        <member name="M:HavocBot.adminModule.storeEventTarget(System.UInt64,System.UInt64)">
             <summary>
             Stores and assigns the specified channel id as the new target event channel
             </summary>
             <param name="target">the channel id to be set as the new target</param>
+            <param name="gID">The guild id of the target</param>
             <returns>returns task complete</returns>
         </member>
         <member name="M:HavocBot.adminModule.setMaint(System.String,System.String,System.String)">

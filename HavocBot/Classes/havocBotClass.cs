@@ -82,9 +82,8 @@ namespace HavocBot
             await _client.LoginAsync(TokenType.Bot, globals.token).ConfigureAwait(false);
             await _client.StartAsync().ConfigureAwait(false);
             await _client.SetGameAsync(globals.statusMessage, null, ActivityType.Playing).ConfigureAwait(false);
-
-            _client.JoinedGuild += joinedGuild;
-            _client.LeftGuild += leftGuild;
+            //_client.JoinedGuild += joinedGuild;
+            //_client.LeftGuild += leftGuild;
             
 
             // load the commands
@@ -112,10 +111,11 @@ namespace HavocBot
         public static void eventTriggered(string name)
         {
             //identify the target channel (this is set in globals)
-            _mainChannel = _client.GetChannel(globals.targetEventChannel) as IMessageChannel;
+            
 
             if (globals.getEvent(name, out botEvents retrievedEvent))
             {
+                _mainChannel = _client.GetChannel(globals.guildSettings[$"g{retrievedEvent.guild.ToString()}"][1]) as IMessageChannel;
                 //build the embed to be sent to the target channel
                 EmbedBuilder eventEmbed;
                 string mentions = retrievedEvent.mentions;
@@ -184,13 +184,16 @@ namespace HavocBot
         /// </summary>
         public static void showDownTime()
         {
-            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
-            EmbedBuilder downEmbed = new EmbedBuilder();
+            foreach (var x in globals.guildSettings)
+            {
+                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
+                EmbedBuilder downEmbed = new EmbedBuilder();
 
-            downEmbed.WithTitle("Bot Undergoing Maintenance");
-            downEmbed.AddField("Details", "The bot is now undergoing maintenance, during this time the bot may go offline several times and may not respond to commands. Downtime is not expected to take longer than an hour.");
+                downEmbed.WithTitle("Bot Undergoing Maintenance");
+                downEmbed.AddField("Details", "The bot is now undergoing maintenance, during this time the bot may go offline several times and may not respond to commands. Downtime is not expected to take longer than an hour.");
 
-            _utilityChannel.SendMessageAsync("", false, downEmbed.Build());
+                _utilityChannel.SendMessageAsync("", false, downEmbed.Build());
+            }
         }
 
         /// <summary>
@@ -199,11 +202,13 @@ namespace HavocBot
         /// <param name="retTop"></param>
         public static void showNewsEmbed(topic retTop)
         {
-            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
-            EmbedBuilder newsEmbed;
-            newsEmbed = globals.xivNews.generateEmbed(retTop);
-            _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
-            
+            foreach (var x in globals.guildSettings)
+            {
+                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
+                EmbedBuilder newsEmbed;
+                newsEmbed = globals.xivNews.generateEmbed(retTop);
+                _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
+            }
         }
 
 
@@ -214,11 +219,13 @@ namespace HavocBot
         /// <param name="type"></param>
         public static void showNewsEmbed(news retNews, newsType type)
         {
-            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
-            EmbedBuilder newsEmbed;
-            newsEmbed = globals.xivNews.generateEmbed(retNews, type);
-            _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
-
+            foreach (var x in globals.guildSettings)
+            {
+                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
+                EmbedBuilder newsEmbed;
+                newsEmbed = globals.xivNews.generateEmbed(retNews, type);
+                _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
+            }
         }
 
 
@@ -228,23 +235,27 @@ namespace HavocBot
         /// <param name="retMaint"></param>
         public static void showNewsEmbed(maintNews retMaint)
         {
-            _utilityChannel = _client.GetChannel(globals.targetChannel) as IMessageChannel;
-            EmbedBuilder newsEmbed;
-            newsEmbed = globals.xivNews.generateEmbed(retMaint);
-            _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
-
+            foreach (var x in globals.guildSettings)
+            {
+                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
+                EmbedBuilder newsEmbed;
+                newsEmbed = globals.xivNews.generateEmbed(retMaint);
+                _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
+            }
         }
 
 
-        private async Task joinedGuild(SocketGuild newGuild)
-        {
+     //   private async Task joinedGuild(SocketGuild newGuild)
+     //   {
+     //       globals.allGuilds.Add(newGuild.Id.ToString());
+     //       globals.commandStorage.Element("guilds").Add(new XElement("guild", newGuild.Id.ToString()));
+     //       globals.commandStorage.Save(globals.storageFilePath);
+      //  }
 
-        }
-
-        private async Task leftGuild(SocketGuild leavingGuild)
-        {
-
-        }
+       // private async Task leftGuild(SocketGuild leavingGuild)
+       // {
+       //     Console.WriteLine($"The bot has left the guild id {leavingGuild.Id.ToString()}");
+       // }
 
         /// <summary>
         /// 
