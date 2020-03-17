@@ -31,7 +31,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Net;
-using HtmlAgilityPack;
 
 namespace HavocBot
 {
@@ -213,7 +212,6 @@ namespace HavocBot
 
             // instantiate the news class with loaded events
 
-            globals.xivNews = new ffxivNews();
             // start timer
             _tmrCalendar.Enabled = true;
             _tmrNews.Enabled = true;
@@ -261,8 +259,8 @@ namespace HavocBot
             }
             else
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Begin News Refresh");
-                globals.xivNews.refresh();
+                //Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Begin News Refresh");
+                //globals.xivNews.refresh();
             }
         }
     }

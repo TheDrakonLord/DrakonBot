@@ -504,20 +504,21 @@ namespace HavocBot
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
             var patchEmbed = new EmbedBuilder();
-            patchEmbed.WithTitle("Version: 0.3.2.1");
+            patchEmbed.WithTitle("Version: 0.4.1.0");
 
             patchEmbed.AddField("**Changes**",
-                "--Added support for multiple discord servers\n" +
-                "--Added the ability for events to mention any role or user\n" +
-                "--Addressed an issue where the bot would not properly update its status message\n " +
-                "--Addressed an issue where events would not repeat until the bot was restarted\n" +
-                "--Addressed an issue where event announcments were not tagging users\n" +
-                "--Addressed an issue where users with non-alphanumeric characters in their discord username could not use !iam or !whoami" +
+                "--The Music Feature is here!\n" +
+                "--Added the ability for users to play music in voice channels\n" +
+                "--Added the !join command to join a voice channel\n " +
+                "--Added the !leave command to leave a voice channel\n" +
+                "--Added the !play command to play a youtube link\n" +
+                "--Added the !stop command to stop playback\n" +
+                "--Removed the News feature in preparation for a total overall. We will soon be basing the feature in the twitter API instead" + 
                 "\n\n **Known Issue:**\n" +
                 "--!newevent does not support its optional parameters. A fix is in the works for this issue. Please use !editevent in the meantime");
 
-            patchEmbed.WithFooter("Emergency Patch 0.4.0.0");
-            patchEmbed.WithTimestamp(new DateTimeOffset(2020, 02, 26, 12, 50, 00, new TimeSpan(-6, 0, 0)));
+            patchEmbed.WithFooter("Patch 0.4.1.0");
+            patchEmbed.WithTimestamp(new DateTimeOffset(2020, 03, 17, 18, 00, 00, new TimeSpan(-6, 0, 0)));
             patchEmbed.WithColor(Color.Gold);
 
             await Context.Channel.SendMessageAsync("Displaying patch notes", false, patchEmbed.Build()).ConfigureAwait(false);
@@ -1159,6 +1160,71 @@ namespace HavocBot
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: startbotdowntime"} by {Context.User.Username}");
             await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
+        }
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class audioModule : ModuleBase<ICommandContext>
+    {
+        // Scroll down further for the AudioService.
+        // Like, way down
+        private readonly audioService _service = new audioService();
+
+        // You *MUST* mark these commands with 'RunMode.Async'
+        // otherwise the bot will not respond until the Task times out.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Command("join", RunMode = RunMode.Async)]
+        public async Task joinCmd(IVoiceChannel channel = null)
+        {
+            channel = channel ?? (Context.User as IGuildUser)?.VoiceChannel;
+            if (channel == null) { await Context.Channel.SendMessageAsync("User must be in a voice channel, or a voice channel must be passed as an argument."); return; }
+
+            // For the next step with transmitting audio, you would want to pass this Audio Client in to a service.
+            var audioClient = await channel.ConnectAsync();
+
+            await _service.joinAudio(Context.Guild, audioClient);
+            
+        }
+
+        // Remember to add preconditions to your commands,
+        // this is merely the minimal amount necessary.
+        // Adding more commands of your own is also encouraged.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Command("leave", RunMode = RunMode.Async)]
+        public async Task leaveCmd()
+        {
+            await _service.leaveAudio(Context.Guild).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="song"></param>
+        /// <returns></returns>
+        [Command("play", RunMode = RunMode.Async)]
+        public async Task playCmd([Remainder] string song)
+        {
+            await _service.loadAndPlay(Context.Guild, Context.Channel, song, _service).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="song"></param>
+        /// <returns></returns>
+        [Command("stop", RunMode = RunMode.Async)]
+        public async Task stopCmd()
+        {
+            await Task.Run(() => _service.endProcess());
         }
 
     }

@@ -196,54 +196,6 @@ namespace HavocBot
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="retTop"></param>
-        public static void showNewsEmbed(topic retTop)
-        {
-            foreach (var x in globals.guildSettings)
-            {
-                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
-                EmbedBuilder newsEmbed;
-                newsEmbed = globals.xivNews.generateEmbed(retTop);
-                _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="retNews"></param>
-        /// <param name="type"></param>
-        public static void showNewsEmbed(news retNews, newsType type)
-        {
-            foreach (var x in globals.guildSettings)
-            {
-                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
-                EmbedBuilder newsEmbed;
-                newsEmbed = globals.xivNews.generateEmbed(retNews, type);
-                _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="retMaint"></param>
-        public static void showNewsEmbed(maintNews retMaint)
-        {
-            foreach (var x in globals.guildSettings)
-            {
-                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
-                EmbedBuilder newsEmbed;
-                newsEmbed = globals.xivNews.generateEmbed(retMaint);
-                _utilityChannel.SendMessageAsync("", false, newsEmbed.Build());
-            }
-        }
-
 
      //   private async Task joinedGuild(SocketGuild newGuild)
      //   {

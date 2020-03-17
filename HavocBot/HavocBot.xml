@@ -4,6 +4,45 @@
         <name>HavocBot</name>
     </assembly>
     <members>
+        <member name="T:HavocBot.audioService">
+            <summary>
+            .
+            </summary>
+        </member>
+        <member name="M:HavocBot.audioService.joinAudio(Discord.IGuild,Discord.Audio.IAudioClient)">
+            <summary>
+            
+            </summary>
+            <param name="guild"></param>
+            <param name="client"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioService.leaveAudio(Discord.IGuild)">
+            <summary>
+            
+            </summary>
+            <param name="guild"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioService.loadAndPlay(Discord.IGuild,Discord.IMessageChannel,System.String,HavocBot.audioService)">
+            <summary>
+            
+            </summary>
+            <param name="guild"></param>
+            <param name="channel"></param>
+            <param name="link"></param>
+            <param name="service"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioService.sendAudioAsync(Discord.IGuild,Discord.IMessageChannel,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="guild"></param>
+            <param name="channel"></param>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
         <member name="T:HavocBot.botEvents">
             <summary>
             This class provides a data structure to store and load events
@@ -222,219 +261,26 @@
             <param name="messageParam">message recieved form the server</param>
             <returns>returns task complete</returns>
         </member>
-        <member name="T:HavocBot.newsType">
-            <summary>
-            Enum for identifying the type of a news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.newsType.Notice">
-            <summary>
-            news items originating from the notices section on the FFXIV Lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.newsType.Update">
-            <summary>
-            news items originating from the Updates section on the FFXIV Lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.newsType.Status">
-            <summary>
-            news items originating from the Statuses section on the FFXIV Lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.newsType.Topic">
-            <summary>
-            news items originating from the Topics section on the FFXIV Lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.newsType.Maintenance">
-            <summary>
-            news items originating from the Maintenance section on the FFXIV Lodestone
-            </summary>
-        </member>
-        <member name="T:HavocBot.topic">
-            <summary>
-            Structure for containing the data obtained from topic news items on the ffxiv lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.topic.title">
-            <summary>
-            Variable for storing the title of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.topic.image">
-            <summary>
-            Variable for storing the image of the topic news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.topic.desc">
-            <summary>
-            Variable for storing the description of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.topic.link">
-            <summary>
-            Variable for storing the link of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.topic.id">
-            <summary>
-            Variable for storing the unique identifier of the news item
-            </summary>
-        </member>
-        <member name="T:HavocBot.news">
-            <summary>
-            Structure for containing the data obtained from generic news items on the ffxiv lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.news.title">
-            <summary>
-            Variable for storing the title of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.news.link">
-            <summary>
-            Variable for storing the link of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.news.id">
-            <summary>
-            Variable for storing the unique identifier of the news item
-            </summary>
-        </member>
-        <member name="T:HavocBot.maintNews">
-            <summary>
-            Structure for containing the data obtained from maintenance news items on the ffxiv lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.maintNews.title">
-            <summary>
-            Variable for storing the title of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.maintNews.desc">
-            <summary>
-            Variable for storing the description of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.maintNews.link">
-            <summary>
-            Variable for storing the link of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.maintNews.id">
-            <summary>
-            Variable for storing the unique identifier of the news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.maintNews.start">
-            <summary>
-            Variable for storing the start date of the maintenance news item
-            </summary>
-        </member>
-        <member name="F:HavocBot.maintNews.end">
-            <summary>
-            Variable for storing the end date of the maintenance news item
-            </summary>
-        </member>
-        <member name="T:HavocBot.ffxivNews">
-            <summary>
-            Class for obtaining and handling ffxiv news items from the ffxiv lodestone website
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.siteRoot">
-            <summary>
-            Constant string containing the first portion of the ffxiv lodestone URL
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.topicsRoot">
-            <summary>
-            Constant string containing the portion of the URL leading to topic news items
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.latestRoot">
-            <summary>
-            Constant string containing the portion of the URL leading to a list of all the latest news items
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.noticesRoot">
-            <summary>
-            Constant string containing the portion of the URL leading to notice news items
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.maintRoot">
-            <summary>
-            Constant string containing the portion of the URL leading to maintenance news items
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.updatesRoot">
-            <summary>
-            Constant string containing the portion of the URL leading to update news items
-            </summary>
-        </member>
-        <member name="F:HavocBot.ffxivNews.statusRoot">
-            <summary>
-            Constant string containing the portion of the URL leading to status news items
-            </summary>
-        </member>
-        <member name="M:HavocBot.ffxivNews.#ctor">
-            <summary>
-            Basic constructor.
-            Initializes the web client
-            </summary>
-        </member>
-        <member name="M:HavocBot.ffxivNews.getTopic(System.Int32)">
-            <summary>
-            Obtains the needed data from a topic news item
-            </summary>
-            <param name="tId">the news item to retrieve. 1 is the newest. Each increment is one older news item. must be a positive integer</param>
-            <returns>Returns a topic structure containing the requested data</returns>
-        </member>
-        <member name="M:HavocBot.ffxivNews.getNews(System.Int32,HavocBot.newsType)">
-            <summary>
-            Obtains the needed data from a Notice, Update, or Status news item
-            </summary>
-            <param name="tId">the news item to retrieve. 1 is the newest. Each increment is one older news item. must be a positive integer</param>
-            <param name="type">The type of news item being requested. must be a newsType enum value</param>
-            <returns>Returns a news structure containing the requested data</returns>
-        </member>
-        <member name="M:HavocBot.ffxivNews.getMaint(System.Int32)">
-            <summary>
-            Obtains the needed data from a Maintenance news item
-            </summary>
-            <param name="tId">the news item to retrieve. 1 is the newest. Each increment is one older news item. must be a positive integer</param>
-            <returns>Returns a maintNews structure containing the requested data</returns>
-        </member>
-        <member name="M:HavocBot.ffxivNews.generateEmbed(HavocBot.topic)">
+        <member name="T:HavocBot.customColors">
             <summary>
             
             </summary>
-            <param name="retTop"></param>
-            <returns></returns>
         </member>
-        <member name="M:HavocBot.ffxivNews.generateEmbed(HavocBot.news,HavocBot.newsType)">
+        <member name="T:HavocBot.ffxivTwitter">
             <summary>
             
             </summary>
-            <param name="retNews"></param>
-            <param name="type"></param>
-            <returns></returns>
         </member>
-        <member name="M:HavocBot.ffxivNews.generateEmbed(HavocBot.maintNews)">
+        <member name="M:HavocBot.ffxivTwitter.#ctor">
             <summary>
             
             </summary>
-            <param name="retMaint"></param>
-            <returns></returns>
         </member>
-        <member name="M:HavocBot.ffxivNews.refresh">
+        <member name="M:HavocBot.ffxivTwitter.twitterStream">
             <summary>
-            Searches through the lodestone news pages and determines how many new news items there are
+            
             </summary>
-            <returns>Returns an integer array representing how many new news items are present
-            Each index corresponds to a news type
-            0: Topic, 1: Notice, 2: Update, 3: Status, 4: Maint
-            Value equals number of new items</returns>
+            <returns></returns>
         </member>
         <member name="T:HavocBot.globals">
             <summary>
@@ -469,11 +315,6 @@
         <member name="F:HavocBot.globals.lodestoneAPI">
             <summary>
             holds the api commands for accessing the lodestone
-            </summary>
-        </member>
-        <member name="F:HavocBot.globals.xivNews">
-            <summary>
-            holds the data and commands for accessing lodestone news items
             </summary>
         </member>
         <member name="F:HavocBot.globals.allGuilds">
@@ -566,25 +407,6 @@
             <summary>
             Displays message that the bot is undergoing maintenance
             </summary>
-        </member>
-        <member name="M:HavocBot.havocBotClass.showNewsEmbed(HavocBot.topic)">
-            <summary>
-            
-            </summary>
-            <param name="retTop"></param>
-        </member>
-        <member name="M:HavocBot.havocBotClass.showNewsEmbed(HavocBot.news,HavocBot.newsType)">
-            <summary>
-            
-            </summary>
-            <param name="retNews"></param>
-            <param name="type"></param>
-        </member>
-        <member name="M:HavocBot.havocBotClass.showNewsEmbed(HavocBot.maintNews)">
-            <summary>
-            
-            </summary>
-            <param name="retMaint"></param>
         </member>
         <member name="M:HavocBot.havocBotClass.statusChange(System.String)">
             <summary>
@@ -858,6 +680,37 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:HavocBot.audioModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:HavocBot.audioModule.joinCmd(Discord.IVoiceChannel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.leaveCmd">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.playCmd(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="song"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.stopCmd">
+            <summary>
+            
+            </summary>
+            <param name="song"></param>
+            <returns></returns>
+        </member>
         <member name="T:HavocBot.lodestone">
             <summary>
             Class for accessing the FFXIV lodestone API
@@ -891,6 +744,11 @@
             <param name="context">context in which the command was called</param>
             <param name="userid">User id to be looked up</param>
             <returns></returns>
+        </member>
+        <member name="T:HavocBot.moderationTools">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:HavocBot.program">
             <summary>
@@ -941,6 +799,47 @@
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+        </member>
+        <member name="T:HavocBot.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.ffmpeg">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.libsodium">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.libsodium_dll">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.opus">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.Resources.opus_dll">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
         </member>
     </members>
 </doc>
