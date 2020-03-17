@@ -66,11 +66,6 @@ namespace HavocBot
         public static lodestone lodestoneAPI = new lodestone();
 
         /// <summary>
-        /// holds the data and commands for accessing lodestone news items
-        /// </summary>
-        public static ffxivNews xivNews;
-
-        /// <summary>
         /// 
         /// </summary>
         public static List<string> allGuilds;
