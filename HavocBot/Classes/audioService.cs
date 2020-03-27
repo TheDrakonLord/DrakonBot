@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using Discord;
@@ -121,10 +119,11 @@ namespace HavocBot
         {
             return Process.Start(new ProcessStartInfo
             {
-                FileName = "ffmpeg.exe",
+                FileName = "ffmpeg",
                 Arguments = $"-hide_banner -loglevel panic -i \"{path}\" -ac 2 -f s16le -ar 48000 pipe:1",
                 UseShellExecute = false,
-                RedirectStandardOutput = true
+                RedirectStandardOutput = true,
+                Verb = "runas"
             });
         }
 
@@ -134,9 +133,10 @@ namespace HavocBot
             ProcessStartInfo taskkillStartInfo = new ProcessStartInfo
             {
                 FileName = "taskkill",
-                Arguments = "/F /IM ffmpeg.exe",
+                Arguments = "/F /IM ffmpeg",
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                Verb = "runas"
             };
 
             killFfmpeg.StartInfo = taskkillStartInfo;
