@@ -14,8 +14,14 @@ namespace HavocBot
     /// </summary>
     public class audioService
     {
-        
         private static Dictionary<ulong, IAudioClient> _connectedChannels = new Dictionary<ulong, IAudioClient>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public audioService()
+        {
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -41,7 +47,7 @@ namespace HavocBot
             if (_connectedChannels.Remove(guild.Id, out IAudioClient _client))
             {
                 await _client.StopAsync().ConfigureAwait(false);
-                //await Log(LogSeverity.Info, $"Disconnected from voice on {guild.Name}.");
+                //_client.Dispose();
             }
         }
 
@@ -70,7 +76,12 @@ namespace HavocBot
 
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"begin video playback"}");
 
-            await service.sendAudioAsync(guild, channel, _path).ConfigureAwait(false);
+            await service.sendAudioAsync(guild, channel, _path);
+
+            if (globals.playbackQueues[guild.Id].Peek() != null)
+            {
+                await loadAndPlay(guild, channel, globals.playbackQueues[guild.Id].Dequeue(), service);
+            }
         }
 
         /// <summary>
@@ -84,34 +95,28 @@ namespace HavocBot
         {
             System.Diagnostics.Contracts.Contract.Requires(channel != null);
             System.Diagnostics.Contracts.Contract.Requires(guild != null);
-            // Your task: Get a full path to the file if the value of 'path' is only a filename.
-            try
+            
+            if (!File.Exists(path))
             {
-                if (!File.Exists(path))
-                {
-                    await channel.SendMessageAsync("File does not exist.").ConfigureAwait(false);
-                    return;
-                }
-                //if (_connectedChannels.TryGetValue(guild.Id, out _client))
-                // {
-
-                IAudioClient _client = _connectedChannels[guild.Id];
-                    // Create FFmpeg using the previous example
-                    using (var ffmpeg = createProcess(path))
-                    using (var output = ffmpeg.StandardOutput.BaseStream)
-                    using (var discord = _client.CreatePCMStream(AudioApplication.Mixed))
-                    {
-                        try { await output.CopyToAsync(discord); }
-                        finally { await discord.FlushAsync(); }
-                    }
-
-                   
-               // }
+                await channel.SendMessageAsync(Properties.strings.audioFileNotFound).ConfigureAwait(false);
+                return;
             }
-            catch (Exception ex)
+                
+
+            IAudioClient _client = _connectedChannels[guild.Id];
+            // Create FFmpeg using the previous example
+            using (var ffmpeg = createProcess(path))
+            using (var output = ffmpeg.StandardOutput.BaseStream)
+            using (var discord = _client.CreatePCMStream(AudioApplication.Mixed))
             {
-                Console.WriteLine(ex.ToString());
+                try {
+                    globals.playbackPIDs[guild.Id] = ffmpeg.Id;
+                    await output.CopyToAsync(discord); }
+                finally { await discord.FlushAsync(); }
+
+                ffmpeg.Dispose();
             }
+            
             
         }
 
@@ -127,20 +132,15 @@ namespace HavocBot
             });
         }
 
-        public void endProcess()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        public void endProcess(int id)
         {
-            Process killFfmpeg = new Process();
-            ProcessStartInfo taskkillStartInfo = new ProcessStartInfo
-            {
-                FileName = "taskkill",
-                Arguments = "/F /IM ffmpeg",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                Verb = "runas"
-            };
-
-            killFfmpeg.StartInfo = taskkillStartInfo;
-            killFfmpeg.Start();
+            Process killProc = Process.GetProcessById(id);
+            killProc.Kill();
         }
     }
+    
 }

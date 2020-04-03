@@ -82,8 +82,9 @@ namespace HavocBot
             await _client.LoginAsync(TokenType.Bot, globals.token).ConfigureAwait(false);
             await _client.StartAsync().ConfigureAwait(false);
             await _client.SetGameAsync(globals.statusMessage, null, ActivityType.Playing).ConfigureAwait(false);
-            //_client.JoinedGuild += joinedGuild;
-            //_client.LeftGuild += leftGuild;
+            _client.JoinedGuild += joinedGuild;
+            _client.LeftGuild += leftGuild;
+            _client.Ready += botReady;
             
 
             // load the commands
@@ -196,18 +197,49 @@ namespace HavocBot
             }
         }
 
+        /// <summary>
+        /// Displays message that the bot is undergoing maintenance
+        /// </summary>
+        public static void showAllPatchNotes()
+        {
+            foreach (var x in globals.guildSettings)
+            {
+                _utilityChannel = _client.GetChannel(x.Value[0]) as IMessageChannel;
+                var patchEmbed = new EmbedBuilder();
+                patchEmbed.WithTitle(globals.versionID);
 
-     //   private async Task joinedGuild(SocketGuild newGuild)
-     //   {
-     //       globals.allGuilds.Add(newGuild.Id.ToString());
-     //       globals.commandStorage.Element("guilds").Add(new XElement("guild", newGuild.Id.ToString()));
-     //       globals.commandStorage.Save(globals.storageFilePath);
-      //  }
+                patchEmbed.AddField(" * *Changes * *", globals.patchnotes);
 
-       // private async Task leftGuild(SocketGuild leavingGuild)
-       // {
-       //     Console.WriteLine($"The bot has left the guild id {leavingGuild.Id.ToString()}");
-       // }
+                patchEmbed.WithFooter(globals.patchID);
+                patchEmbed.WithTimestamp(globals.patchDate);
+                patchEmbed.WithColor(Color.Gold);
+
+                _utilityChannel.SendMessageAsync("Displaying patch notes", false, patchEmbed.Build()).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newGuild"></param>
+        /// <returns></returns>
+        private async Task joinedGuild(SocketGuild newGuild)
+        {
+            globals.allGuilds.Add(newGuild.Id);
+            //globals.commandStorage.Element("guilds").Add(new XElement("guild", newGuild.Id.ToString()));
+            //globals.commandStorage.Save(globals.storageFilePath);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="leavingGuild"></param>
+        /// <returns></returns>
+        private async Task leftGuild(SocketGuild leavingGuild)
+        {
+            globals.allGuilds.Remove(leavingGuild.Id);
+            Console.WriteLine($"The bot has left the guild id {leavingGuild.Id}");
+        }
 
         /// <summary>
         /// 
@@ -217,6 +249,17 @@ namespace HavocBot
         public static void statusChange(string message)
         {
             _client.SetGameAsync(message, null, ActivityType.Playing).ConfigureAwait(false);
+        }
+
+        private async Task botReady()
+        {
+            IReadOnlyCollection<SocketGuild> conGuilds = _client.Guilds;
+            foreach (SocketGuild x in conGuilds)
+            {
+                globals.allGuilds.Add(x.Id);
+                globals.playbackPIDs.Add(x.Id, 0);
+                globals.playbackQueues.Add(x.Id, new Queue<string>());
+            }
         }
     }
 }

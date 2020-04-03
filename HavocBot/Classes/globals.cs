@@ -68,12 +68,45 @@ namespace HavocBot
         /// <summary>
         /// 
         /// </summary>
-        public static List<string> allGuilds;
+        public static List<ulong> allGuilds = new List<ulong>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Dictionary<ulong, int> playbackPIDs = new Dictionary<ulong, int>();
+
+        public static Dictionary<ulong, Queue<string>> playbackQueues = new Dictionary<ulong, Queue<string>>();
 
         /// <summary>
         /// 
         /// </summary>
         public static string token = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string patchnotes = "--Added a queue feature to the music function (!queue [video link] to add a video to the queue)\n" +
+                "--Addressed an issue where the !stop command was not working \n" + 
+                "--Added the ability for admins to cancel and event with !cancelEvent \n" +
+                "--Addressed an issue where the music features were not working \n" +
+                "--We have transferred servers! We are no longer running on linux Ubuntu. We are now on Windows Server 2016 \n" +
+                "\n\n **Known Issue:**\n" +
+                "--!newevent does not support its optional parameters. A fix is in the works for this issue. Please use !editevent in the meantime";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string versionID = "Version: 0.5.0.0";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string patchID = "Patch 0.5.0.0";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static DateTimeOffset patchDate = new DateTimeOffset(2020, 04, 03, 17, 00, 00, new TimeSpan(-6, 0, 0));
 
         /// <summary>
         /// 

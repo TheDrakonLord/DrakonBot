@@ -9,6 +9,11 @@
             .
             </summary>
         </member>
+        <member name="M:HavocBot.audioService.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:HavocBot.audioService.joinAudio(Discord.IGuild,Discord.Audio.IAudioClient)">
             <summary>
             
@@ -42,6 +47,12 @@
             <param name="channel"></param>
             <param name="path"></param>
             <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioService.endProcess(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
         </member>
         <member name="T:HavocBot.botEvents">
             <summary>
@@ -98,6 +109,9 @@
         </member>
         <member name="F:HavocBot.botEvents.eventType.movie">
             <summary>Events involving movies, tv shows, or anime</summary>
+        </member>
+        <member name="F:HavocBot.botEvents.eventType.dnd">
+            <summary>Events involving dungeons and dragons</summary>
         </member>
         <member name="M:HavocBot.botEvents.#ctor(System.String,System.DateTime,System.DateTime,System.Xml.Linq.XElement)">
             <summary>
@@ -322,6 +336,11 @@
             
             </summary>
         </member>
+        <member name="F:HavocBot.globals.playbackPIDs">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:HavocBot.globals.token">
             <summary>
             
@@ -407,6 +426,20 @@
             <summary>
             Displays message that the bot is undergoing maintenance
             </summary>
+        </member>
+        <member name="M:HavocBot.havocBotClass.joinedGuild(Discord.WebSocket.SocketGuild)">
+            <summary>
+            
+            </summary>
+            <param name="newGuild"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.havocBotClass.leftGuild(Discord.WebSocket.SocketGuild)">
+            <summary>
+            
+            </summary>
+            <param name="leavingGuild"></param>
+            <returns></returns>
         </member>
         <member name="M:HavocBot.havocBotClass.statusChange(System.String)">
             <summary>
@@ -839,6 +872,47 @@
         <member name="P:HavocBot.Properties.Resources.opus_dll">
             <summary>
               Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="T:HavocBot.Properties.strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.audioFileNotFound">
+            <summary>
+              Looks up a localized string similar to File does not exist..
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.audioNoPlaybackError">
+            <summary>
+              Looks up a localized string similar to Error: nothing is currently playing.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.codePlatformError">
+            <summary>
+              Looks up a localized string similar to Error: no platform found with that name. It is either misspelt or unsupported.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.codeSuccess">
+            <summary>
+              Looks up a localized string similar to Code successfully added.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.noVoiceChannelError">
+            <summary>
+              Looks up a localized string similar to User must be in a voice channel, or a voice channel must be passed as an argument..
             </summary>
         </member>
     </members>

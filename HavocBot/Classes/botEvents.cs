@@ -65,7 +65,9 @@ namespace HavocBot
             /// <summary>Events involving the Jackbox Party Pack by Jackbox Games</summary>
             jackbox,
             /// <summary>Events involving movies, tv shows, or anime</summary>
-            movie
+            movie,
+            /// <summary>Events involving dungeons and dragons</summary>
+            dnd
         };
         // Event type
         private eventType _type = eventType.other;
@@ -168,7 +170,7 @@ namespace HavocBot
 
             set
             {
-                switch (value)
+                switch (value.ToLower())
                 {
                     case "dungeon":
                         _type = eventType.dungeon;
@@ -252,6 +254,12 @@ namespace HavocBot
                         _type = eventType.movie;
                         _typeImagePath = (string)
                             (from el in _imageRetrieve.Descendants("movie")
+                             select el).First();
+                        break;
+                    case "dnd":
+                        _type = eventType.dnd;
+                        _typeImagePath = (string)
+                            (from el in _imageRetrieve.Descendants("dnd")
                              select el).First();
                         break;
                     default:

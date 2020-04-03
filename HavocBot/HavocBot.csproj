@@ -1,20 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Neal Jamieson</Authors>
     <Company>Jamieson Applications</Company>
-    <Version>0.3.1.0</Version>
+    <Version>0.4.1.0</Version>
     <Copyright>(c) Neal Jamieson 2020</Copyright>
     <RepositoryUrl>https://github.com/Jamiesonnc/HavocBot</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Jamiesonnc/HavocBot</PackageProjectUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>--Status Messages can now be changed without a patch
---Updated APIs
---Addressed an issue where events were not being announced when they occured
---Addressed an issue where events were not properly mentioning roles
---Added bot maintenance handling and messaging</PackageReleaseNotes>
+    <PackageReleaseNotes>--Laid the groundwork for other modules in the future
+--Added the ability for users to play music in voice channels
+--Added the !join command to join a voice channel
+--Added the !leave command to leave a voice channel
+--Added the !play command to play a youtube link
+--Added the !stop command to stop playback
+--Removed the News feature in preparation for a total overall. We will soon be basing the feature in the twitter API instead
+
+Known Issue:
+--!newevent does not support its optional parameters. A fix is in the works for this issue. Please use !editevent in the meantime</PackageReleaseNotes>
     <Description>DIscord bot to combine the functions of several bots used in a specific server</Description>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -44,12 +50,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
