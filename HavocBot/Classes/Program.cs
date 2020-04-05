@@ -52,7 +52,7 @@ namespace HavocBot
         /// <returns></returns>        
         public async Task mainAsync()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{DateTime.Now.ToLongTimeString(),-8} Application Start");
+            globals.logMessage("Application Start");
 
             //Declare a timer
 
@@ -79,7 +79,7 @@ namespace HavocBot
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("Notice: Command Data was not found. A new command data file will be created");
+                globals.logMessage("Notice: Command Data was not found. A new command data file will be created");
                 XElement NewCommandData = new XElement("root");
                 NewCommandData.Add(
                 new XElement("events", null),
@@ -255,11 +255,11 @@ namespace HavocBot
         {
             if (DateTime.Now >= globals.lodeMaintStart && DateTime.Now <= globals.lodeMaintEnd)
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} News refresh skipped due to lodestone maintenance");
+                globals.logMessage("News refresh skipped due to lodestone maintenance");
             }
             else
             {
-                //Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} Begin News Refresh");
+                //globals.logMessage("Begin News Refresh");
                 //globals.xivNews.refresh();
             }
         }
