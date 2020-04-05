@@ -346,6 +346,26 @@
             
             </summary>
         </member>
+        <member name="F:HavocBot.globals.patchnotes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.versionID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.patchID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.patchDate">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:HavocBot.globals.lodeMaintStart">
             <summary>
             
@@ -355,6 +375,27 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:HavocBot.globals.logMessage(Discord.Commands.SocketCommandContext,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="category"></param>
+            <param name="Context"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:HavocBot.globals.logMessage(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="category"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:HavocBot.globals.logMessage(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
         </member>
         <member name="M:HavocBot.globals.storeEvent(HavocBot.botEvents)">
             <summary>
@@ -423,6 +464,11 @@
             <param name="name">the name of the event to be triggered. case sensitive.</param>
         </member>
         <member name="M:HavocBot.havocBotClass.showDownTime">
+            <summary>
+            Displays message that the bot is undergoing maintenance
+            </summary>
+        </member>
+        <member name="M:HavocBot.havocBotClass.showAllPatchNotes">
             <summary>
             Displays message that the bot is undergoing maintenance
             </summary>
@@ -713,6 +759,26 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:HavocBot.adminModule.showAllPatchNotes">
+            <summary>
+            triggers an embed displaying patch notes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.cancelEventAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.cancelEvent(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="T:HavocBot.audioModule">
             <summary>
             
@@ -741,7 +807,6 @@
             <summary>
             
             </summary>
-            <param name="song"></param>
             <returns></returns>
         </member>
         <member name="T:HavocBot.lodestone">

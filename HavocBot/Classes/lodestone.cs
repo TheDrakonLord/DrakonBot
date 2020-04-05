@@ -98,7 +98,7 @@ namespace HavocBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                globals.logMessage(ex.Message);
                 throw;
             }
         }
@@ -189,7 +189,7 @@ namespace HavocBot
             catch (Exception ex)
             {
                 await context.Channel.SendMessageAsync("Error: No Character Found", false).ConfigureAwait(false);
-                Console.WriteLine(ex.Message);
+                globals.logMessage(ex.Message);
                 throw;
             }
         }
@@ -306,7 +306,7 @@ namespace HavocBot
             catch (Exception ex)
             {
                 await context.Channel.SendMessageAsync("Error: No Character Found", false).ConfigureAwait(false);
-                Console.WriteLine(ex.Message);
+                globals.logMessage(ex.Message);
                 throw;
             }
         }

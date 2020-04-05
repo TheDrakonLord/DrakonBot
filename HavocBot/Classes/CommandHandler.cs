@@ -98,7 +98,7 @@ namespace HavocBot
                 services: null).ConfigureAwait(false);
 
             //log the command recieve in the log
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command",-11} {messageParam as SocketUserMessage}");
+            globals.logMessage("Command",$"{messageParam as SocketUserMessage}");
         }
     }
 }

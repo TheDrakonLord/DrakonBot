@@ -69,12 +69,12 @@ namespace HavocBot
             string _guildID = guild.Id.ToString();
             string _path = $"{_guildID}-savedVid.mp4";
 
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"begin video download"}");
+            globals.logMessage("Begin video download");
             YouTube _youTube = YouTube.Default; // starting point for YouTube actions
             YouTubeVideo _video = _youTube.GetVideo(_link); // gets a Video object with info about the video
             File.WriteAllBytes(_path, _video.GetBytes());
 
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"begin video playback"}");
+            globals.logMessage("begin video playback");
 
             await service.sendAudioAsync(guild, channel, _path);
 

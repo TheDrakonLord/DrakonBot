@@ -55,7 +55,7 @@ namespace HavocBot
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.getCharacter(name, server, Context);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: iam"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","iam");
             }
         }
 
@@ -73,7 +73,7 @@ namespace HavocBot
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context);
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whoami"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","whoami");
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
@@ -98,7 +98,7 @@ namespace HavocBot
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context, trimmedId);
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: whois"} by {Context.User.Username}");
+                globals.logMessage(Context, "Command triggered","whois");
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
@@ -115,7 +115,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 await showMaint().ConfigureAwait(false);
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: maint"} by {Context.User.Username}");
+                globals.logMessage(Context, "Command triggered","maint");
             }
         }
 
@@ -198,7 +198,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: myCode"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","myCode");
                 await saveCode(platform, code).ConfigureAwait(false);
             }
         }
@@ -265,7 +265,7 @@ namespace HavocBot
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex.ToString());
+                            globals.logMessage(ex.ToString());
                             throw;
                         }
 
@@ -331,7 +331,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes()"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","codes()");
                 await getCodes().ConfigureAwait(false);
             }
         }
@@ -347,7 +347,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: codes(Username)"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","codes(Username)");
                 await getCodes(username).ConfigureAwait(false);
             }
         }
@@ -362,7 +362,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: mycodes"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","mycodes");
                 await getCodes(Context.User.Username).ConfigureAwait(false);
             }
         }
@@ -454,7 +454,7 @@ namespace HavocBot
         [Summary("Displays a list of available commands")]
         public async Task showHelpAsync()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} by {Context.User.Username}");
+            globals.logMessage(Context,"Command triggered","help");
             var helpEmbed = new EmbedBuilder()
             {
                 Title = "Available Commands"
@@ -502,7 +502,7 @@ namespace HavocBot
         [Summary("Displays changes since last patch")]
         public async Task showPatchNotes()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: patchNotes"} by {Context.User.Username}");
+            globals.logMessage(Context,"Command triggered","patchNotes");
             var patchEmbed = new EmbedBuilder();
             patchEmbed.WithTitle(globals.versionID);
 
@@ -526,7 +526,7 @@ namespace HavocBot
         public async Task showHelpAsync(string cmdName)
         {
             System.Diagnostics.Contracts.Contract.Requires(cmdName != null);
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: help"} ({cmdName}) by {Context.User.Username}");
+            globals.logMessage(Context,"Command triggered","help");
             var helpEmbed = new EmbedBuilder()
             {
                 Title = $"Help: {cmdName}"
@@ -655,7 +655,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
             {
-                Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: showEvent"} by {Context.User.Username}");
+                globals.logMessage(Context,"Command triggered","showEvent");
                 await retrieveEvent(reqEvent, "Displaying Event").ConfigureAwait(false);
             }
         }
@@ -683,17 +683,17 @@ namespace HavocBot
                 if (globals.eventCalendar.ContainsKey(name))
                 {
                     await ReplyAsync("Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass").ConfigureAwait(false);
-                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Event already exists error thrown"} by {Context.User.Username}");
+                    globals.logMessage(Context,"Error","Event already exists");
                 }
                 else
                 {
-                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: newEvent"} by {Context.User.Username}");
+                    globals.logMessage(Context,"Command triggered","newEvent");
                     await createEvent(name, start, end, type, mentions, description).ConfigureAwait(false);
                 }
             }
             else
             {
-                Console.WriteLine("error");
+                globals.logMessage("Error");
             }
         }
 
@@ -724,13 +724,13 @@ namespace HavocBot
             {
                 if (globals.eventCalendar.ContainsKey(name))
                 {
-                    Console.WriteLine($"{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: rsvp"}-{name} by {Context.User.Username}");
+                    globals.logMessage(Context, "Command triggered", "rsvp");
                     await toggleRSVP(name).ConfigureAwait(false);
                 }
                 else
                 {
                     await ReplyAsync("Error: no event found with that name").ConfigureAwait(false);
-                    Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"No event found error"} by {Context.User.Username}");
+                    globals.logMessage(Context,"Error","No event found");
                 }
             }
         }
@@ -778,7 +778,7 @@ namespace HavocBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                globals.logMessage(ex.ToString());
                 await Context.Channel.SendMessageAsync("Error: An unknown error has occured").ConfigureAwait(false);
             }
 
@@ -1026,7 +1026,7 @@ namespace HavocBot
         [Summary("Sets the target channel for event announcments")]
         public async Task setTargetChannel()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setTarget"} by {Context.User.Username}");
+            globals.logMessage(Context, "Admin Command Triggered", "setTarget");
             await storeTarget((Context.Channel.Id), Context.Guild.Id).ConfigureAwait(false);
         }
 
@@ -1051,7 +1051,7 @@ namespace HavocBot
         [Summary("Sets the target channel for event announcments")]
         public async Task setTargetEventChannel()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setEventTarget"} by {Context.User.Username}");
+            globals.logMessage(Context, "Admin Command triggered", "setEventTarget");
             await storeEventTarget((Context.Channel.Id), Context.Guild.Id).ConfigureAwait(false);
         }
 
@@ -1114,7 +1114,7 @@ namespace HavocBot
             globals.commandStorage.Save(globals.storageFilePath);
 
             await ReplyAsync("Maitenance has successfully been added").ConfigureAwait(false);
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Command triggered: setmaint"} by {Context.User.Username}");
+            globals.logMessage(Context, "Command triggered", "setmaint");
         }
 
         /// <summary>
@@ -1126,7 +1126,7 @@ namespace HavocBot
         [Summary("Sets bots displayed status")]
         public async Task setStatus([Remainder][Summary("Status to be set to the bot")] string status)
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: setStatus"} by {Context.User.Username}");
+            globals.logMessage(Context, "Admin Command triggered", "setStatus");
             await storeStatusMessage(status).ConfigureAwait(false);
         }
 
@@ -1149,7 +1149,7 @@ namespace HavocBot
         [Summary("triggers an embed announcing bot downtime")]
         public async Task showDownTime()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: startbotdowntime"} by {Context.User.Username}");
+            globals.logMessage(Context, "Admin Command triggered", "startbotdowntime");
             await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
         }
 
@@ -1161,7 +1161,7 @@ namespace HavocBot
         [Summary("triggers an embed displaying patch notes")]
         public async Task showAllPatchNotes()
         {
-            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {"Admin Command triggered: showAllPatchNotes"} by {Context.User.Username}");
+            globals.logMessage(Context, "Admin Command triggered", "showAllPatchNotes");
             await Task.Run(() => havocBotClass.showAllPatchNotes()).ConfigureAwait(false);
         }
 
@@ -1174,6 +1174,7 @@ namespace HavocBot
         [Summary("ends the specified event")]
         public async Task cancelEventAsync([Remainder] string name)
         {
+            globals.logMessage(Context, "Admin Command triggered", $"Cancel Event: {name}");
             await cancelEvent(name).ConfigureAwait(false);
         }
 
@@ -1204,85 +1205,89 @@ namespace HavocBot
             }
 
         }
+    }
 
         /// <summary>
         /// 
         /// </summary>
-        public class audioModule : ModuleBase<ICommandContext>
+    public class audioModule : ModuleBase<ICommandContext>
+    {
+        // Scroll down further for the AudioService.
+        // Like, way down
+
+        private audioService _service = new audioService();
+
+        // You *MUST* mark these commands with 'RunMode.Async'
+        // otherwise the bot will not respond until the Task times out.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Command("join", RunMode = RunMode.Async)]
+        public async Task joinCmd(IVoiceChannel channel = null)
         {
-            // Scroll down further for the AudioService.
-            // Like, way down
+            globals.logMessage("Audio Command triggered",$"join by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
+            channel ??= (Context.User as IGuildUser)?.VoiceChannel;
+            if (channel == null) { await Context.Channel.SendMessageAsync(Properties.strings.noVoiceChannelError).ConfigureAwait(false); return; }
 
-            private audioService _service = new audioService();
+            // For the next step with transmitting audio, you would want to pass this Audio Client in to a service.
+            var audioClient = await channel.ConnectAsync();
 
-            // You *MUST* mark these commands with 'RunMode.Async'
-            // otherwise the bot will not respond until the Task times out.
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [Command("join", RunMode = RunMode.Async)]
-            public async Task joinCmd(IVoiceChannel channel = null)
-            {
-                channel ??= (Context.User as IGuildUser)?.VoiceChannel;
-                if (channel == null) { await Context.Channel.SendMessageAsync(Properties.strings.noVoiceChannelError).ConfigureAwait(false); return; }
-
-                // For the next step with transmitting audio, you would want to pass this Audio Client in to a service.
-                var audioClient = await channel.ConnectAsync();
-
-                await _service.joinAudio(Context.Guild, audioClient);
-
-            }
-
-            // Remember to add preconditions to your commands,
-            // this is merely the minimal amount necessary.
-            // Adding more commands of your own is also encouraged.
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
-            [Command("leave", RunMode = RunMode.Async)]
-            public async Task leaveCmd()
-            {
-                await _service.leaveAudio(Context.Guild).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="song"></param>
-            /// <returns></returns>
-            [Command("play", RunMode = RunMode.Async)]
-            public async Task playCmd([Remainder] string song)
-            {
-                await _service.loadAndPlay(Context.Guild, Context.Channel, song, _service).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="song"></param>
-            /// <returns></returns>
-            [Command("stop", RunMode = RunMode.Async)]
-            public async Task stopCmd()
-            {
-                int playbackPID = globals.playbackPIDs[Context.Guild.Id];
-                if (playbackPID != 0)
-                {
-                    await Task.Run(() => _service.endProcess(playbackPID));
-                }
-                else
-                {
-                    await Context.Channel.SendMessageAsync(Properties.strings.audioNoPlaybackError);
-                }
-            }
-
-            [Command("queue", RunMode = RunMode.Async)]
-            public async Task queueCmd([Remainder] string song)
-            {
-                await Task.Run(() => globals.playbackQueues[Context.Guild.Id].Enqueue(song));
-            }
+            await _service.joinAudio(Context.Guild, audioClient);    
 
         }
+
+        // Remember to add preconditions to your commands,
+        // this is merely the minimal amount necessary.
+        // Adding more commands of your own is also encouraged.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Command("leave", RunMode = RunMode.Async)]
+        public async Task leaveCmd()
+        {
+            globals.logMessage("Audio Command triggered", $"leave by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
+            await _service.leaveAudio(Context.Guild).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="song"></param>
+        /// <returns></returns>
+        [Command("play", RunMode = RunMode.Async)]
+        public async Task playCmd([Remainder] string song)
+        {
+            globals.logMessage("Audio Command triggered", $"play {song} by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
+            await _service.loadAndPlay(Context.Guild, Context.Channel, song, _service).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Command("stop", RunMode = RunMode.Async)]
+        public async Task stopCmd()
+        {
+            globals.logMessage("Audio Command triggered", $"stop by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
+            int playbackPID = globals.playbackPIDs[Context.Guild.Id];
+            if (playbackPID != 0)
+            {
+                await Task.Run(() => _service.endProcess(playbackPID));
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync(Properties.strings.audioNoPlaybackError);
+            }
+        }
+
+        [Command("queue", RunMode = RunMode.Async)]
+        public async Task queueCmd([Remainder] string song)
+        {
+            globals.logMessage("Audio Command triggered", $"queue by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
+            await Task.Run(() => globals.playbackQueues[Context.Guild.Id].Enqueue(song));
+        }
+
     }
 }

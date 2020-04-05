@@ -73,7 +73,7 @@ namespace HavocBot
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("error no token file found");
+                globals.logMessage("error no token file found");
                 throw;
             }
 
@@ -138,7 +138,7 @@ namespace HavocBot
                 _mainChannel.SendMessageAsync(caption, false, eventEmbed.Build());
 
                 //log that an event has been triggered in the log
-                Console.WriteLine("Event Triggered: " + retrievedEvent.name);
+                globals.logMessage("Event Triggered",retrievedEvent.name);
 
                 retrievedEvent.repeatDate();
 
@@ -164,7 +164,7 @@ namespace HavocBot
                 if (!retrievedEvent.repeat.Equals("none"))
                 {
                     globals.eventCalendar[name] = retrievedEvent.startDate;
-                    Console.WriteLine("Advanced date based on repeat");
+                    globals.logMessage("Advanced date based on repeat");
                 }
                 else
                 {
@@ -175,7 +175,7 @@ namespace HavocBot
             else
             {
                 //if the event is missing send an error to the target channel and log the error
-                Console.WriteLine("Exception thrown--event trigger");
+                globals.logMessage("Exception thrown--event trigger");
                 _mainChannel.SendMessageAsync("Error: event trigger failed");
             }
         }
@@ -225,9 +225,18 @@ namespace HavocBot
         /// <returns></returns>
         private async Task joinedGuild(SocketGuild newGuild)
         {
-            globals.allGuilds.Add(newGuild.Id);
-            //globals.commandStorage.Element("guilds").Add(new XElement("guild", newGuild.Id.ToString()));
-            //globals.commandStorage.Save(globals.storageFilePath);
+            if (!globals.allGuilds.Contains(newGuild.Id))
+            {
+                globals.allGuilds.Add(newGuild.Id);
+                globals.logMessage("Connected to Guild",$"{newGuild.Name} ({newGuild.Id})");
+
+                //globals.commandStorage.Element("guilds").Add(new XElement("guild", newGuild.Id.ToString()));
+                //globals.commandStorage.Save(globals.storageFilePath);
+            }
+            else
+            {
+                globals.logMessage($"Join error. Already connected to {newGuild.Name} ({newGuild.Id})");
+            }
         }
 
         /// <summary>
@@ -237,8 +246,15 @@ namespace HavocBot
         /// <returns></returns>
         private async Task leftGuild(SocketGuild leavingGuild)
         {
-            globals.allGuilds.Remove(leavingGuild.Id);
-            Console.WriteLine($"The bot has left the guild id {leavingGuild.Id}");
+            if (globals.allGuilds.Contains(leavingGuild.Id))
+            {
+                globals.allGuilds.Remove(leavingGuild.Id);
+                globals.logMessage($"The bot has left the guild {leavingGuild.Name} ({leavingGuild.Id})");
+            }
+            else
+            {
+                globals.logMessage($"Bot departure error. {leavingGuild.Name} ({leavingGuild.Id}) not found in collection");
+            }
         }
 
         /// <summary>
@@ -253,12 +269,21 @@ namespace HavocBot
 
         private async Task botReady()
         {
+            globals.logMessage("Bot Ready");
             IReadOnlyCollection<SocketGuild> conGuilds = _client.Guilds;
             foreach (SocketGuild x in conGuilds)
             {
-                globals.allGuilds.Add(x.Id);
-                globals.playbackPIDs.Add(x.Id, 0);
-                globals.playbackQueues.Add(x.Id, new Queue<string>());
+                if (!globals.allGuilds.Contains(x.Id))
+                {
+                    globals.allGuilds.Add(x.Id);
+                    globals.playbackPIDs.Add(x.Id, 0);
+                    globals.playbackQueues.Add(x.Id, new Queue<string>());
+                    globals.logMessage("Connected to Guild",$"{x.Name} ({x.Id})");
+                }
+                else
+                {
+                    globals.logMessage($"Ready Join error. Already connected to {x.Name} ({x.Id})");
+                }
             }
         }
     }

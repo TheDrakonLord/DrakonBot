@@ -118,7 +118,36 @@ namespace HavocBot
         /// </summary>
         public static DateTime lodeMaintEnd;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="Context"></param>
+        /// <param name="message"></param>
+        public static void logMessage(SocketCommandContext Context, string category, string message)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(Context != null);
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {category}: {message} by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="message"></param>
+        public static void logMessage(string category, string message)
+        {
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {category}: {message}");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        public static void logMessage(string message)
+        {
+            Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {message}");
+        }
 
         /// <summary>
         /// Stores an event in the command Data file and adds it to the event calendar
@@ -269,7 +298,7 @@ namespace HavocBot
             catch (InvalidOperationException)
             {
                 //if no command with the requested name was found, display an error
-                Console.WriteLine("Exception thrown--invalidOperationException--No command found");
+                logMessage("Exception thrown--invalidOperationException--No command found");
                 retrievedEvent = null;
                 return false;
                 throw;
