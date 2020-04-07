@@ -79,6 +79,222 @@ namespace HavocBot.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The bot status has been changed.
+        /// </summary>
+        public static string botStatusSet {
+            get {
+                return ResourceManager.GetString("botStatusSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin Command triggered.
+        /// </summary>
+        public static string catAdminTrigger {
+            get {
+                return ResourceManager.GetString("catAdminTrigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command triggered.
+        /// </summary>
+        public static string catCmdTrigger {
+            get {
+                return ResourceManager.GetString("catCmdTrigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string catError {
+            get {
+                return ResourceManager.GetString("catError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to codes().
+        /// </summary>
+        public static string cmdCodesNull {
+            get {
+                return ResourceManager.GetString("cmdCodesNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to codes(Username).
+        /// </summary>
+        public static string cmdCodesUser {
+            get {
+                return ResourceManager.GetString("cmdCodesUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to startbotdowntime.
+        /// </summary>
+        public static string cmdDowntimeStart {
+            get {
+                return ResourceManager.GetString("cmdDowntimeStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to events.
+        /// </summary>
+        public static string cmdEvents {
+            get {
+                return ResourceManager.GetString("cmdEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to help.
+        /// </summary>
+        public static string cmdHelp {
+            get {
+                return ResourceManager.GetString("cmdHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to iam.
+        /// </summary>
+        public static string cmdIAm {
+            get {
+                return ResourceManager.GetString("cmdIAm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to maint.
+        /// </summary>
+        public static string cmdMaint {
+            get {
+                return ResourceManager.GetString("cmdMaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to myCode.
+        /// </summary>
+        public static string cmdMyCode {
+            get {
+                return ResourceManager.GetString("cmdMyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to myCodes.
+        /// </summary>
+        public static string cmdMyCodes {
+            get {
+                return ResourceManager.GetString("cmdMyCodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to newEvent.
+        /// </summary>
+        public static string cmdNewEvent {
+            get {
+                return ResourceManager.GetString("cmdNewEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to patchNotes.
+        /// </summary>
+        public static string cmdPatchNotes {
+            get {
+                return ResourceManager.GetString("cmdPatchNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rsvp.
+        /// </summary>
+        public static string cmdRSVP {
+            get {
+                return ResourceManager.GetString("cmdRSVP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to setEventTarget.
+        /// </summary>
+        public static string cmdSetEventTarget {
+            get {
+                return ResourceManager.GetString("cmdSetEventTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to setmaint.
+        /// </summary>
+        public static string cmdSetMaint {
+            get {
+                return ResourceManager.GetString("cmdSetMaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to setStatus.
+        /// </summary>
+        public static string cmdSetStatus {
+            get {
+                return ResourceManager.GetString("cmdSetStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to setTarget.
+        /// </summary>
+        public static string cmdSetTarget {
+            get {
+                return ResourceManager.GetString("cmdSetTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to showAllPatchNotes.
+        /// </summary>
+        public static string cmdShowAllPatchNotes {
+            get {
+                return ResourceManager.GetString("cmdShowAllPatchNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to showEvent.
+        /// </summary>
+        public static string cmdShowEvent {
+            get {
+                return ResourceManager.GetString("cmdShowEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to whoami.
+        /// </summary>
+        public static string cmdWhoAmI {
+            get {
+                return ResourceManager.GetString("cmdWhoAmI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to whois.
+        /// </summary>
+        public static string cmdWhoIs {
+            get {
+                return ResourceManager.GetString("cmdWhoIs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error: no platform found with that name. It is either misspelt or unsupported.
         /// </summary>
         public static string codePlatformError {
@@ -97,11 +313,290 @@ namespace HavocBot.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notice: Command Data was not found. A new command data file will be created.
+        /// </summary>
+        public static string errorCmdDataMissing {
+            get {
+                return ResourceManager.GetString("errorCmdDataMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass.
+        /// </summary>
+        public static string errorEventExists {
+            get {
+                return ResourceManager.GetString("errorEventExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No event found.
+        /// </summary>
+        public static string errorEventNotFound {
+            get {
+                return ResourceManager.GetString("errorEventNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: event trigger failed.
+        /// </summary>
+        public static string errorEventTrigger {
+            get {
+                return ResourceManager.GetString("errorEventTrigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: No Character Found.
+        /// </summary>
+        public static string errorMissingChar {
+            get {
+                return ResourceManager.GetString("errorMissingChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to error no token file found.
+        /// </summary>
+        public static string errorTokenMissing {
+            get {
+                return ResourceManager.GetString("errorTokenMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This channel will now recieve event announcments..
+        /// </summary>
+        public static string eventAnnounceSet {
+            get {
+                return ResourceManager.GetString("eventAnnounceSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exception thrown--event trigger.
+        /// </summary>
+        public static string exceptionEventTrigger {
+            get {
+                return ResourceManager.GetString("exceptionEventTrigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exception thrown--invalidOperationException--No command found.
+        /// </summary>
+        public static string exceptionNoCmd {
+            get {
+                return ResourceManager.GetString("exceptionNoCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legend: &lt;required&gt; [optional].
+        /// </summary>
+        public static string helpFooter {
+            get {
+                return ResourceManager.GetString("helpFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Start.
+        /// </summary>
+        public static string logAppStart {
+            get {
+                return ResourceManager.GetString("logAppStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Begin video download.
+        /// </summary>
+        public static string logAudioDownload {
+            get {
+                return ResourceManager.GetString("logAudioDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to begin video playback.
+        /// </summary>
+        public static string logAudioPlayback {
+            get {
+                return ResourceManager.GetString("logAudioPlayback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bot Ready.
+        /// </summary>
+        public static string logBotReady {
+            get {
+                return ResourceManager.GetString("logBotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event already exists.
+        /// </summary>
+        public static string logErrorEventExists {
+            get {
+                return ResourceManager.GetString("logErrorEventExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News refresh skipped due to lodestone maintenance.
+        /// </summary>
+        public static string logRefreshSkip {
+            get {
+                return ResourceManager.GetString("logRefreshSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maitenance has successfully been added.
+        /// </summary>
+        public static string maintAddSuccess {
+            get {
+                return ResourceManager.GetString("maintAddSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying Character.
+        /// </summary>
+        public static string msgCharDisplay {
+            get {
+                return ResourceManager.GetString("msgCharDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving Character.
+        /// </summary>
+        public static string msgCharSave {
+            get {
+                return ResourceManager.GetString("msgCharSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying All Events.
+        /// </summary>
+        public static string msgDisplayAllEvents {
+            get {
+                return ResourceManager.GetString("msgDisplayAllEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Created.
+        /// </summary>
+        public static string msgEventCreated {
+            get {
+                return ResourceManager.GetString("msgEventCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: no event found with that name.
+        /// </summary>
+        public static string msgEventNotFound {
+            get {
+                return ResourceManager.GetString("msgEventNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: No field found with that name.
+        /// </summary>
+        public static string msgFieldNotFound {
+            get {
+                return ResourceManager.GetString("msgFieldNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying Help.
+        /// </summary>
+        public static string msgHelp {
+            get {
+                return ResourceManager.GetString("msgHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying Help on a specific command.
+        /// </summary>
+        public static string msgHelpSpecific {
+            get {
+                return ResourceManager.GetString("msgHelpSpecific", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no upcoming maintenence currently.
+        /// </summary>
+        public static string msgNoCurrentMaint {
+            get {
+                return ResourceManager.GetString("msgNoCurrentMaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying Patch Notes.
+        /// </summary>
+        public static string msgPatchNotes {
+            get {
+                return ResourceManager.GetString("msgPatchNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced date based on repeat.
+        /// </summary>
+        public static string msgRepeat {
+            get {
+                return ResourceManager.GetString("msgRepeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying Event.
+        /// </summary>
+        public static string msgShowEvent {
+            get {
+                return ResourceManager.GetString("msgShowEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: An unknown error has occured.
+        /// </summary>
+        public static string msgUnkownError {
+            get {
+                return ResourceManager.GetString("msgUnkownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User must be in a voice channel, or a voice channel must be passed as an argument..
         /// </summary>
         public static string noVoiceChannelError {
             get {
                 return ResourceManager.GetString("noVoiceChannelError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This channel will now recieve utility announcments..
+        /// </summary>
+        public static string utilityAnnounceSet {
+            get {
+                return ResourceManager.GetString("utilityAnnounceSet", resourceCulture);
             }
         }
     }

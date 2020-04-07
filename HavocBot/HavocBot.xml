@@ -4,55 +4,185 @@
         <name>HavocBot</name>
     </assembly>
     <members>
+        <member name="T:HavocBot.adminModule">
+            <summary>
+            Set of commands only executable by Admins or the Bot Owner
+            </summary>
+        </member>
+        <member name="M:HavocBot.adminModule.setTargetChannel">
+            <summary>
+            Sets the target channel where commands are permitted
+            this must be executed before commands may be created and announced properly.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.storeTarget(System.UInt64,System.UInt64)">
+            <summary>
+            Stores and assigns the specified channel id as the new target channel
+            </summary>
+            <param name="target">the channel id to be set as the new target</param>
+            <param name="gID">The guild id of the target</param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.adminModule.setTargetEventChannel">
+            <summary>
+            Sets the target channel where event announcments will be sent.
+            this must be executed before events may be created and announced properly.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.storeEventTarget(System.UInt64,System.UInt64)">
+            <summary>
+            Stores and assigns the specified channel id as the new target event channel
+            </summary>
+            <param name="target">the channel id to be set as the new target</param>
+            <param name="gID">The guild id of the target</param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.adminModule.setMaint(System.String,System.String,System.String)">
+            <summary>
+            Sets the date and time of upcoming maintenance
+            </summary>
+            <param name="start">Start date of maintenance</param>
+            <param name="end">End date of maintenance</param>
+            <param name="patch">Patch for maintenance</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.storeMaint(System.String,System.String,System.String)">
+            <summary>
+            stores the date and time of upcoming maintenance
+            </summary>
+            <param name="start">Start date of maintenance</param>
+            <param name="end">End date of maintenance</param>
+            <param name="patch">Patch for maintenance</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.setStatus(System.String)">
+            <summary>
+            Changes the bots currently displayed status message
+            </summary>
+            <param name="status">status to be set to the bot</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.storeStatusMessage(System.String)">
+            <summary>
+            Changes the bots currently displayed status message
+            </summary>
+            <param name="status">status to be set to the bot</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.showDownTime">
+            <summary>
+            Triggers an embed announcing bot downtime
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.showAllPatchNotes">
+            <summary>
+            triggers an embed displaying patch notes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.cancelEventAsync(System.String)">
+            <summary>
+            Ends an event early or ends an event that was repeating
+            </summary>
+            <param name="name">the name of the event to be cancelled</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.adminModule.cancelEvent(System.String)">
+            <summary>
+            Ends an event early or ends an event that was repeating
+            </summary>
+            <param name="name">the name of the event to be cancelled</param>
+            <returns></returns>
+        </member>
+        <member name="T:HavocBot.audioModule">
+            <summary>
+            Module that contains commands related to the audio features of the bot
+            </summary>
+        </member>
+        <member name="M:HavocBot.audioModule.joinCmd(Discord.IVoiceChannel)">
+            <summary>
+            Makes the bot join a specified channel or the channel the user is in
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.leaveCmd">
+            <summary>
+            Makes the bot leave the voice channel it is in
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.playCmd(System.String)">
+            <summary>
+            Makes the bot download and play the specified youtube link
+            </summary>
+            <param name="song">the youtube link of the song to be played</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.stopCmd">
+            <summary>
+            Makes the bot stop playing the current song
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.audioModule.queueCmd(System.String)">
+            <summary>
+            Adds a song to the queue to be played after the current one finishes
+            </summary>
+            <param name="song">The youtube link of the song to be added to the queue</param>
+            <returns></returns>
+        </member>
         <member name="T:HavocBot.audioService">
             <summary>
-            .
+            Class that enables the bot to connect to voice channels and play songs
             </summary>
         </member>
         <member name="M:HavocBot.audioService.#ctor">
             <summary>
-            
+            The default constructor of the audioService class
             </summary>
         </member>
         <member name="M:HavocBot.audioService.joinAudio(Discord.IGuild,Discord.Audio.IAudioClient)">
             <summary>
-            
+            Makes the bot join the specified voice channel
             </summary>
-            <param name="guild"></param>
-            <param name="client"></param>
+            <param name="guild">The guild of the voice channel to join</param>
+            <param name="client">The audio client the bot is using</param>
             <returns></returns>
         </member>
         <member name="M:HavocBot.audioService.leaveAudio(Discord.IGuild)">
             <summary>
-            
+            Makes the bot leave the voice channel it is in
             </summary>
-            <param name="guild"></param>
+            <param name="guild">the guild containing the voice channel to leave</param>
             <returns></returns>
         </member>
         <member name="M:HavocBot.audioService.loadAndPlay(Discord.IGuild,Discord.IMessageChannel,System.String,HavocBot.audioService)">
             <summary>
-            
+            Has the bot download and play a specified youtube link
             </summary>
-            <param name="guild"></param>
-            <param name="channel"></param>
-            <param name="link"></param>
-            <param name="service"></param>
+            <param name="guild">The guild that called the command</param>
+            <param name="channel">The channel the bot is in</param>
+            <param name="link">the youtube link to be played</param>
+            <param name="service">the audioservice in use</param>
             <returns></returns>
         </member>
         <member name="M:HavocBot.audioService.sendAudioAsync(Discord.IGuild,Discord.IMessageChannel,System.String)">
             <summary>
-            
+            Sends audio to the currently connected channel
             </summary>
-            <param name="guild"></param>
-            <param name="channel"></param>
-            <param name="path"></param>
+            <param name="guild">The guild requesting audio playback</param>
+            <param name="channel">The voice channel the bot is in</param>
+            <param name="path">The path of the file to be played</param>
             <returns></returns>
         </member>
         <member name="M:HavocBot.audioService.endProcess(System.Int32)">
             <summary>
-            
+            Ends the specified process
             </summary>
-            <param name="id"></param>
+            <param name="id">the ID of the process to be stopped</param>
         </member>
         <member name="T:HavocBot.botEvents">
             <summary>
@@ -247,7 +377,7 @@
         </member>
         <member name="P:HavocBot.botEvents.guild">
             <summary>
-            
+            Gets or sets the guild this event belongs to
             </summary>
         </member>
         <member name="T:HavocBot.commandHandler">
@@ -277,24 +407,112 @@
         </member>
         <member name="T:HavocBot.customColors">
             <summary>
-            
+            Class for allowing users to set their own custom role color
             </summary>
+        </member>
+        <member name="T:HavocBot.eventModule">
+            <summary>
+            Module for storing event commands and they're related methods
+            </summary>
+        </member>
+        <member name="M:HavocBot.eventModule.showEventAsync(System.String)">
+            <summary>
+            Displays a specified event
+            </summary>
+            <param name="reqEvent">the name of the event to display</param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.eventModule.createEventAsync(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            creates a new event
+            </summary>
+            <param name="name">the name of the new event. must be unique</param>
+            <param name="start">the start date of the new event</param>
+            <param name="end">the end date of the new event</param>
+            <param name="type"></param>
+            <param name="mentions"></param>
+            <param name="description"></param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.eventModule.editEventAsync(System.String,System.String,System.String)">
+            <summary>
+            alters the specified details fo an event
+            </summary>
+            <param name="name">name of the event to be changed</param>
+            <param name="field">event field to be edited</param>
+            <param name="changes">changes to be made to the event field</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.eventModule.toggleRSVPAsync(System.String)">
+            <summary>
+            Adds or Removes the user from the RSVP list of a specified event
+            </summary>
+            <param name="name">name of specified event</param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.eventModule.showAllEventsAsync">
+            <summary>
+            shows all active events
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.eventModule.createEvent(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            asyncronous task to store the new event
+            </summary>
+            <param name="name">the name of the new event. must be unique</param>
+            <param name="start">the start date of the new event</param>
+            <param name="end">the end date of the new event</param>
+            <param name="type"></param>
+            <param name="mentions"></param>
+            <param name="description"></param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.eventModule.retrieveEvent(System.String,System.String)">
+            <summary>
+            finds a specified event and displays it to the user
+            </summary>
+            <param name="eventName">the name of the requested event</param>
+            <param name="caption">The caption to be displayed before the embed</param>
+            <returns>returns task complete</returns>
+        </member>
+        <member name="M:HavocBot.eventModule.editEvent(System.String,System.String,System.String)">
+            <summary>
+            alters the specified details fo an event
+            </summary>
+            <param name="name">name of the event to be changed</param>
+            <param name="field">event field to be edited</param>
+            <param name="changes">changes to be made to the event field</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.eventModule.toggleRSVP(System.String)">
+            <summary>
+            Toggles the users RSVP for the specified event
+            </summary>
+            <param name="name">the name of the event to be retrieved</param>
+            <returns>task complete</returns>
+        </member>
+        <member name="M:HavocBot.eventModule.showAllEvents">
+            <summary>
+            shows all events in the dictionary
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:HavocBot.ffxivTwitter">
             <summary>
-            
+            Class for obtaining news and information published on the FFXIV twitter pages
             </summary>
         </member>
         <member name="M:HavocBot.ffxivTwitter.#ctor">
             <summary>
-            
+            Defalt constructor for the twitter class
             </summary>
         </member>
         <member name="M:HavocBot.ffxivTwitter.twitterStream">
             <summary>
-            
+            Obtains a specific stream of tweets
             </summary>
-            <returns></returns>
+            <returns>task complete</returns>
         </member>
         <member name="T:HavocBot.globals">
             <summary>
@@ -318,7 +536,7 @@
         </member>
         <member name="F:HavocBot.globals.guildSettings">
             <summary>
-            
+            Collection of target channels for each guild
             </summary>
         </member>
         <member name="F:HavocBot.globals.statusMessage">
@@ -333,69 +551,74 @@
         </member>
         <member name="F:HavocBot.globals.allGuilds">
             <summary>
-            
+            A list of all guilds the bot has joined
             </summary>
         </member>
         <member name="F:HavocBot.globals.playbackPIDs">
             <summary>
-            
+            Lists the process ID for each guild's music feature
+            </summary>
+        </member>
+        <member name="F:HavocBot.globals.playbackQueues">
+            <summary>
+            Holds the song queues for each guild
             </summary>
         </member>
         <member name="F:HavocBot.globals.token">
             <summary>
-            
+            Holds the token for accessing discord
             </summary>
         </member>
         <member name="F:HavocBot.globals.patchnotes">
             <summary>
-            
+            The body content for the patch notes message
             </summary>
         </member>
         <member name="F:HavocBot.globals.versionID">
             <summary>
-            
+            The current version number for the header of the patch notes message
             </summary>
         </member>
         <member name="F:HavocBot.globals.patchID">
             <summary>
-            
+            The current version number for the footer of the patch notes message
             </summary>
         </member>
         <member name="F:HavocBot.globals.patchDate">
             <summary>
-            
+            The date and time of the current patch number
             </summary>
         </member>
         <member name="F:HavocBot.globals.lodeMaintStart">
             <summary>
-            
+            Holds the start date and time of when the lodestone is under maintenance
             </summary>
         </member>
         <member name="F:HavocBot.globals.lodeMaintEnd">
             <summary>
-            
+            holds the end date and time of when the lodestone is under maintenance
             </summary>
         </member>
         <member name="M:HavocBot.globals.logMessage(Discord.Commands.SocketCommandContext,System.String,System.String)">
             <summary>
-            
+            Logs a message to the console
             </summary>
-            <param name="category"></param>
-            <param name="Context"></param>
-            <param name="message"></param>
+            <param name="category">The category for the log message (ex. Type:)</param>
+            <param name="Context">The context of the command called (only available in modules)</param>
+            <param name="message">the message to be sent to the log</param>
         </member>
         <member name="M:HavocBot.globals.logMessage(System.String,System.String)">
             <summary>
-            
+            Logs a message to the console
             </summary>
-            <param name="category"></param>
-            <param name="message"></param>
+            <param name="category">The category for the log message (ex. Type:)</param>
+            <param name="message">the message to be sent to the log</param>
         </member>
         <member name="M:HavocBot.globals.logMessage(System.String)">
             <summary>
-            
+            Logs a message to the console
             </summary>
-            <param name="message"></param>
+            <param name="message">the message to be sent to the log</param>
         </member>
         <member name="M:HavocBot.globals.storeEvent(HavocBot.botEvents)">
             <summary>
@@ -475,23 +698,29 @@
         </member>
         <member name="M:HavocBot.havocBotClass.joinedGuild(Discord.WebSocket.SocketGuild)">
             <summary>
-            
+            Event handler for when the bot joins a guild
             </summary>
-            <param name="newGuild"></param>
-            <returns></returns>
+            <param name="newGuild">the guid the bot just joined</param>
+            <returns>task complete</returns>
         </member>
         <member name="M:HavocBot.havocBotClass.leftGuild(Discord.WebSocket.SocketGuild)">
             <summary>
-            
+            Event handler for when the bot leaves a guild
             </summary>
-            <param name="leavingGuild"></param>
-            <returns></returns>
+            <param name="leavingGuild">the guild the bot left</param>
+            <returns>task complete</returns>
         </member>
         <member name="M:HavocBot.havocBotClass.statusChange(System.String)">
             <summary>
-            
+            Changes the bot's status message
             </summary>
-            <param name="message"></param>
+            <param name="message">the new status message to be set</param>
+            <returns></returns>
+        </member>
+        <member name="M:HavocBot.havocBotClass.botReady">
+            <summary>
+            Event handler for when the bot has finished loading and is ready to run
+            </summary>
             <returns></returns>
         </member>
         <member name="T:HavocBot.infoModule">
@@ -598,217 +827,6 @@
             <param name="cmdName">the command information is requested for</param>
             <returns></returns>
         </member>
-        <member name="T:HavocBot.eventModule">
-            <summary>
-            Module for storing event commands and they're related methods
-            </summary>
-        </member>
-        <member name="M:HavocBot.eventModule.showEventAsync(System.String)">
-            <summary>
-            Displays a specified event
-            </summary>
-            <param name="reqEvent">the name of the event to display</param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.eventModule.createEventAsync(System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            creates a new event
-            </summary>
-            <param name="name">the name of the new event. must be unique</param>
-            <param name="start">the start date of the new event</param>
-            <param name="end">the end date of the new event</param>
-            <param name="type"></param>
-            <param name="mentions"></param>
-            <param name="description"></param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.eventModule.editEventAsync(System.String,System.String,System.String)">
-            <summary>
-            alters the specified details fo an event
-            </summary>
-            <param name="name">name of the event to be changed</param>
-            <param name="field">event field to be edited</param>
-            <param name="changes">changes to be made to the event field</param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.eventModule.toggleRSVPAsync(System.String)">
-            <summary>
-            Adds or Removes the user from the RSVP list of a specified event
-            </summary>
-            <param name="name">name of specified event</param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.eventModule.showAllEventsAsync">
-            <summary>
-            shows all active events
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.eventModule.createEvent(System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            asyncronous task to store the new event
-            </summary>
-            <param name="name">the name of the new event. must be unique</param>
-            <param name="start">the start date of the new event</param>
-            <param name="end">the end date of the new event</param>
-            <param name="type"></param>
-            <param name="mentions"></param>
-            <param name="description"></param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.eventModule.retrieveEvent(System.String,System.String)">
-            <summary>
-            finds a specified event and displays it to the user
-            </summary>
-            <param name="eventName">the name of the requested event</param>
-            <param name="caption">The caption to be displayed before the embed</param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.eventModule.editEvent(System.String,System.String,System.String)">
-            <summary>
-            alters the specified details fo an event
-            </summary>
-            <param name="name">name of the event to be changed</param>
-            <param name="field">event field to be edited</param>
-            <param name="changes">changes to be made to the event field</param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.eventModule.toggleRSVP(System.String)">
-            <summary>
-            Toggles the users RSVP for the specified event
-            </summary>
-            <param name="name">the name of the event to be retrieved</param>
-            <returns>task complete</returns>
-        </member>
-        <member name="M:HavocBot.eventModule.showAllEvents">
-            <summary>
-            shows all events in the dictionary
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:HavocBot.adminModule">
-            <summary>
-            Set of commands only executable by Admins or the Bot Owner
-            </summary>
-        </member>
-        <member name="M:HavocBot.adminModule.setTargetChannel">
-            <summary>
-            Sets the target channel where commands are permitted
-            this must be executed before commands may be created and announced properly.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.storeTarget(System.UInt64,System.UInt64)">
-            <summary>
-            Stores and assigns the specified channel id as the new target channel
-            </summary>
-            <param name="target">the channel id to be set as the new target</param>
-            <param name="gID">The guild id of the target</param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.adminModule.setTargetEventChannel">
-            <summary>
-            Sets the target channel where event announcments will be sent.
-            this must be executed before events may be created and announced properly.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.storeEventTarget(System.UInt64,System.UInt64)">
-            <summary>
-            Stores and assigns the specified channel id as the new target event channel
-            </summary>
-            <param name="target">the channel id to be set as the new target</param>
-            <param name="gID">The guild id of the target</param>
-            <returns>returns task complete</returns>
-        </member>
-        <member name="M:HavocBot.adminModule.setMaint(System.String,System.String,System.String)">
-            <summary>
-            Sets the date and time of upcoming maintenance
-            </summary>
-            <param name="start">Start date of maintenance</param>
-            <param name="end">End date of maintenance</param>
-            <param name="patch">Patch for maintenance</param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.storeMaint(System.String,System.String,System.String)">
-            <summary>
-            stores the date and time of upcoming maintenance
-            </summary>
-            <param name="start">Start date of maintenance</param>
-            <param name="end">End date of maintenance</param>
-            <param name="patch">Patch for maintenance</param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.setStatus(System.String)">
-            <summary>
-            Changes the bots currently displayed status message
-            </summary>
-            <param name="status">status to be set to the bot</param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.storeStatusMessage(System.String)">
-            <summary>
-            Changes the bots currently displayed status message
-            </summary>
-            <param name="status">status to be set to the bot</param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.showDownTime">
-            <summary>
-            Triggers an embed announcing bot downtime
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.showAllPatchNotes">
-            <summary>
-            triggers an embed displaying patch notes
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.cancelEventAsync(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.adminModule.cancelEvent(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="T:HavocBot.audioModule">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:HavocBot.audioModule.joinCmd(Discord.IVoiceChannel)">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.audioModule.leaveCmd">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.audioModule.playCmd(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="song"></param>
-            <returns></returns>
-        </member>
-        <member name="M:HavocBot.audioModule.stopCmd">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:HavocBot.lodestone">
             <summary>
             Class for accessing the FFXIV lodestone API
@@ -845,12 +863,12 @@
         </member>
         <member name="T:HavocBot.moderationTools">
             <summary>
-            
+            Class that provides tools for moderating users on a server
             </summary>
         </member>
         <member name="T:HavocBot.program">
             <summary>
-            
+            The main class for the application
             </summary>
         </member>
         <member name="M:HavocBot.program.Main">
@@ -878,25 +896,6 @@
             </summary>
             <param name="source"></param>
             <param name="e"></param>
-        </member>
-        <member name="T:HavocBot.Startup">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:HavocBot.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            This method gets called by the runtime. Use this method to add services to the container.
-            For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-            </summary>
-            <param name="services"></param>
-        </member>
-        <member name="M:HavocBot.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
-            <summary>
-            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            </summary>
-            <param name="app"></param>
-            <param name="env"></param>
         </member>
         <member name="T:HavocBot.Properties.Resources">
             <summary>
@@ -965,6 +964,126 @@
               Looks up a localized string similar to Error: nothing is currently playing.
             </summary>
         </member>
+        <member name="P:HavocBot.Properties.strings.botStatusSet">
+            <summary>
+              Looks up a localized string similar to The bot status has been changed.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.catAdminTrigger">
+            <summary>
+              Looks up a localized string similar to Admin Command triggered.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.catCmdTrigger">
+            <summary>
+              Looks up a localized string similar to Command triggered.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.catError">
+            <summary>
+              Looks up a localized string similar to Error.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdCodesNull">
+            <summary>
+              Looks up a localized string similar to codes().
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdCodesUser">
+            <summary>
+              Looks up a localized string similar to codes(Username).
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdDowntimeStart">
+            <summary>
+              Looks up a localized string similar to startbotdowntime.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdEvents">
+            <summary>
+              Looks up a localized string similar to events.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdHelp">
+            <summary>
+              Looks up a localized string similar to help.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdIAm">
+            <summary>
+              Looks up a localized string similar to iam.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdMaint">
+            <summary>
+              Looks up a localized string similar to maint.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdMyCode">
+            <summary>
+              Looks up a localized string similar to myCode.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdMyCodes">
+            <summary>
+              Looks up a localized string similar to myCodes.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdNewEvent">
+            <summary>
+              Looks up a localized string similar to newEvent.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdPatchNotes">
+            <summary>
+              Looks up a localized string similar to patchNotes.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdRSVP">
+            <summary>
+              Looks up a localized string similar to rsvp.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdSetEventTarget">
+            <summary>
+              Looks up a localized string similar to setEventTarget.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdSetMaint">
+            <summary>
+              Looks up a localized string similar to setmaint.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdSetStatus">
+            <summary>
+              Looks up a localized string similar to setStatus.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdSetTarget">
+            <summary>
+              Looks up a localized string similar to setTarget.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdShowAllPatchNotes">
+            <summary>
+              Looks up a localized string similar to showAllPatchNotes.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdShowEvent">
+            <summary>
+              Looks up a localized string similar to showEvent.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdWhoAmI">
+            <summary>
+              Looks up a localized string similar to whoami.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.cmdWhoIs">
+            <summary>
+              Looks up a localized string similar to whois.
+            </summary>
+        </member>
         <member name="P:HavocBot.Properties.strings.codePlatformError">
             <summary>
               Looks up a localized string similar to Error: no platform found with that name. It is either misspelt or unsupported.
@@ -975,9 +1094,164 @@
               Looks up a localized string similar to Code successfully added.
             </summary>
         </member>
+        <member name="P:HavocBot.Properties.strings.errorCmdDataMissing">
+            <summary>
+              Looks up a localized string similar to Notice: Command Data was not found. A new command data file will be created.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.errorEventExists">
+            <summary>
+              Looks up a localized string similar to Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.errorEventNotFound">
+            <summary>
+              Looks up a localized string similar to No event found.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.errorEventTrigger">
+            <summary>
+              Looks up a localized string similar to Error: event trigger failed.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.errorMissingChar">
+            <summary>
+              Looks up a localized string similar to Error: No Character Found.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.errorTokenMissing">
+            <summary>
+              Looks up a localized string similar to error no token file found.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.eventAnnounceSet">
+            <summary>
+              Looks up a localized string similar to This channel will now recieve event announcments..
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.exceptionEventTrigger">
+            <summary>
+              Looks up a localized string similar to Exception thrown--event trigger.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.exceptionNoCmd">
+            <summary>
+              Looks up a localized string similar to Exception thrown--invalidOperationException--No command found.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.helpFooter">
+            <summary>
+              Looks up a localized string similar to Legend: &lt;required&gt; [optional].
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.logAppStart">
+            <summary>
+              Looks up a localized string similar to Application Start.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.logAudioDownload">
+            <summary>
+              Looks up a localized string similar to Begin video download.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.logAudioPlayback">
+            <summary>
+              Looks up a localized string similar to begin video playback.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.logBotReady">
+            <summary>
+              Looks up a localized string similar to Bot Ready.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.logErrorEventExists">
+            <summary>
+              Looks up a localized string similar to Event already exists.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.logRefreshSkip">
+            <summary>
+              Looks up a localized string similar to News refresh skipped due to lodestone maintenance.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.maintAddSuccess">
+            <summary>
+              Looks up a localized string similar to Maitenance has successfully been added.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgCharDisplay">
+            <summary>
+              Looks up a localized string similar to Displaying Character.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgCharSave">
+            <summary>
+              Looks up a localized string similar to Saving Character.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgDisplayAllEvents">
+            <summary>
+              Looks up a localized string similar to Displaying All Events.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgEventCreated">
+            <summary>
+              Looks up a localized string similar to Event Created.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgEventNotFound">
+            <summary>
+              Looks up a localized string similar to Error: no event found with that name.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgFieldNotFound">
+            <summary>
+              Looks up a localized string similar to Error: No field found with that name.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgHelp">
+            <summary>
+              Looks up a localized string similar to Displaying Help.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgHelpSpecific">
+            <summary>
+              Looks up a localized string similar to Displaying Help on a specific command.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgNoCurrentMaint">
+            <summary>
+              Looks up a localized string similar to There is no upcoming maintenence currently.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgPatchNotes">
+            <summary>
+              Looks up a localized string similar to Displaying Patch Notes.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgRepeat">
+            <summary>
+              Looks up a localized string similar to Advanced date based on repeat.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgShowEvent">
+            <summary>
+              Looks up a localized string similar to Displaying Event.
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.msgUnkownError">
+            <summary>
+              Looks up a localized string similar to Error: An unknown error has occured.
+            </summary>
+        </member>
         <member name="P:HavocBot.Properties.strings.noVoiceChannelError">
             <summary>
               Looks up a localized string similar to User must be in a voice channel, or a voice channel must be passed as an argument..
+            </summary>
+        </member>
+        <member name="P:HavocBot.Properties.strings.utilityAnnounceSet">
+            <summary>
+              Looks up a localized string similar to This channel will now recieve utility announcments..
             </summary>
         </member>
     </members>

@@ -73,7 +73,7 @@ namespace HavocBot
             }
             catch (FileNotFoundException)
             {
-                globals.logMessage("error no token file found");
+                globals.logMessage(Properties.strings.errorTokenMissing);
                 throw;
             }
 
@@ -116,17 +116,21 @@ namespace HavocBot
 
             if (globals.getEvent(name, out botEvents retrievedEvent))
             {
-                _mainChannel = _client.GetChannel(globals.guildSettings[$"g{retrievedEvent.guild.ToString()}"][1]) as IMessageChannel;
+                _mainChannel = _client.GetChannel(globals.guildSettings[$"g{retrievedEvent.guild}"][1]) as IMessageChannel;
                 //build the embed to be sent to the target channel
                 EmbedBuilder eventEmbed;
                 string mentions = retrievedEvent.mentions;
                 string caption = $"The event \"{name}\" has begun";
 
+#pragma warning disable CA1307 // Specify StringComparison
                 if (!mentions.Equals("none") && !mentions.Equals("rsvp"))
+#pragma warning restore CA1307 // Specify StringComparison
                 {
                     caption = $"{mentions} {caption}";
                 }
+#pragma warning disable CA1307 // Specify StringComparison
                 if (mentions.Equals("rsvp"))
+#pragma warning restore CA1307 // Specify StringComparison
                 {
                     mentions = retrievedEvent.allRSVPIDs();
                     caption = $"{caption} {mentions}";
@@ -161,10 +165,12 @@ namespace HavocBot
                 xdate.Value = retrievedEvent.endDate.ToString();
 
                 globals.commandStorage.Save(globals.storageFilePath);
+#pragma warning disable CA1307 // Specify StringComparison
                 if (!retrievedEvent.repeat.Equals("none"))
+#pragma warning restore CA1307 // Specify StringComparison
                 {
                     globals.eventCalendar[name] = retrievedEvent.startDate;
-                    globals.logMessage("Advanced date based on repeat");
+                    globals.logMessage(Properties.strings.msgRepeat);
                 }
                 else
                 {
@@ -175,8 +181,8 @@ namespace HavocBot
             else
             {
                 //if the event is missing send an error to the target channel and log the error
-                globals.logMessage("Exception thrown--event trigger");
-                _mainChannel.SendMessageAsync("Error: event trigger failed");
+                globals.logMessage(Properties.strings.exceptionEventTrigger);
+                _mainChannel.SendMessageAsync(Properties.strings.errorEventTrigger);
             }
         }
 
@@ -214,16 +220,18 @@ namespace HavocBot
                 patchEmbed.WithTimestamp(globals.patchDate);
                 patchEmbed.WithColor(Color.Gold);
 
-                _utilityChannel.SendMessageAsync("Displaying patch notes", false, patchEmbed.Build()).ConfigureAwait(false);
+                _utilityChannel.SendMessageAsync(Properties.strings.msgPatchNotes, false, patchEmbed.Build()).ConfigureAwait(false);
             }
         }
 
         /// <summary>
-        /// 
+        /// Event handler for when the bot joins a guild
         /// </summary>
-        /// <param name="newGuild"></param>
-        /// <returns></returns>
+        /// <param name="newGuild">the guid the bot just joined</param>
+        /// <returns>task complete</returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task joinedGuild(SocketGuild newGuild)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (!globals.allGuilds.Contains(newGuild.Id))
             {
@@ -240,11 +248,13 @@ namespace HavocBot
         }
 
         /// <summary>
-        /// 
+        /// Event handler for when the bot leaves a guild
         /// </summary>
-        /// <param name="leavingGuild"></param>
-        /// <returns></returns>
+        /// <param name="leavingGuild">the guild the bot left</param>
+        /// <returns>task complete</returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task leftGuild(SocketGuild leavingGuild)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (globals.allGuilds.Contains(leavingGuild.Id))
             {
@@ -258,18 +268,24 @@ namespace HavocBot
         }
 
         /// <summary>
-        /// 
+        /// Changes the bot's status message
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">the new status message to be set</param>
         /// <returns></returns>
         public static void statusChange(string message)
         {
             _client.SetGameAsync(message, null, ActivityType.Playing).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Event handler for when the bot has finished loading and is ready to run
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task botReady()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            globals.logMessage("Bot Ready");
+            globals.logMessage(Properties.strings.logBotReady);
             IReadOnlyCollection<SocketGuild> conGuilds = _client.Guilds;
             foreach (SocketGuild x in conGuilds)
             {

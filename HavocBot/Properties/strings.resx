@@ -123,13 +123,178 @@
   <data name="audioNoPlaybackError" xml:space="preserve">
     <value>Error: nothing is currently playing</value>
   </data>
+  <data name="botStatusSet" xml:space="preserve">
+    <value>The bot status has been changed</value>
+  </data>
+  <data name="catAdminTrigger" xml:space="preserve">
+    <value>Admin Command triggered</value>
+  </data>
+  <data name="catCmdTrigger" xml:space="preserve">
+    <value>Command triggered</value>
+  </data>
+  <data name="catError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="cmdCodesNull" xml:space="preserve">
+    <value>codes()</value>
+  </data>
+  <data name="cmdCodesUser" xml:space="preserve">
+    <value>codes(Username)</value>
+  </data>
+  <data name="cmdDowntimeStart" xml:space="preserve">
+    <value>startbotdowntime</value>
+  </data>
+  <data name="cmdEvents" xml:space="preserve">
+    <value>events</value>
+  </data>
+  <data name="cmdHelp" xml:space="preserve">
+    <value>help</value>
+  </data>
+  <data name="cmdIAm" xml:space="preserve">
+    <value>iam</value>
+  </data>
+  <data name="cmdMaint" xml:space="preserve">
+    <value>maint</value>
+  </data>
+  <data name="cmdMyCode" xml:space="preserve">
+    <value>myCode</value>
+  </data>
+  <data name="cmdMyCodes" xml:space="preserve">
+    <value>myCodes</value>
+  </data>
+  <data name="cmdNewEvent" xml:space="preserve">
+    <value>newEvent</value>
+  </data>
+  <data name="cmdPatchNotes" xml:space="preserve">
+    <value>patchNotes</value>
+  </data>
+  <data name="cmdRSVP" xml:space="preserve">
+    <value>rsvp</value>
+  </data>
+  <data name="cmdSetEventTarget" xml:space="preserve">
+    <value>setEventTarget</value>
+  </data>
+  <data name="cmdSetMaint" xml:space="preserve">
+    <value>setmaint</value>
+  </data>
+  <data name="cmdSetStatus" xml:space="preserve">
+    <value>setStatus</value>
+  </data>
+  <data name="cmdSetTarget" xml:space="preserve">
+    <value>setTarget</value>
+  </data>
+  <data name="cmdShowAllPatchNotes" xml:space="preserve">
+    <value>showAllPatchNotes</value>
+  </data>
+  <data name="cmdShowEvent" xml:space="preserve">
+    <value>showEvent</value>
+  </data>
+  <data name="cmdWhoAmI" xml:space="preserve">
+    <value>whoami</value>
+  </data>
+  <data name="cmdWhoIs" xml:space="preserve">
+    <value>whois</value>
+  </data>
   <data name="codePlatformError" xml:space="preserve">
     <value>Error: no platform found with that name. It is either misspelt or unsupported</value>
   </data>
   <data name="codeSuccess" xml:space="preserve">
     <value>Code successfully added</value>
   </data>
+  <data name="errorCmdDataMissing" xml:space="preserve">
+    <value>Notice: Command Data was not found. A new command data file will be created</value>
+  </data>
+  <data name="errorEventExists" xml:space="preserve">
+    <value>Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass</value>
+  </data>
+  <data name="errorEventNotFound" xml:space="preserve">
+    <value>No event found</value>
+  </data>
+  <data name="errorEventTrigger" xml:space="preserve">
+    <value>Error: event trigger failed</value>
+  </data>
+  <data name="errorMissingChar" xml:space="preserve">
+    <value>Error: No Character Found</value>
+  </data>
+  <data name="errorTokenMissing" xml:space="preserve">
+    <value>error no token file found</value>
+  </data>
+  <data name="eventAnnounceSet" xml:space="preserve">
+    <value>This channel will now recieve event announcments.</value>
+  </data>
+  <data name="exceptionEventTrigger" xml:space="preserve">
+    <value>Exception thrown--event trigger</value>
+  </data>
+  <data name="exceptionNoCmd" xml:space="preserve">
+    <value>Exception thrown--invalidOperationException--No command found</value>
+  </data>
+  <data name="helpFooter" xml:space="preserve">
+    <value>Legend: &lt;required&gt; [optional]</value>
+  </data>
+  <data name="logAppStart" xml:space="preserve">
+    <value>Application Start</value>
+  </data>
+  <data name="logAudioDownload" xml:space="preserve">
+    <value>Begin video download</value>
+  </data>
+  <data name="logAudioPlayback" xml:space="preserve">
+    <value>begin video playback</value>
+  </data>
+  <data name="logBotReady" xml:space="preserve">
+    <value>Bot Ready</value>
+  </data>
+  <data name="logErrorEventExists" xml:space="preserve">
+    <value>Event already exists</value>
+  </data>
+  <data name="logRefreshSkip" xml:space="preserve">
+    <value>News refresh skipped due to lodestone maintenance</value>
+  </data>
+  <data name="maintAddSuccess" xml:space="preserve">
+    <value>Maitenance has successfully been added</value>
+  </data>
+  <data name="msgCharDisplay" xml:space="preserve">
+    <value>Displaying Character</value>
+  </data>
+  <data name="msgCharSave" xml:space="preserve">
+    <value>Saving Character</value>
+  </data>
+  <data name="msgDisplayAllEvents" xml:space="preserve">
+    <value>Displaying All Events</value>
+  </data>
+  <data name="msgEventCreated" xml:space="preserve">
+    <value>Event Created</value>
+  </data>
+  <data name="msgEventNotFound" xml:space="preserve">
+    <value>Error: no event found with that name</value>
+  </data>
+  <data name="msgFieldNotFound" xml:space="preserve">
+    <value>Error: No field found with that name</value>
+  </data>
+  <data name="msgHelp" xml:space="preserve">
+    <value>Displaying Help</value>
+  </data>
+  <data name="msgHelpSpecific" xml:space="preserve">
+    <value>Displaying Help on a specific command</value>
+  </data>
+  <data name="msgNoCurrentMaint" xml:space="preserve">
+    <value>There is no upcoming maintenence currently</value>
+  </data>
+  <data name="msgPatchNotes" xml:space="preserve">
+    <value>Displaying Patch Notes</value>
+  </data>
+  <data name="msgRepeat" xml:space="preserve">
+    <value>Advanced date based on repeat</value>
+  </data>
+  <data name="msgShowEvent" xml:space="preserve">
+    <value>Displaying Event</value>
+  </data>
+  <data name="msgUnkownError" xml:space="preserve">
+    <value>Error: An unknown error has occured</value>
+  </data>
   <data name="noVoiceChannelError" xml:space="preserve">
     <value>User must be in a voice channel, or a voice channel must be passed as an argument.</value>
+  </data>
+  <data name="utilityAnnounceSet" xml:space="preserve">
+    <value>This channel will now recieve utility announcments.</value>
   </data>
 </root>

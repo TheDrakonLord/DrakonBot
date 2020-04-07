@@ -55,7 +55,7 @@ namespace HavocBot
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.getCharacter(name, server, Context);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                globals.logMessage(Context,"Command triggered","iam");
+                globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdIAm);
             }
         }
 
@@ -73,7 +73,7 @@ namespace HavocBot
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context);
-                globals.logMessage(Context,"Command triggered","whoami");
+                globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdWhoAmI);
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
@@ -92,13 +92,15 @@ namespace HavocBot
             System.Diagnostics.Contracts.Contract.Requires(userid != null);
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
+#pragma warning disable CA1307 // Specify StringComparison
                 string trimmedId = userid.Replace("<", "");
                 trimmedId = trimmedId.Replace(">", "");
                 trimmedId = trimmedId.Replace("@", "");
+#pragma warning restore CA1307 // Specify StringComparison
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 using (Context.Channel.EnterTypingState()) globals.lodestoneAPI.showCharacter(Context, trimmedId);
-                globals.logMessage(Context, "Command triggered","whois");
+                globals.logMessage(Context, Properties.strings.catCmdTrigger,Properties.strings.cmdWhoIs);
 
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
@@ -115,7 +117,7 @@ namespace HavocBot
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
                 await showMaint().ConfigureAwait(false);
-                globals.logMessage(Context, "Command triggered","maint");
+                globals.logMessage(Context, Properties.strings.catCmdTrigger,Properties.strings.cmdMaint);
             }
         }
 
@@ -180,7 +182,7 @@ namespace HavocBot
             }
             else
             {
-                await ReplyAsync("There is no upcoming maintenence currently").ConfigureAwait(false);
+                await ReplyAsync(Properties.strings.msgNoCurrentMaint).ConfigureAwait(false);
             }
 
 
@@ -198,7 +200,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                globals.logMessage(Context,"Command triggered","myCode");
+                globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdMyCode);
                 await saveCode(platform, code).ConfigureAwait(false);
             }
         }
@@ -331,7 +333,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                globals.logMessage(Context,"Command triggered","codes()");
+                globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdCodesNull);
                 await getCodes().ConfigureAwait(false);
             }
         }
@@ -347,7 +349,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                globals.logMessage(Context,"Command triggered","codes(Username)");
+                globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdCodesUser);
                 await getCodes(username).ConfigureAwait(false);
             }
         }
@@ -362,7 +364,7 @@ namespace HavocBot
         {
             if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][0])
             {
-                globals.logMessage(Context,"Command triggered","mycodes");
+                globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdMyCodes);
                 await getCodes(Context.User.Username).ConfigureAwait(false);
             }
         }
@@ -454,7 +456,7 @@ namespace HavocBot
         [Summary("Displays a list of available commands")]
         public async Task showHelpAsync()
         {
-            globals.logMessage(Context,"Command triggered","help");
+            globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdHelp);
             var helpEmbed = new EmbedBuilder()
             {
                 Title = "Available Commands"
@@ -486,12 +488,12 @@ namespace HavocBot
                 }
             }
 
-            helpEmbed.WithFooter("Legend: <required> [optional]");
+            helpEmbed.WithFooter(Properties.strings.helpFooter);
             helpEmbed.WithCurrentTimestamp();
             helpEmbed.WithColor(Color.Blue);
 
             //display the help embed to the user
-            await Context.Channel.SendMessageAsync("Displaying Help", false, helpEmbed.Build()).ConfigureAwait(false);
+            await Context.Channel.SendMessageAsync(Properties.strings.msgHelp, false, helpEmbed.Build()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,7 +504,7 @@ namespace HavocBot
         [Summary("Displays changes since last patch")]
         public async Task showPatchNotes()
         {
-            globals.logMessage(Context,"Command triggered","patchNotes");
+            globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdPatchNotes);
             var patchEmbed = new EmbedBuilder();
             patchEmbed.WithTitle(globals.versionID);
 
@@ -512,7 +514,7 @@ namespace HavocBot
             patchEmbed.WithTimestamp(globals.patchDate);
             patchEmbed.WithColor(Color.Gold);
 
-            await Context.Channel.SendMessageAsync("Displaying patch notes", false, patchEmbed.Build()).ConfigureAwait(false);
+            await Context.Channel.SendMessageAsync(Properties.strings.msgPatchNotes, false, patchEmbed.Build()).ConfigureAwait(false);
         }
 
 
@@ -526,13 +528,15 @@ namespace HavocBot
         public async Task showHelpAsync(string cmdName)
         {
             System.Diagnostics.Contracts.Contract.Requires(cmdName != null);
-            globals.logMessage(Context,"Command triggered","help");
+            globals.logMessage(Context,Properties.strings.catCmdTrigger,Properties.strings.cmdHelp);
             var helpEmbed = new EmbedBuilder()
             {
                 Title = $"Help: {cmdName}"
             };
 
+#pragma warning disable CA1304 // Specify CultureInfo
             switch (cmdName.ToLower())
+#pragma warning restore CA1304 // Specify CultureInfo
             {
                 case "help":
                     helpEmbed.WithDescription("This command displays either a list of available commands or the details of a specific command.");
@@ -629,665 +633,13 @@ namespace HavocBot
                     break;
             }
 
-            helpEmbed.WithFooter("Legend: <required> [optional]");
+            helpEmbed.WithFooter(Properties.strings.helpFooter);
             helpEmbed.WithCurrentTimestamp();
             helpEmbed.WithColor(Color.Blue);
 
             //display the help embed to the user
-            await Context.Channel.SendMessageAsync("Displaying Help on a specific command", false, helpEmbed.Build()).ConfigureAwait(false);
+            await Context.Channel.SendMessageAsync(Properties.strings.msgHelpSpecific, false, helpEmbed.Build()).ConfigureAwait(false);
 
         }
-    }
-
-    /// <summary>
-    /// Module for storing event commands and they're related methods
-    /// </summary>
-    public class eventModule : ModuleBase<SocketCommandContext>
-    {
-        /// <summary>
-        /// Displays a specified event
-        /// </summary>
-        /// <param name="reqEvent">the name of the event to display</param>
-        /// <returns>returns task complete</returns>
-        [Command("showEvent")]
-        [Summary("Displays an event that matches the specified name")]
-        public async Task showEventAsync([Remainder] [Summary("The name of the event to display")] string reqEvent)
-        {
-            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
-            {
-                globals.logMessage(Context,"Command triggered","showEvent");
-                await retrieveEvent(reqEvent, "Displaying Event").ConfigureAwait(false);
-            }
-        }
-
-
-        /// <summary>
-        /// creates a new event
-        /// </summary>
-        /// <param name="name">the name of the new event. must be unique</param>
-        /// <param name="start">the start date of the new event</param>
-        /// <param name="end">the end date of the new event</param>
-        /// <param name="type"></param>
-        /// <param name="mentions"></param>
-        /// <param name="description"></param>
-        /// <returns>returns task complete</returns>
-        [Command("newEvent")]
-        [Summary("Stores and event with the specified parameters")]
-        public async Task createEventAsync([Summary("event name")] string name,
-            [Summary("Start Date")] string start, [Summary("End Date")] string end,
-            [Summary("type")] string type = "other", [Summary("mentions")] string mentions = "none",
-            [Remainder] [Summary("Description")] string description = "N/A")
-        {
-            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
-            {
-                if (globals.eventCalendar.ContainsKey(name))
-                {
-                    await ReplyAsync("Error: An active event with that name already exists, choose a different name, delete the exisiting event, or wait for the existing event to pass").ConfigureAwait(false);
-                    globals.logMessage(Context,"Error","Event already exists");
-                }
-                else
-                {
-                    globals.logMessage(Context,"Command triggered","newEvent");
-                    await createEvent(name, start, end, type, mentions, description).ConfigureAwait(false);
-                }
-            }
-            else
-            {
-                globals.logMessage("Error");
-            }
-        }
-
-        /// <summary>
-        /// alters the specified details fo an event
-        /// </summary>
-        /// <param name="name">name of the event to be changed</param>
-        /// <param name="field">event field to be edited</param>
-        /// <param name="changes">changes to be made to the event field</param>
-        /// <returns></returns>
-        [Command("editEvent")]
-        [Summary("Alters specified details of an event")]
-        public async Task editEventAsync([Summary("event name")] string name, [Summary("field to edit")] string field, [Remainder] [Summary("changes to be made")] string changes)
-        {
-            await editEvent(name, field, changes).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Adds or Removes the user from the RSVP list of a specified event
-        /// </summary>
-        /// <param name="name">name of specified event</param>
-        /// <returns>returns task complete</returns>
-        [Command("rsvp")]
-        [Summary("Adds or Removes the user from the RSVP list of a specified event")]
-        public async Task toggleRSVPAsync([Remainder] [Summary("name of specified event")] string name)
-        {
-            if (Context.Channel.Id == globals.guildSettings[$"g{Context.Guild.Id}"][1])
-            {
-                if (globals.eventCalendar.ContainsKey(name))
-                {
-                    globals.logMessage(Context, "Command triggered", "rsvp");
-                    await toggleRSVP(name).ConfigureAwait(false);
-                }
-                else
-                {
-                    await ReplyAsync("Error: no event found with that name").ConfigureAwait(false);
-                    globals.logMessage(Context,"Error","No event found");
-                }
-            }
-        }
-
-        /// <summary>
-        /// shows all active events
-        /// </summary>
-        /// <returns></returns>
-        [Command("events")]
-        [Summary("Shows all active events")]
-        public async Task showAllEventsAsync()
-        {
-            await showAllEvents().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// asyncronous task to store the new event
-        /// </summary>
-        /// <param name="name">the name of the new event. must be unique</param>
-        /// <param name="start">the start date of the new event</param>
-        /// <param name="end">the end date of the new event</param>
-        /// <param name="type"></param>
-        /// <param name="mentions"></param>
-        /// <param name="description"></param>
-        /// <returns>returns task complete</returns>
-        public async Task createEvent(string name, string start, string end, string type, string mentions, string description)
-        {
-            try
-            {
-                //create an event using the specified parameters
-                botEvents storedEvent = new botEvents(name, DateTime.Parse(start), DateTime.Parse(end), globals.commandStorage)
-                {
-                    author = Context.User.Username
-                };
-                Uri.TryCreate(Context.User.GetAvatarUrl(ImageFormat.Auto, 128), UriKind.RelativeOrAbsolute, out Uri uriResult);
-                storedEvent.authorURL = uriResult;
-                storedEvent.type = type;
-                storedEvent.mentions = mentions;
-                storedEvent.description = description;
-                storedEvent.guild = Context.Guild.Id.ToString();
-                //add the event to the xml tree
-                globals.storeEvent(storedEvent);
-                //display the created event to the user
-                await retrieveEvent(storedEvent.name, "Event Created").ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                globals.logMessage(ex.ToString());
-                await Context.Channel.SendMessageAsync("Error: An unknown error has occured").ConfigureAwait(false);
-            }
-
-        }
-
-        /// <summary>
-        /// finds a specified event and displays it to the user
-        /// </summary>
-        /// <param name="eventName">the name of the requested event</param>
-        /// <param name="caption">The caption to be displayed before the embed</param>
-        /// <returns>returns task complete</returns>
-        public async Task retrieveEvent(string eventName, string caption)
-        {
-            if (globals.getEvent(eventName, out botEvents retrievedEvent))
-            {
-                //create an embed based off of the loaded event
-                EmbedBuilder eventEmbed;
-
-                eventEmbed = globals.generateEventEmbed(retrievedEvent);
-
-                //display the loaded event to the user
-                await Context.Channel.SendMessageAsync(caption, false, eventEmbed.Build()).ConfigureAwait(false);
-            }
-            else
-            {
-                await Context.Channel.SendMessageAsync("Error: No command found with that name").ConfigureAwait(false);
-            }
-
-        }
-
-        /// <summary>
-        /// alters the specified details fo an event
-        /// </summary>
-        /// <param name="name">name of the event to be changed</param>
-        /// <param name="field">event field to be edited</param>
-        /// <param name="changes">changes to be made to the event field</param>
-        /// <returns></returns>
-        public async Task editEvent(string name, string field, string changes)
-        {
-            System.Diagnostics.Contracts.Contract.Requires(field != null);
-            if (globals.getEvent(name, out botEvents retrievedEvent))
-            {
-                IEnumerable<XElement> eventRetrieve =
-                 from el in globals.commandStorage.Elements("events")
-                 select el;
-
-                eventRetrieve = from el in eventRetrieve.Elements("event")
-                                where (string)el.Element("name") == retrievedEvent.name
-                                select el;
-                XElement changeTarget;
-                int intChange;
-                switch (field.ToLower())
-                {
-                    case "start":
-                        retrievedEvent.startDate = DateTime.Parse(changes);
-                        changeTarget = (from el in eventRetrieve.Descendants("start")
-                                        select el).Last();
-                        changeTarget.Value = retrievedEvent.startDate.ToString();
-                        await Context.Channel.SendMessageAsync($"The start date of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
-                        break;
-                    case "end":
-                        retrievedEvent.endDate = DateTime.Parse(changes);
-                        changeTarget = (from el in eventRetrieve.Descendants("end")
-                                        select el).Last();
-                        changeTarget.Value = retrievedEvent.endDate.ToString();
-                        await Context.Channel.SendMessageAsync($"The end date of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
-                        break;
-                    case "type":
-                        retrievedEvent.type = changes;
-                        changeTarget = (from el in eventRetrieve.Descendants("type")
-                                        select el).Last();
-                        changeTarget.Value = retrievedEvent.type;
-                        await Context.Channel.SendMessageAsync($"The type of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
-                        break;
-                    case "description":
-                        retrievedEvent.description = changes;
-                        changeTarget = (from el in eventRetrieve.Descendants("description")
-                                        select el).Last();
-                        changeTarget.Value = retrievedEvent.description;
-                        await Context.Channel.SendMessageAsync($"The description of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
-                        break;
-                    case "remindermin":
-                    case "reminder":
-                        if (int.TryParse(changes, out intChange))
-                        {
-                            retrievedEvent.reminderMinutes = intChange;
-                            changeTarget = (from el in eventRetrieve.Descendants("reminder")
-                                            select el).Last();
-                            changeTarget.Value = retrievedEvent.reminderMinutes.ToString();
-                        }
-                        await Context.Channel.SendMessageAsync($"The reminder option of the event \"{name}\" has been changed to {changes} minutes").ConfigureAwait(false);
-                        break;
-                    case "reminderhrs":
-                        if (int.TryParse(changes, out intChange))
-                        {
-                            retrievedEvent.reminderHours = intChange;
-                            changeTarget = (from el in eventRetrieve.Descendants("reminder")
-                                            select el).Last();
-                            changeTarget.Value = retrievedEvent.reminderMinutes.ToString();
-                        }
-                        await Context.Channel.SendMessageAsync($"The reminder option of the event \"{name}\" has been changed to {changes} hours").ConfigureAwait(false);
-                        break;
-                    case "repeat":
-                        retrievedEvent.repeat = changes;
-                        changeTarget = (from el in eventRetrieve.Descendants("repeat")
-                                        select el).Last();
-                        changeTarget.Value = retrievedEvent.repeat;
-                        await Context.Channel.SendMessageAsync($"The repeat option of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
-                        break;
-                    case "mentions":
-                        retrievedEvent.mentions = changes;
-                        changeTarget = (from el in eventRetrieve.Descendants("mentions")
-                                        select el).Last();
-                        changeTarget.Value = retrievedEvent.mentions;
-                        await Context.Channel.SendMessageAsync($"The mentions option of the event \"{name}\" has been changed to {changes}").ConfigureAwait(false);
-                        break;
-                    default:
-                        await Context.Channel.SendMessageAsync("Error: No field found with that name").ConfigureAwait(false);
-                        break;
-                }
-                globals.commandStorage.Save(globals.storageFilePath);
-            }
-            else
-            {
-                await Context.Channel.SendMessageAsync("Error: No command found with that name").ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Toggles the users RSVP for the specified event
-        /// </summary>
-        /// <param name="name">the name of the event to be retrieved</param>
-        /// <returns>task complete</returns>
-        public async Task toggleRSVP(string name)
-        {
-            string nickname;
-            if (Context.Guild.GetUser(Context.User.Id).Nickname != null)
-            {
-                nickname = Context.Guild.GetUser(Context.User.Id).Nickname;
-            }
-            else
-            {
-                nickname = Context.User.Username;
-            }
-            string id = "<@" + Context.User.Id.ToString() + ">";
-
-            if (globals.getEvent(name, out botEvents retrievedEvent))
-            {
-                bool toggle = false;
-
-                if (retrievedEvent.rSVPs != null)
-                {
-                    toggle = retrievedEvent.rSVPs.Contains(nickname);
-                }
-                if (toggle)
-                {
-                    retrievedEvent.removeRSVP(nickname, id);
-
-                    IEnumerable<XElement> eventRetrieve =
-                 from el in globals.commandStorage.Elements("events")
-                 select el;
-
-                    eventRetrieve = from el in eventRetrieve.Elements("event")
-                                    where (string)el.Element("name") == retrievedEvent.name
-                                    select el;
-
-                    XElement rsvp = (from el in eventRetrieve.Descendants("rsvps")
-                                     select el).Last();
-
-                    rsvp.Value = retrievedEvent.allRSVPs();
-
-                    rsvp = (from el in eventRetrieve.Descendants("rsvpids")
-                            select el).Last();
-
-                    rsvp.Value = retrievedEvent.allRSVPIDs();
-
-                    globals.commandStorage.Save(globals.storageFilePath);
-                    await Context.Channel.SendMessageAsync($"You have sucessfully removed your RSVP for the event {name}").ConfigureAwait(false);
-                }
-                else
-                {
-                    retrievedEvent.addRSVP(nickname, id);
-
-                    IEnumerable<XElement> eventRetrieve =
-                        from el in globals.commandStorage.Elements("events")
-                        select el;
-
-                    eventRetrieve = from el in eventRetrieve.Elements("event")
-                                    where (string)el.Element("name") == retrievedEvent.name
-                                    select el;
-
-                    XElement rsvp = (from el in eventRetrieve.Descendants("rsvps")
-                                     select el).Last();
-
-                    rsvp.Value = retrievedEvent.allRSVPs();
-
-                    rsvp = (from el in eventRetrieve.Descendants("rsvpids")
-                            select el).Last();
-
-                    rsvp.Value = retrievedEvent.allRSVPIDs();
-
-
-                    globals.commandStorage.Save(globals.storageFilePath);
-                    await Context.Channel.SendMessageAsync($"You have successfully RSVP'd for the event {name}").ConfigureAwait(false);
-                }
-            }
-            else
-            {
-                await Context.Channel.SendMessageAsync("Error: No command found with that name").ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// shows all events in the dictionary
-        /// </summary>
-        /// <returns></returns>
-        public async Task showAllEvents()
-        {
-            EmbedBuilder listEmbed = new EmbedBuilder()
-            {
-                Title = "Active Events"
-            };
-
-            foreach (KeyValuePair<string, DateTime> item in globals.eventCalendar)
-            {
-                listEmbed.AddField(item.Key, $"Starts at: {item.Value}");
-            }
-            await Context.Channel.SendMessageAsync("displaying all events", false, listEmbed.Build()).ConfigureAwait(false);
-        }
-    }
-
-    /// <summary>
-    /// Set of commands only executable by Admins or the Bot Owner
-    /// </summary>
-    [RequireUserPermission(GuildPermission.Administrator, Group = "Permission")]
-    [RequireOwner(Group = "Permission")]
-    public class adminModule : ModuleBase<SocketCommandContext>
-    {
-        /// <summary>
-        /// Sets the target channel where commands are permitted
-        /// this must be executed before commands may be created and announced properly.
-        /// </summary>
-        /// <returns></returns>
-        [Command("setTarget")]
-        [Summary("Sets the target channel for event announcments")]
-        public async Task setTargetChannel()
-        {
-            globals.logMessage(Context, "Admin Command Triggered", "setTarget");
-            await storeTarget((Context.Channel.Id), Context.Guild.Id).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Stores and assigns the specified channel id as the new target channel
-        /// </summary>
-        /// <param name="target">the channel id to be set as the new target</param>
-        /// <param name="gID">The guild id of the target</param>
-        /// <returns>returns task complete</returns>
-        public async Task storeTarget(ulong target, ulong gID)
-        {
-            await Task.Run(() => globals.changeTarget(target, gID)).ConfigureAwait(false);
-            await ReplyAsync("This channel will now recieve utility announcments.").ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sets the target channel where event announcments will be sent.
-        /// this must be executed before events may be created and announced properly.
-        /// </summary>
-        /// <returns></returns>
-        [Command("setEventTarget")]
-        [Summary("Sets the target channel for event announcments")]
-        public async Task setTargetEventChannel()
-        {
-            globals.logMessage(Context, "Admin Command triggered", "setEventTarget");
-            await storeEventTarget((Context.Channel.Id), Context.Guild.Id).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Stores and assigns the specified channel id as the new target event channel
-        /// </summary>
-        /// <param name="target">the channel id to be set as the new target</param>
-        /// <param name="gID">The guild id of the target</param>
-        /// <returns>returns task complete</returns>
-        public async Task storeEventTarget(ulong target, ulong gID)
-        {
-            await Task.Run(() => globals.changeEventTarget(target, gID)).ConfigureAwait(false);
-            await ReplyAsync("This channel will now recieve event announcments.").ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sets the date and time of upcoming maintenance
-        /// </summary>
-        /// <param name="start">Start date of maintenance</param>
-        /// <param name="end">End date of maintenance</param>
-        /// <param name="patch">Patch for maintenance</param>
-        /// <returns></returns>
-        [Command("addMaint")]
-        [Summary("Sets upcoming maintenance")]
-        public async Task setMaint([Summary("Start date of maintenance")] string start, [Summary("End date of maintenance")] string end, [Remainder][Summary("Patch for maintenance")] string patch)
-        {
-            await storeMaint(start, end, patch).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// stores the date and time of upcoming maintenance
-        /// </summary>
-        /// <param name="start">Start date of maintenance</param>
-        /// <param name="end">End date of maintenance</param>
-        /// <param name="patch">Patch for maintenance</param>
-        /// <returns></returns>
-        public async Task storeMaint(string start, string end, string patch)
-        {
-            IEnumerable<XElement> maintRetrieve =
-                 from el in globals.commandStorage.Elements("maintenance")
-                 select el;
-
-            maintRetrieve = from el in maintRetrieve.Elements("maint")
-                            select el;
-
-            XElement changeTarget = (from el in maintRetrieve.Descendants("start")
-                                     select el).First();
-            changeTarget.Value = DateTime.Parse(start).ToString();
-
-            changeTarget = (from el in maintRetrieve.Descendants("end")
-                            select el).First();
-
-            changeTarget.Value = DateTime.Parse(end).ToString();
-
-            XAttribute patchChange = (from el in maintRetrieve.Attributes("patch")
-                                      select el).First();
-
-            patchChange.Value = patch;
-
-            globals.commandStorage.Save(globals.storageFilePath);
-
-            await ReplyAsync("Maitenance has successfully been added").ConfigureAwait(false);
-            globals.logMessage(Context, "Command triggered", "setmaint");
-        }
-
-        /// <summary>
-        /// Changes the bots currently displayed status message
-        /// </summary>
-        /// <param name="status">status to be set to the bot</param>
-        /// <returns></returns>
-        [Command("setStatus")]
-        [Summary("Sets bots displayed status")]
-        public async Task setStatus([Remainder][Summary("Status to be set to the bot")] string status)
-        {
-            globals.logMessage(Context, "Admin Command triggered", "setStatus");
-            await storeStatusMessage(status).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Changes the bots currently displayed status message
-        /// </summary>
-        /// <param name="status">status to be set to the bot</param>
-        /// <returns></returns>
-        public async Task storeStatusMessage(string status)
-        {
-            await Task.Run(() => globals.changeStatus(status)).ConfigureAwait(false);
-            await ReplyAsync("The bot status has been changed").ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Triggers an embed announcing bot downtime
-        /// </summary>
-        /// <returns></returns>
-        [Command("startBotDowntime")]
-        [Summary("triggers an embed announcing bot downtime")]
-        public async Task showDownTime()
-        {
-            globals.logMessage(Context, "Admin Command triggered", "startbotdowntime");
-            await Task.Run(() => havocBotClass.showDownTime()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// triggers an embed displaying patch notes
-        /// </summary>
-        /// <returns></returns>
-        [Command("showAllPatchNotes")]
-        [Summary("triggers an embed displaying patch notes")]
-        public async Task showAllPatchNotes()
-        {
-            globals.logMessage(Context, "Admin Command triggered", "showAllPatchNotes");
-            await Task.Run(() => havocBotClass.showAllPatchNotes()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        [Command("CancelEvent")]
-        [Summary("ends the specified event")]
-        public async Task cancelEventAsync([Remainder] string name)
-        {
-            globals.logMessage(Context, "Admin Command triggered", $"Cancel Event: {name}");
-            await cancelEvent(name).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public async Task cancelEvent(string name)
-        {
-            if (globals.getEvent(name, out botEvents retrievedEvent))
-            {
-                IEnumerable<XElement> eventRetrieve =
-                 from el in globals.commandStorage.Elements("events")
-                 select el;
-
-                eventRetrieve = from el in eventRetrieve.Elements("event")
-                                where (string)el.Element("name") == retrievedEvent.name
-                                select el;
-                XElement changeTarget = (from el in eventRetrieve.Descendants("start")
-                                         select el).Last();
-
-                retrievedEvent.startDate = DateTime.Now.AddDays(-1);
-
-                changeTarget.Value = retrievedEvent.startDate.ToString();
-                globals.commandStorage.Save(globals.storageFilePath);
-                await Context.Channel.SendMessageAsync($"The event \"{name}\" has been cancelled").ConfigureAwait(false);
-            }
-
-        }
-    }
-
-        /// <summary>
-        /// 
-        /// </summary>
-    public class audioModule : ModuleBase<ICommandContext>
-    {
-        // Scroll down further for the AudioService.
-        // Like, way down
-
-        private audioService _service = new audioService();
-
-        // You *MUST* mark these commands with 'RunMode.Async'
-        // otherwise the bot will not respond until the Task times out.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Command("join", RunMode = RunMode.Async)]
-        public async Task joinCmd(IVoiceChannel channel = null)
-        {
-            globals.logMessage("Audio Command triggered",$"join by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
-            channel ??= (Context.User as IGuildUser)?.VoiceChannel;
-            if (channel == null) { await Context.Channel.SendMessageAsync(Properties.strings.noVoiceChannelError).ConfigureAwait(false); return; }
-
-            // For the next step with transmitting audio, you would want to pass this Audio Client in to a service.
-            var audioClient = await channel.ConnectAsync();
-
-            await _service.joinAudio(Context.Guild, audioClient);    
-
-        }
-
-        // Remember to add preconditions to your commands,
-        // this is merely the minimal amount necessary.
-        // Adding more commands of your own is also encouraged.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Command("leave", RunMode = RunMode.Async)]
-        public async Task leaveCmd()
-        {
-            globals.logMessage("Audio Command triggered", $"leave by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
-            await _service.leaveAudio(Context.Guild).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="song"></param>
-        /// <returns></returns>
-        [Command("play", RunMode = RunMode.Async)]
-        public async Task playCmd([Remainder] string song)
-        {
-            globals.logMessage("Audio Command triggered", $"play {song} by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
-            await _service.loadAndPlay(Context.Guild, Context.Channel, song, _service).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Command("stop", RunMode = RunMode.Async)]
-        public async Task stopCmd()
-        {
-            globals.logMessage("Audio Command triggered", $"stop by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
-            int playbackPID = globals.playbackPIDs[Context.Guild.Id];
-            if (playbackPID != 0)
-            {
-                await Task.Run(() => _service.endProcess(playbackPID));
-            }
-            else
-            {
-                await Context.Channel.SendMessageAsync(Properties.strings.audioNoPlaybackError);
-            }
-        }
-
-        [Command("queue", RunMode = RunMode.Async)]
-        public async Task queueCmd([Remainder] string song)
-        {
-            globals.logMessage("Audio Command triggered", $"queue by {Context.User.Username} in {Context.Guild.Name} ({Context.Guild.Id})");
-            await Task.Run(() => globals.playbackQueues[Context.Guild.Id].Enqueue(song));
-        }
-
     }
 }

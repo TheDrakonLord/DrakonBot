@@ -170,7 +170,10 @@ namespace HavocBot
 
             set
             {
+                System.Diagnostics.Contracts.Contract.Requires(value != null);
+#pragma warning disable CA1304 // Specify CultureInfo
                 switch (value.ToLower())
+#pragma warning restore CA1304 // Specify CultureInfo
                 {
                     case "dungeon":
                         _type = eventType.dungeon;
@@ -432,12 +435,16 @@ namespace HavocBot
         {
             System.Diagnostics.Contracts.Contract.Requires(rsvpList != null);
             System.Diagnostics.Contracts.Contract.Requires(idList != null);
+#pragma warning disable CA1307 // Specify StringComparison
             if (!rsvpList.Equals("N/A"))
+#pragma warning restore CA1307 // Specify StringComparison
             {
                 string tempString = rsvpList;
                 _rsvps = tempString.Split(',').ToList();
                 tempString = idList;
+#pragma warning disable CA1307 // Specify StringComparison
                 tempString = tempString.Replace(" ", "");
+#pragma warning restore CA1307 // Specify StringComparison
                 _rsvpID = tempString.Split(',').ToList();
             }
         }
@@ -538,7 +545,7 @@ namespace HavocBot
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets the guild this event belongs to
         /// </summary>
         public string guild
         {
