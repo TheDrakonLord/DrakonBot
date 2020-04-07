@@ -35,7 +35,7 @@ using System.Net;
 namespace HavocBot
 {
     /// <summary>
-    /// 
+    /// The main class for the application
     /// </summary>
     public class program
     {
@@ -45,14 +45,18 @@ namespace HavocBot
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
         public static void Main() => new program().mainAsync().GetAwaiter().GetResult();
+#pragma warning restore IDE1006 // Naming Styles
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         /// <returns></returns>        
+#pragma warning disable CA1822 // Mark members as static
         public async Task mainAsync()
+#pragma warning restore CA1822 // Mark members as static
         {
-            globals.logMessage("Application Start");
+            globals.logMessage(Properties.strings.logAppStart);
 
             //Declare a timer
 
@@ -79,7 +83,7 @@ namespace HavocBot
             }
             catch (FileNotFoundException)
             {
-                globals.logMessage("Notice: Command Data was not found. A new command data file will be created");
+                globals.logMessage(Properties.strings.errorCmdDataMissing);
                 XElement NewCommandData = new XElement("root");
                 NewCommandData.Add(
                 new XElement("events", null),
@@ -138,7 +142,9 @@ namespace HavocBot
             // store events in the eventCalendar Dictionary, filtering out old events
             foreach (XElement el in eventRetrieve)
             {
+#pragma warning disable CA1307 // Specify StringComparison
                 if (DateTime.Now <= DateTime.Parse((string)el.Element("start")) && !el.Element("name").Value.Contains("Reminder:"))
+#pragma warning restore CA1307 // Specify StringComparison
                 {
                     try
                     {
@@ -255,7 +261,7 @@ namespace HavocBot
         {
             if (DateTime.Now >= globals.lodeMaintStart && DateTime.Now <= globals.lodeMaintEnd)
             {
-                globals.logMessage("News refresh skipped due to lodestone maintenance");
+                globals.logMessage(Properties.strings.logRefreshSkip);
             }
             else
             {

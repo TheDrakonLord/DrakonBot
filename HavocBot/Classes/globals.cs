@@ -38,8 +38,10 @@ namespace HavocBot
         /// <summary>
         /// Holds the command data xml tree
         /// </summary>
+#pragma warning disable CA2211 // Non-constant fields should not be visible
         public static XElement commandStorage;
-        
+
+
         /// <summary>
         /// holds the file path for the current directory
         /// </summary>
@@ -51,7 +53,7 @@ namespace HavocBot
         public static Dictionary<string, DateTime> eventCalendar = new Dictionary<string, DateTime>();
 
         /// <summary>
-        /// 
+        /// Collection of target channels for each guild
         /// </summary>
         public static Dictionary<string, ulong[]> guildSettings = new Dictionary<string, ulong[]>();
 
@@ -66,24 +68,27 @@ namespace HavocBot
         public static lodestone lodestoneAPI = new lodestone();
 
         /// <summary>
-        /// 
+        /// A list of all guilds the bot has joined
         /// </summary>
         public static List<ulong> allGuilds = new List<ulong>();
 
         /// <summary>
-        /// 
+        /// Lists the process ID for each guild's music feature
         /// </summary>
         public static Dictionary<ulong, int> playbackPIDs = new Dictionary<ulong, int>();
 
+        /// <summary>
+        /// Holds the song queues for each guild
+        /// </summary>
         public static Dictionary<ulong, Queue<string>> playbackQueues = new Dictionary<ulong, Queue<string>>();
 
         /// <summary>
-        /// 
+        /// Holds the token for accessing discord
         /// </summary>
         public static string token = "";
 
         /// <summary>
-        /// 
+        /// The body content for the patch notes message
         /// </summary>
         public static string patchnotes = "--Added a queue feature to the music function (!queue [video link] to add a video to the queue)\n" +
                 "--Addressed an issue where the !stop command was not working \n" + 
@@ -94,36 +99,37 @@ namespace HavocBot
                 "--!newevent does not support its optional parameters. A fix is in the works for this issue. Please use !editevent in the meantime";
 
         /// <summary>
-        /// 
+        /// The current version number for the header of the patch notes message
         /// </summary>
         public static string versionID = "Version: 0.5.0.0";
 
         /// <summary>
-        /// 
+        /// The current version number for the footer of the patch notes message
         /// </summary>
         public static string patchID = "Patch 0.5.0.0";
 
         /// <summary>
-        /// 
+        /// The date and time of the current patch number
         /// </summary>
         public static DateTimeOffset patchDate = new DateTimeOffset(2020, 04, 03, 17, 00, 00, new TimeSpan(-6, 0, 0));
 
         /// <summary>
-        /// 
+        /// Holds the start date and time of when the lodestone is under maintenance
         /// </summary>
         public static DateTime lodeMaintStart;
 
         /// <summary>
-        /// 
+        /// holds the end date and time of when the lodestone is under maintenance
         /// </summary>
         public static DateTime lodeMaintEnd;
+#pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <summary>
-        /// 
+        /// Logs a message to the console
         /// </summary>
-        /// <param name="category"></param>
-        /// <param name="Context"></param>
-        /// <param name="message"></param>
+        /// <param name="category">The category for the log message (ex. Type:)</param>
+        /// <param name="Context">The context of the command called (only available in modules)</param>
+        /// <param name="message">the message to be sent to the log</param>
         public static void logMessage(SocketCommandContext Context, string category, string message)
         {
             System.Diagnostics.Contracts.Contract.Requires(Context != null);
@@ -131,19 +137,19 @@ namespace HavocBot
         }
 
         /// <summary>
-        /// 
+        /// Logs a message to the console
         /// </summary>
-        /// <param name="category"></param>
-        /// <param name="message"></param>
+        /// <param name="category">The category for the log message (ex. Type:)</param>
+        /// <param name="message">the message to be sent to the log</param>
         public static void logMessage(string category, string message)
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {category}: {message}");
         }
 
         /// <summary>
-        /// 
+        /// Logs a message to the console
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">the message to be sent to the log</param>
         public static void logMessage(string message)
         {
             Console.WriteLine($"{DateTime.Now.ToShortDateString(),-11}{System.DateTime.Now.ToLongTimeString(),-8} {message}");
@@ -186,7 +192,7 @@ namespace HavocBot
         /// <param name="guild">id of the target guild</param>
         public static void changeTarget(ulong target, ulong guild)
         {
-            guildSettings[$"g{guild.ToString()}"][0] = target;
+            guildSettings[$"g{guild}"][0] = target;
 
             commandStorage.Element("settings").Element($"g{guild}").Element("TargetChannel").SetValue(target);
 
@@ -200,7 +206,7 @@ namespace HavocBot
         /// <param name="guild">id of the target guild</param>
         public static void changeEventTarget(ulong target, ulong guild)
         {
-            guildSettings[$"g{guild.ToString()}"][0] = target;
+            guildSettings[$"g{guild}"][0] = target;
 
             commandStorage.Element("settings").Element($"g{guild}").Element("TargetEventChannel").SetValue(target);
 
@@ -298,7 +304,7 @@ namespace HavocBot
             catch (InvalidOperationException)
             {
                 //if no command with the requested name was found, display an error
-                logMessage("Exception thrown--invalidOperationException--No command found");
+                logMessage(Properties.strings.exceptionNoCmd);
                 retrievedEvent = null;
                 return false;
                 throw;

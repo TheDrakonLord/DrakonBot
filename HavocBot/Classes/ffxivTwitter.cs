@@ -8,7 +8,7 @@ using CoreTweet.Streaming;
 namespace HavocBot
 {
     /// <summary>
-    /// 
+    /// Class for obtaining news and information published on the FFXIV twitter pages
     /// </summary>
     public class ffxivTwitter
     {
@@ -16,7 +16,7 @@ namespace HavocBot
         readonly Tokens _token;
 
         /// <summary>
-        /// 
+        /// Defalt constructor for the twitter class
         /// </summary>
         public ffxivTwitter()
         {
@@ -25,9 +25,9 @@ namespace HavocBot
         }
 
         /// <summary>
-        /// 
+        /// Obtains a specific stream of tweets
         /// </summary>
-        /// <returns></returns>
+        /// <returns>task complete</returns>
         public async Task twitterStream()
         {
             foreach (var m in _token.Streaming.Filter(follow => "FFXIV_EN")

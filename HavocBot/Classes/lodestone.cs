@@ -64,12 +64,14 @@ namespace HavocBot
             System.Diagnostics.Contracts.Contract.Requires(name != null);
             System.Diagnostics.Contracts.Contract.Requires(context != null);
             
-            string userID = $"u{context.User.Id.ToString()}";
+            string userID = $"u{context.User.Id}";
             try
             {
 
-           
-            string strName = name.Replace(" ", "+");
+
+#pragma warning disable CA1307 // Specify StringComparison
+                string strName = name.Replace(" ", "+");
+#pragma warning restore CA1307 // Specify StringComparison
                 Uri.TryCreate($"https://xivapi.com/character/search?name={strName}&server={server}", UriKind.RelativeOrAbsolute, out Uri uriResult);
             HttpResponseMessage req = await _client.GetAsync(uriResult).ConfigureAwait(false);
             dynamic character = JsonConvert.DeserializeObject(
@@ -94,7 +96,7 @@ namespace HavocBot
             charEmbed.WithColor(Color.Green);
 
             //display the loaded event to the user
-            await context.Channel.SendMessageAsync("Saving Character", false, charEmbed.Build()).ConfigureAwait(false);
+            await context.Channel.SendMessageAsync(Properties.strings.msgCharSave, false, charEmbed.Build()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -121,7 +123,7 @@ namespace HavocBot
             string charFC;
             string charAvatar;
             string charPortrait;
-            string userID = $"u{context.User.Id.ToString()}";
+            string userID = $"u{context.User.Id}";
 
             try
             {
@@ -160,7 +162,9 @@ namespace HavocBot
                 {
                     charJob = character.Character.ActiveClassJob.Job.Name;
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     charJob = character.Character.ActiveClassJob.Class.Name;
                 }
@@ -183,12 +187,12 @@ namespace HavocBot
                 charEmbed.WithColor(Color.Red);
 
                 //display the loaded event to the user
-                await context.Channel.SendMessageAsync("Displaying Character", false, charEmbed.Build()).ConfigureAwait(false);
+                await context.Channel.SendMessageAsync(Properties.strings.msgCharDisplay, false, charEmbed.Build()).ConfigureAwait(false);
 
             }
             catch (Exception ex)
             {
-                await context.Channel.SendMessageAsync("Error: No Character Found", false).ConfigureAwait(false);
+                await context.Channel.SendMessageAsync(Properties.strings.errorMissingChar, false).ConfigureAwait(false);
                 globals.logMessage(ex.Message);
                 throw;
             }
@@ -216,7 +220,7 @@ namespace HavocBot
             string charRaceId;
             string charPortrait;
             SocketGuildUser user = null;
-            string uID = $"u{context.User.Id.ToString()}";
+            string uID = $"u{context.User.Id}";
 
             if (ulong.TryParse(userid, out ulong ulongId))
             {
@@ -300,12 +304,12 @@ namespace HavocBot
                 charEmbed.WithColor(Color.Red);
 
                 //display the loaded event to the user
-                await context.Channel.SendMessageAsync("Displaying Character", false, charEmbed.Build()).ConfigureAwait(false);
+                await context.Channel.SendMessageAsync(Properties.strings.msgCharDisplay, false, charEmbed.Build()).ConfigureAwait(false);
 
             }
             catch (Exception ex)
             {
-                await context.Channel.SendMessageAsync("Error: No Character Found", false).ConfigureAwait(false);
+                await context.Channel.SendMessageAsync(Properties.strings.errorMissingChar, false).ConfigureAwait(false);
                 globals.logMessage(ex.Message);
                 throw;
             }
