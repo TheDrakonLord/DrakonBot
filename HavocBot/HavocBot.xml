@@ -661,6 +661,11 @@
             <param name="retrievedEvent">event to build the embed from</param>
             <returns>Completed embed</returns>
         </member>
+        <member name="T:HavocBot.guild">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:HavocBot.havocBotClass">
             <summary>
             Main class for the havoc bot. initializes the command handler and service as well as the client.

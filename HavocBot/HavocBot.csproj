@@ -21,6 +21,8 @@ Known Issue:
 --!newevent does not support its optional parameters. A fix is in the works for this issue. Please use !editevent in the meantime</PackageReleaseNotes>
     <Description>DIscord bot to combine the functions of several bots used in a specific server</Description>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyName>HavocBot</AssemblyName>
+    <StartupObject>HavocBot.program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
